@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity() {
         val tabs: TabLayout = findViewById(R.id.tabs)
         tabs.setupWithViewPager(viewPager)
 
-        //##############################
+      /*  //##############################
         //Stopwatch implementation code
         //#############################
         val meter = findViewById<Chronometer>(R.id.c_meter)//gets chronometer from the XML using the proper id
@@ -55,7 +55,7 @@ class MainActivity : AppCompatActivity() {
                         R.string.stopped),
                     Toast.LENGTH_SHORT).show()
             }
-        })
+        })*/
 
 
         //This part of the code refers to the button
