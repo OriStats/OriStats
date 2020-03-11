@@ -2,4 +2,10 @@
     <string name="app_name">OriStats</string>
     <string name="tab_text_1">Clock</string>
     <string name="tab_text_2">Statistics</string>
+    //string for start button
+    <string name="start">Start Timer</string>
+    //string for stop button
+    <string name="stop">Stop Timer</string>
+    <string name="working">Started</string>
+    <string name="stopped">Stopped</string>
 </resources>

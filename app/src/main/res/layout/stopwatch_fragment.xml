@@ -4,16 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.main.Stopwatch">
+    tools:context=".ui.main.Stopwatch"
+    >
 
-    <TextView
-        android:id="@+id/tvTimer"
+    <Chronometer
+        android:id="@+id/c_meter"
         android:layout_width="wrap_content"
         android:layout_height="130dp"
         android:layout_marginTop="150dp"
         android:paddingBottom="50dp"
         android:layout_centerHorizontal="true"
-        android:text="00:00:00"
         android:textColor="#000000"
         android:textSize="50sp"
         android:textStyle="bold" />
@@ -22,13 +22,13 @@
         android:id="@+id/btStart"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tvTimer"
+        android:layout_below="@+id/c_meter"
         android:layout_alignParentStart="true"
         android:layout_centerHorizontal="true"
         android:layout_marginStart="166dp"
         android:layout_marginTop="40dp"
         android:background="#ffffff"
-        android:text="Start" />
+        android:text="@string/start" />
 
 </RelativeLayout>
 
