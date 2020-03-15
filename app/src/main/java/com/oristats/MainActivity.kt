@@ -26,43 +26,13 @@ class MainActivity : AppCompatActivity() {
         val tabs: TabLayout = findViewById(R.id.tabs)
         tabs.setupWithViewPager(viewPager)
 
-      /*  //##############################
-        //Stopwatch implementation code
-        //#############################
-        val meter = findViewById<Chronometer>(R.id.c_meter)//gets chronometer from the XML using the proper id
-        val btn = findViewById<Button>(R.id.btStart)//gets the button from the XML
-
-        btn?.setOnClickListener(object : View.OnClickListener {
-
-            var isWorking = false
-
-            override fun onClick(v: View) {
-                if (!isWorking) {
-                    meter.start()
-                    //print("entrou")
-                    isWorking = true
-                } else {
-                    meter.stop()
-                    isWorking = false
-                }
-
-                btn.setText(if (isWorking) R.string.start else R.string.stop)
-
-                Toast.makeText(this@MainActivity, getString(
-                    if (isWorking)
-                        R.string.working
-                    else
-                        R.string.stopped),
-                    Toast.LENGTH_SHORT).show()
-            }
-        })*/
-
-
         //This part of the code refers to the button
+        /*
         val fab: FloatingActionButton = findViewById(R.id.fab)
         fab.setOnClickListener { view ->
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show()
         }
+         */
     }
 }

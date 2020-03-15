@@ -2,10 +2,11 @@
     <string name="app_name">OriStats</string>
     <string name="tab_text_1">Clock</string>
     <string name="tab_text_2">Statistics</string>
-    //string for start button
-    <string name="start">Start Timer</string>
-    //string for stop button
-    <string name="stop">Stop Timer</string>
+    <string name="start">Start Session</string>
+    <string name="stop">Stop Session</string>
+    <string name="pause">Take a break</string>
+    <string name="work_time">Work Time</string>
+    <string name="break_time">Break Time</string>
     <string name="working">Started</string>
     <string name="stopped">Stopped</string>
 </resources>
