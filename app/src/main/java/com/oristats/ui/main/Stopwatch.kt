@@ -64,7 +64,7 @@ class Stopwatch : Fragment() {
                         }
                     }
 
-                    btStart.setText(if (isWorking) R.string.pause else R.string.start)
+                    btStart.setText(if (isWorking) R.string.pause else R.string.resume)
                     //Toast.makeText(this@Stopwatch, getString(if (isWorking) R.string.working else R.string.stopped), Toast.LENGTH_SHORT).show()
                 }
             })
