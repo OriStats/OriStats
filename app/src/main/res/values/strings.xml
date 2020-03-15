@@ -3,7 +3,7 @@
     <string name="tab_text_1">Clock</string>
     <string name="tab_text_2">Statistics</string>
     <string name="start">Start Session</string>
-    <string name="stop">Stop Session</string>
+    <string name="stop">End Session</string>
     <string name="pause">Take a break</string>
     <string name="work_time">Work Time</string>
     <string name="break_time">Break Time</string>

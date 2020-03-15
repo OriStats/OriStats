@@ -75,8 +75,8 @@ class Stopwatch : Fragment() {
                     if(!start) {
                         start = true
                         isWorking = false
-                        crono_work.setBase(crono_work.getBase())
                         crono_work.stop()
+                        crono_break.stop()
                         btStart.setText(R.string.start)
                     }
                 }
