@@ -6,21 +6,23 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import androidx.viewpager.widget.ViewPager
 import com.oristats.R
 
 
-class Statistics : Fragment() {
+class Graph1 : Fragment() {
 
 
 
     companion object {
-        fun newInstance() = Statistics()
+        fun newInstance() = Graph1()
     }
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.statistics_fragment, container, false)
+        return inflater.inflate(R.layout.graph_fragment, container, false)
     }
+
 
 
 /*
