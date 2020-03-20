@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item android:id="@+id/Settings"
+        android:title="@string/three_dots_menu_Settings"
+        app:showAsAction="never"/>
+
+    <item android:id="@+id/Export"
+        android:title="@string/three_dots_menu_Export"
+        app:showAsAction="never"/>
+
+    <item android:id="@+id/Import"
+        android:title="@string/three_dots_menu_Import"
+        app:showAsAction="never"/>
+
+    <item android:id="@+id/Help"
+        android:title="@string/three_dots_menu_Help"
+        app:showAsAction="never"/>
+
+    <item android:id="@+id/About"
+        android:title="@string/three_dots_menu_About"
+        app:showAsAction="never"/>
+
+    <item android:id="@+id/Donate"
+        android:title="@string/three_dots_menu_Donate"
+        app:showAsAction="never"/>
+
+
+</menu>

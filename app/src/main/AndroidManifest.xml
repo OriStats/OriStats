@@ -12,7 +12,8 @@
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme">
+            <!--Before three_dots_menu: android:theme="@style/AppTheme.NoActionBar"-->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -20,5 +21,7 @@
             </intent-filter>
         </activity>
     </application>
+
+    <!--Warning:(5, 6) On SDK version 23 and up, your app data will be automatically backed up and restored on app install. Consider adding the attribute `android:fullBackupContent` to specify an `@xml` resource which configures which files to backup. More info: https://developer.android.com/training/backup/autosyncapi.html-->
 
 </manifest>

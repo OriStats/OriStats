@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">OriStats</string>
-    <string name="tab_text_1">Clock</string>
+    <string name="tab_text_1">Stopwatch</string>
     <string name="tab_text_2">Tags</string>
     <string name="tab_text_3">Statistics</string>
     <string name="start">Start session</string>
@@ -11,4 +11,11 @@
     <string name="break_time">Break Time</string>
     <string name="working">Started</string>
     <string name="stopped">Stopped</string>
+
+    <string name="three_dots_menu_Settings">Settings</string>
+    <string name="three_dots_menu_Export">Export Data</string>
+    <string name="three_dots_menu_Import">Import Data</string>
+    <string name="three_dots_menu_Help">Help</string>
+    <string name="three_dots_menu_About">About</string>
+    <string name="three_dots_menu_Donate">Donate</string>
 </resources>
