@@ -25,9 +25,7 @@
             android:id="@+id/tabs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/Second" >
-
-        </com.google.android.material.tabs.TabLayout>
+            android:background="@color/colorSecondary" />
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.viewpager.widget.ViewPager

@@ -1,7 +1,8 @@
 <resources>
     <string name="app_name">OriStats</string>
     <string name="tab_text_1">Clock</string>
-    <string name="tab_text_2">Statistics</string>
+    <string name="tab_text_2">Tags</string>
+    <string name="tab_text_3">Statistics</string>
     <string name="start">Start session</string>
     <string name="stop">End session</string>
     <string name="pause">Take a break</string>

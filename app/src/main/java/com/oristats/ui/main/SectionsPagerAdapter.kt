@@ -8,7 +8,8 @@ import com.oristats.R
 
 private val TAB_TITLES = arrayOf(
         R.string.tab_text_1,
-        R.string.tab_text_2
+        R.string.tab_text_2,
+        R.string.tab_text_3
 )
 
 /**
@@ -22,7 +23,8 @@ class SectionsPagerAdapter(private val context: Context, fm: FragmentManager)
         var fragment : Fragment? = null
         when(position){
             0 -> fragment = Stopwatch.newInstance()
-            1 -> fragment = Statistics.newInstance()
+            1 -> fragment = Tags.newInstance()
+            2 -> fragment = Statistics.newInstance()
         }
         return fragment!!
     }
@@ -32,7 +34,7 @@ class SectionsPagerAdapter(private val context: Context, fm: FragmentManager)
     }
 
     override fun getCount(): Int {
-        // Show 2 total pages.
-        return 2
+        // Show 3 total pages.
+        return 3
     }
 }
