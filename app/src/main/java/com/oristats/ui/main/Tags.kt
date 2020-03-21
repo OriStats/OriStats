@@ -10,6 +10,8 @@ import com.oristats.R
 
 
 class Tags : Fragment() {
+//the xml is started to host a RecyclerView
+//only need to program the kotlin file and the page adapter
 
     companion object {
         fun newInstance() = Tags()
@@ -19,4 +21,10 @@ class Tags : Fragment() {
     ): View? {
         return inflater.inflate(R.layout.tags_fragment, container, false)
     }
+
+
+
+
+
+
 }

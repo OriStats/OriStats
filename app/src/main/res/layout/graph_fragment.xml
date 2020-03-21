@@ -1,29 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/constraintLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.main.Graph1">
+    android:orientation="vertical"
+    android:padding="20dp"
+    tools:context=".MainActivity$PlaceholderFragment">
 
-    <LinearLayout
+    <!-- title will set to this TextView, and change on
+         slide right/left-->
+    <TextView
+        android:id="@+id/title_tv"
+        android:text="Title"
+        android:textAlignment="center"
+        android:textSize="25sp"
+        android:textColor="#000"
+        android:textStyle="bold"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:fitsSystemWindows="true"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintLeft_toRightOf="parent"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"/>
 
-        <com.github.mikephil.charting.charts.LineChart
-            android:id="@+id/lineChart"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:layout_marginStart="5dp"
-            android:layout_marginEnd="5dp"
-            android:padding="9dp"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </LinearLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <!-- image will set to this ImageView, and change on
+         slide right/left-->
+    <ImageView
+        android:id="@+id/image_iv"
+        android:background="@color/colorPrimary"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"/>
+
+    <!-- description will set to this TextView, and change on
+         slide right/left-->
+    <TextView
+        android:id="@+id/description_tv"
+        android:text="Here can be long and multiple lined description of the title..."
+        android:textSize="20sp"
+        android:textColor="#000"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+</LinearLayout>

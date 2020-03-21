@@ -20,21 +20,21 @@ class SectionsPagerAdapter(private val context: Context, fm: FragmentManager)
     : FragmentPagerAdapter(fm) {
 
     override fun getItem(position: Int): Fragment {
-        var fragment : Fragment? = null
-        when(position){
-            0 -> fragment = Stopwatch.newInstance()
-            1 -> fragment = Tags.newInstance()
-            2 -> fragment = Statistics.newInstance()
+            var fragment : Fragment? = null
+            when(position){
+                0 -> fragment = Stopwatch.newInstance()
+                1 -> fragment = Tags.newInstance()
+                2 -> fragment = Statistics.newInstance()
+            }
+            return fragment!!
         }
-        return fragment!!
-    }
 
-    override fun getPageTitle(position: Int): CharSequence? {
-        return context.resources.getString(TAB_TITLES[position])
-    }
+        override fun getPageTitle(position: Int): CharSequence? {
+            return context.resources.getString(TAB_TITLES[position])
+        }
 
-    override fun getCount(): Int {
-        // Show 3 total pages.
-        return 3
+        override fun getCount(): Int {
+            // Show 3 total pages.
+            return 3
     }
 }

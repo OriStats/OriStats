@@ -12,6 +12,11 @@
     <string name="working">Started</string>
     <string name="stopped">Stopped</string>
 
+    <string name="Graphic1">Graph1</string>
+    <string name="Graphic2">Graph2</string>
+    <string name="Graphic3">Graph3</string>
+
+
     <string name="three_dots_menu_Settings">Settings</string>
     <string name="three_dots_menu_Export">Export Data</string>
     <string name="three_dots_menu_Import">Import Data</string>
