@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
+import com.oristats.MainActivity
 import com.oristats.R
 import kotlinx.android.synthetic.main.statistics_fragment.*
 
@@ -34,6 +35,7 @@ class Statistics : Fragment() {
     //when more plots arrive have to link the fragments to this main with ViewPager
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        (activity as MainActivity).supportActionBar?.title = getString(R.string.app_name)
         //Part1
         val entries = ArrayList<Entry>()
 

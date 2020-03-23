@@ -4,7 +4,9 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
+import android.view.View
 import android.widget.Toast
+import android.widget.Toolbar
 import com.google.android.material.tabs.TabLayout
 import androidx.viewpager.widget.ViewPager
 import androidx.appcompat.app.AppCompatActivity
@@ -13,7 +15,10 @@ import com.oristats.ui.main.SectionsPagerAdapter
 //import com.oristats.ui.main.Linechart
 import androidx.navigation.Navigation
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
+import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_main.*
@@ -23,8 +28,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val sectionsPagerAdapter = SectionsPagerAdapter(this, supportFragmentManager)
         /* Old tablayout code (might be usefull as example)
+        val sectionsPagerAdapter = SectionsPagerAdapter(this, supportFragmentManager)
         val viewPager: ViewPager = findViewById(R.id.view_pager)
         viewPager.adapter = sectionsPagerAdapter
         val tabs: TabLayout = findViewById(R.id.tabs)
@@ -34,7 +39,19 @@ class MainActivity : AppCompatActivity() {
         findViewById<BottomNavigationView>(R.id.bottom_nav)
             .setupWithNavController(navController)
         setupBottomNavMenu(navController)
+//        setupActionBar(navController)
+        val toolbar: androidx.appcompat.widget.Toolbar = findViewById(R.id.toolbar)
+        setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowHomeEnabled(true)
     }
+
+    private fun setupActionBar(navController: NavController) {
+
+        NavigationUI.setupActionBarWithNavController(this, navController)
+
+    }
+
 
     private fun setupBottomNavMenu(navController: NavController) {
         bottom_nav?.let {
@@ -51,7 +68,8 @@ class MainActivity : AppCompatActivity() {
         // Handle item selection
         return when (item.itemId) {
             R.id.Settings -> {
-                Toast.makeText(this, "Settings Selected", Toast.LENGTH_SHORT).show()
+                val action = NavGraphDirections.actionGlobalSettings()
+                NavHostFragment.findNavController(nav_host_fragment).navigate(action)
                 true
             }
             R.id.Export -> {
@@ -63,15 +81,22 @@ class MainActivity : AppCompatActivity() {
                 true
             }
             R.id.Help -> {
-                Toast.makeText(this, "Help Selected", Toast.LENGTH_SHORT).show()
+                val action = NavGraphDirections.actionGlobalHelp()
+                NavHostFragment.findNavController(nav_host_fragment).navigate(action)
                 true
             }
             R.id.About -> {
-                Toast.makeText(this, "About Selected", Toast.LENGTH_LONG).show()
+                val action = NavGraphDirections.actionGlobalAbout()
+                NavHostFragment.findNavController(nav_host_fragment).navigate(action)
                 true
             }
             R.id.Donate -> {
-                Toast.makeText(this, "Donate Selected", Toast.LENGTH_LONG).show()
+                val action = NavGraphDirections.actionGlobalDonate()
+                NavHostFragment.findNavController(nav_host_fragment).navigate(action)
+                true
+            }
+            android.R.id.home -> {
+                onBackPressed()
                 true
             }
             else -> super.onOptionsItemSelected(item)

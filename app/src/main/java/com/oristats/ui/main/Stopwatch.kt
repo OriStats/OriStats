@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.oristats.MainActivity
 import com.oristats.R
 import kotlinx.android.synthetic.main.stopwatch_fragment.*
 
@@ -27,6 +28,7 @@ class Stopwatch : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        (activity as MainActivity).supportActionBar?.title = getString(R.string.app_name)
 
         //val meter =R.id.c_meter//gets chronometer from the XML using the proper id
         //val btn =R.id.btStart//gets the button from the XML
