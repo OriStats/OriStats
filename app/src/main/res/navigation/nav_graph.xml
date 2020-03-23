@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/stopwatch">
+
+    <fragment
+        android:id="@+id/stopwatch"
+        android:name="com.oristats.ui.main.Stopwatch"
+        android:label="stopwatch_fragment"
+        tools:layout="@layout/stopwatch_fragment" >
+        <action
+            android:id="@+id/action_stopwatch2_to_statistics2"
+            app:destination="@id/statistics" />
+        <action
+            android:id="@+id/action_stopwatch2_to_tags2"
+            app:destination="@id/tags" />
+    </fragment>
+    <fragment
+        android:id="@+id/statistics"
+        android:name="com.oristats.ui.main.Statistics"
+        android:label="statistics_fragment"
+        tools:layout="@layout/statistics_fragment" >
+        <action
+            android:id="@+id/action_statistics2_to_stopwatch2"
+            app:destination="@id/stopwatch" />
+        <action
+            android:id="@+id/action_statistics2_to_tags2"
+            app:destination="@id/tags" />
+    </fragment>
+    <fragment
+        android:id="@+id/tags"
+        android:name="com.oristats.ui.main.Tags"
+        android:label="tags_fragment"
+        tools:layout="@layout/tags_fragment" >
+        <action
+            android:id="@+id/action_tags2_to_statistics2"
+            app:destination="@id/statistics" />
+        <action
+            android:id="@+id/action_tags2_to_statistics22"
+            app:destination="@id/statistics" />
+        <action
+            android:id="@+id/action_tags2_to_stopwatch2"
+            app:destination="@id/stopwatch" />
+    </fragment>
+</navigation>

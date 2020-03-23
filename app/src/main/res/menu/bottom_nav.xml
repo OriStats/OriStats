@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/stopwatch"
+        android:icon="@drawable/ic_stopwatch"
+        android:title="@string/fragment_stopwatch" />
+    <item
+        android:id="@+id/tags"
+        android:icon="@drawable/ic_tags"
+        android:title="@string/fragment_tags" />
+    <item
+        android:id="@+id/statistics"
+        android:icon="@drawable/ic_statistics"
+        android:title="@string/fragment_statistics" />
+</menu>

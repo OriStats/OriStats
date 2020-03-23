@@ -16,6 +16,9 @@
     <string name="Graphic2">Graph2</string>
     <string name="Graphic3">Graph3</string>
 
+    <string name="fragment_stopwatch">Stopwatch</string>
+    <string name="fragment_tags">Tags</string>
+    <string name="fragment_statistics">Statistics</string>
 
     <string name="three_dots_menu_Settings">Settings</string>
     <string name="three_dots_menu_Export">Export Data</string>
