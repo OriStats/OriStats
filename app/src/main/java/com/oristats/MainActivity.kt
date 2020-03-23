@@ -11,7 +11,6 @@ import com.google.android.material.tabs.TabLayout
 import androidx.viewpager.widget.ViewPager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
-import com.oristats.ui.main.SectionsPagerAdapter
 //import com.oristats.ui.main.Linechart
 import androidx.navigation.Navigation
 import androidx.navigation.findNavController

@@ -1,46 +1,37 @@
 package com.oristats.ui.main
 
 import android.os.Bundle
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
-import androidx.viewpager2.widget.ViewPager2
+import com.oristats.MainActivity
+import com.oristats.R
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
-import com.oristats.MainActivity
-import com.oristats.R
-import com.oristats.ui.main.StatisticsStateAdapter
-import kotlinx.android.synthetic.main.statistics_fragment.*
+import kotlinx.android.synthetic.main.time_chart_fragment.*
 
-
-class Statistics : Fragment() {
-
-    private lateinit var statisticsStateAdapter: StatisticsStateAdapter
-    private lateinit var viewPager: ViewPager2
+class Time_Chart : Fragment() {
 
     companion object {
-        fun newInstance() = Statistics()
+        fun newInstance() = Time_Chart()
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
-        return inflater.inflate(R.layout.statistics_fragment, container, false)
+        return inflater.inflate(R.layout.time_chart_fragment, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        (activity as MainActivity).supportActionBar?.title = getString(R.string.app_name)
+        (activity as MainActivity).supportActionBar?.title = getString(
+            R.string.fragment_time_chart
+        )
 
-        statisticsStateAdapter = StatisticsStateAdapter(this)
-        viewPager = view.findViewById(R.id.statistics_viewpager)
-        viewPager.adapter = statisticsStateAdapter
-
-        /* Example plot
+        //Example plot
         //Part1
         val entries = ArrayList<Entry>()
 
@@ -78,11 +69,13 @@ class Statistics : Fragment() {
 //Part9
         lineChart.description.text = "Days"
         lineChart.setNoDataText("No forex yet!")
-
-         */
-
-
     }
 
+    //Update action bar title when viewpager focuses this fragment
+    override fun onResume() {
+        super.onResume()
+        (activity as MainActivity).supportActionBar?.title = getString(
+            R.string.fragment_time_chart
+        )
+    }
 }
-
