@@ -16,8 +16,8 @@ class StatisticsStateAdapter(fragment: Fragment) : FragmentStateAdapter(fragment
     override fun createFragment(position: Int): Fragment {
         var fragment : Fragment? = null
         when(position){
-            0 -> fragment = Pie_chart.newInstance()
-            1 -> fragment = Time_Chart.newInstance()
+            1 -> fragment = Pie_chart.newInstance()
+            0 -> fragment = Time_Chart.newInstance()
         }
         return fragment!!
     }

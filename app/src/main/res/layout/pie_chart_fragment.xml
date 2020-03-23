@@ -4,10 +4,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.main.Settings">
-
+<!-- BEFORE PIE CHART XML
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/fragment_pie_chart" />
+        android:text="@string/fragment_pie_chart" />  -->
 
-</FrameLayout>
+      <com.github.mikephil.charting.charts.PieChart
+           android:id="@+id/piechart"
+           android:layout_width="match_parent"
+           android:layout_height="match_parent" />
+   </FrameLayout>
