@@ -10,14 +10,15 @@ import com.oristats.R
 
 class StatisticsStateAdapter(fragment: Fragment) : FragmentStateAdapter(fragment){
     override fun getItemCount(): Int {
-        return 2
+        return 3
     }
 
     override fun createFragment(position: Int): Fragment {
         var fragment : Fragment? = null
         when(position){
-            1 -> fragment = Pie_chart.newInstance()
             0 -> fragment = Time_Chart.newInstance()
+            1 -> fragment = Pie_chart.newInstance()
+            2 -> fragment = DB_Test.newInstance()
         }
         return fragment!!
     }

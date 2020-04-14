@@ -25,6 +25,7 @@
     <string name="fragment_donate">Donate</string>
     <string name="fragment_pie_chart">Pie Chart</string>
     <string name="fragment_time_chart">Time Chart</string>
+    <string name="fragment_db_test">Data Base Test</string>
 
     <string name="three_dots_menu_Settings">Settings</string>
     <string name="three_dots_menu_Export">Export Data</string>
@@ -32,5 +33,10 @@
     <string name="three_dots_menu_Help">Help</string>
     <string name="three_dots_menu_About">About</string>
     <string name="three_dots_menu_Donate">Donate</string>
+
+    <string name="db_test_add">DBPlus</string>
+    <string name="hint_word">Word…</string>
+    <string name="button_save">Save</string>
+    <string name="empty_not_saved">Word not saved because it is empty.</string>
 
 </resources>
