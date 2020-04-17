@@ -3,14 +3,15 @@
     <string name="tab_text_1">Stopwatch</string>
     <string name="tab_text_2">Tags</string>
     <string name="tab_text_3">Statistics</string>
-    <string name="start">Start session</string>
-    <string name="stop">End session</string>
-    <string name="pause">Take a break</string>
-    <string name="resume">Resume work</string>
+    <string name="start">Start Session</string>
+    <string name="stop">End Session</string>
+    <string name="pause">Take a Break</string>
+    <string name="resume">Resume Work</string>
     <string name="work_time">Work Time</string>
     <string name="break_time">Break Time</string>
     <string name="working">Started</string>
     <string name="stopped">Stopped</string>
+    <string name="playpause">Start/Pause/Resume Session</string>
 
     <string name="Graphic1">Graph1</string>
     <string name="Graphic2">Graph2</string>

@@ -46,53 +46,53 @@ class Statistics : Fragment() {
         //Things added to put the dots
         //the dots aren't displayed
         //because of tablayoutmediator
-        tabLayout = view.findViewById(R.id.tab_layout)
+        tabLayout = view.findViewById(R.id.statistics_tab_layout)
         TabLayoutMediator(tabLayout, viewPager,
             TabLayoutMediator.TabConfigurationStrategy {tab, position ->position+1
             }).attach()
-        /* Example plot
-        //Part1
-        val entries = ArrayList<Entry>()
-
-//Part2
-        entries.add(Entry(1f, 10f))
-        entries.add(Entry(2f, 2f))
-        entries.add(Entry(3f, 7f))
-        entries.add(Entry(4f, 20f))
-        entries.add(Entry(5f, 16f))
-
-//Part3
-        val vl = LineDataSet(entries, "My Type")
-
-//Part4
-        vl.setDrawValues(false)
-        vl.setDrawFilled(true)
-        vl.lineWidth = 3f
-        vl.fillColor = R.color.Blue
-        vl.fillAlpha = R.color.Red
-
-//Part5
-        lineChart.xAxis.labelRotationAngle = 0f
-
-//Part6
-        lineChart.data = LineData(vl)
-
-//Part7
-        lineChart.axisRight.isEnabled = false
-
-
-//Part8
-        lineChart.setTouchEnabled(true)
-        lineChart.setPinchZoom(true)
-
-//Part9
-        lineChart.description.text = "Days"
-        lineChart.setNoDataText("No forex yet!")
-
-         */
-
 
     }
 
 }
 
+
+
+/* Example Plot [Final de onViewCreated().]
+//Part1
+val entries = ArrayList<Entry>()
+
+//Part2
+entries.add(Entry(1f, 10f))
+entries.add(Entry(2f, 2f))
+entries.add(Entry(3f, 7f))
+entries.add(Entry(4f, 20f))
+entries.add(Entry(5f, 16f))
+
+//Part3
+val vl = LineDataSet(entries, "My Type")
+
+//Part4
+vl.setDrawValues(false)
+vl.setDrawFilled(true)
+vl.lineWidth = 3f
+vl.fillColor = R.color.Blue
+vl.fillAlpha = R.color.Red
+
+//Part5
+lineChart.xAxis.labelRotationAngle = 0f
+
+//Part6
+lineChart.data = LineData(vl)
+
+//Part7
+lineChart.axisRight.isEnabled = false
+
+
+//Part8
+lineChart.setTouchEnabled(true)
+lineChart.setPinchZoom(true)
+
+//Part9
+lineChart.description.text = "Days"
+lineChart.setNoDataText("No forex yet!")
+*/

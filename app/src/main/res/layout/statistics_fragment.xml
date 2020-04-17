@@ -10,8 +10,8 @@
     Before these chages, only viewpager2 was on this xml file-->
     <com.google.android.material.tabs.TabLayout
         android:layout_width="match_parent"
-        android:id="@+id/tab_layout"
-        android:layout_height="20dp"
+        android:id="@+id/statistics_tab_layout"
+        android:layout_height="0dp"
         android:layout_weight="1"
         android:layout_gravity="bottom"
         app:tabBackground="@drawable/tab_selector"

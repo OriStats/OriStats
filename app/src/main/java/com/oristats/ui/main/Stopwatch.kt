@@ -5,6 +5,10 @@ import android.os.SystemClock
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.constraintlayout.widget.ConstraintLayout.LayoutParams.PARENT_ID
+import androidx.constraintlayout.widget.ConstraintSet
 import androidx.fragment.app.Fragment
 import com.oristats.MainActivity
 import com.oristats.R
@@ -30,12 +34,12 @@ class Stopwatch : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         (activity as MainActivity).supportActionBar?.title = getString(R.string.app_name)
 
-        //val meter =R.id.c_meter//gets chronometer from the XML using the proper id
-        //val btn =R.id.btStart//gets the button from the XML
+        // start: Is it starting over (0:00)?
         var start = true
+        // isWorking: Is the client working/studying/etc?
         var isWorking = false
 
-        btStart?.setOnClickListener(
+        fabPlayPause?.setOnClickListener(
             object : View.OnClickListener {
 
                 var lastPause: Long = 0
@@ -50,6 +54,13 @@ class Stopwatch : Fragment() {
                         start = false
                         isWorking = true
                         crono_work.start()
+
+                        // fabStop now visible; fabPlayPause to the left
+                        fabStop.setVisibility(View.VISIBLE)
+                        val mConstraintSet = ConstraintSet()
+                        mConstraintSet.clone(stopwatch_constraintLayout)
+                        mConstraintSet.connect(R.id.fabPlayPause, ConstraintSet.END, R.id.guideline, ConstraintSet.START)
+                        mConstraintSet.applyTo(stopwatch_constraintLayout)
                     } else {
                         if (!isWorking) {
                             lastWork = SystemClock.elapsedRealtime()
@@ -66,12 +77,12 @@ class Stopwatch : Fragment() {
                         }
                     }
 
-                    btStart.setText(if (isWorking) R.string.pause else R.string.resume)
-                    //Toast.makeText(this@Stopwatch, getString(if (isWorking) R.string.working else R.string.stopped), Toast.LENGTH_SHORT).show()
+                    // Swap fabPlayPause Play<->Pause
+                    fabPlayPause.setImageDrawable(if (isWorking) getResources().getDrawable(R.drawable.ic_pause_black_24dp, context?.getTheme()) else getResources().getDrawable(R.drawable.ic_play_arrow_black_24dp, context?.getTheme()))
                 }
             })
 
-        btStop?.setOnClickListener(
+        fabStop?.setOnClickListener(
             object : View.OnClickListener {
                 override fun onClick(v: View) {
                     if(!start) {
@@ -79,7 +90,15 @@ class Stopwatch : Fragment() {
                         isWorking = false
                         crono_work.stop()
                         crono_break.stop()
-                        btStart.setText(R.string.start)
+
+                        // guarantee fabPlayPause now is Play
+                        fabPlayPause.setImageDrawable(getResources().getDrawable(R.drawable.ic_play_arrow_black_24dp, context?.getTheme()))
+                        // fabStop now invisible; fabPlayPause to center
+                        fabStop.setVisibility(View.INVISIBLE)
+                        val mConstraintSet = ConstraintSet()
+                        mConstraintSet.clone(stopwatch_constraintLayout)
+                        mConstraintSet.connect(R.id.fabPlayPause, ConstraintSet.END, PARENT_ID, ConstraintSet.END)
+                        mConstraintSet.applyTo(stopwatch_constraintLayout)
                     }
                 }
             })
