@@ -5,8 +5,6 @@ import android.os.SystemClock
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintLayout.LayoutParams.PARENT_ID
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.fragment.app.Fragment
@@ -78,7 +76,7 @@ class Stopwatch : Fragment() {
                     }
 
                     // Swap fabPlayPause Play<->Pause
-                    fabPlayPause.setImageDrawable(if (isWorking) getResources().getDrawable(R.drawable.ic_pause_black_24dp, context?.getTheme()) else getResources().getDrawable(R.drawable.ic_play_arrow_black_24dp, context?.getTheme()))
+                    fabPlayPause.setImageDrawable(if (isWorking) getResources().getDrawable(R.drawable.ic_pause_colorsecondary_24dp, context?.getTheme()) else getResources().getDrawable(R.drawable.ic_play_arrow_colorsecondary_24dp, context?.getTheme()))
                 }
             })
 
@@ -91,8 +89,8 @@ class Stopwatch : Fragment() {
                         crono_work.stop()
                         crono_break.stop()
 
-                        // guarantee fabPlayPause now is Play
-                        fabPlayPause.setImageDrawable(getResources().getDrawable(R.drawable.ic_play_arrow_black_24dp, context?.getTheme()))
+                        // fabPlayPause now is Play w/ Circle Outline: meaning it will start a new session.
+                        fabPlayPause.setImageDrawable(getResources().getDrawable(R.drawable.ic_play_circle_outline_colorsecondary_24dp, context?.getTheme()))
                         // fabStop now invisible; fabPlayPause to center
                         fabStop.setVisibility(View.INVISIBLE)
                         val mConstraintSet = ConstraintSet()

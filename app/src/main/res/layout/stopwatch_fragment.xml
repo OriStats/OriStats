@@ -83,6 +83,7 @@
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabPlayPause"
+        app:backgroundTint="@color/colorPrimary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline2"
         app:layout_constraintVertical_bias="0.40"
@@ -92,10 +93,11 @@
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         android:contentDescription="@string/playpause"
-        android:src="@drawable/ic_play_arrow_black_24dp"/>
+        android:src="@drawable/ic_play_arrow_colorsecondary_24dp"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabStop"
+        app:backgroundTint="@color/colorPrimary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline2"
         app:layout_constraintVertical_bias="0.40"
@@ -105,7 +107,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         android:contentDescription="@string/stop"
-        android:src="@drawable/ic_stop_black_24dp"
+        android:src="@drawable/ic_stop_colorsecondary_24dp"
         android:visibility="invisible"
         tools:visibility="visible"/>
 

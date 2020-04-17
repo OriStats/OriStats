@@ -48,7 +48,8 @@ class Statistics : Fragment() {
         //because of tablayoutmediator
         tabLayout = view.findViewById(R.id.statistics_tab_layout)
         TabLayoutMediator(tabLayout, viewPager,
-            TabLayoutMediator.TabConfigurationStrategy {tab, position ->position+1
+            TabLayoutMediator.TabConfigurationStrategy {_, position ->position+1
+                //Why '_'? Because warning: "Parameter 'tab' is never used, could be renamed to _"
             }).attach()
 
     }
