@@ -9,6 +9,10 @@
     <string name="resume">Resume Work</string>
     <string name="work_time">Work Time</string>
     <string name="break_time">Break Time</string>
+    <plurals name="break_time_w_counter">
+        <item quantity="one">Break Time [%d break]</item>
+        <item quantity="other">Break Time [%d breaks]</item>
+    </plurals>
     <string name="working">Started</string>
     <string name="stopped">Stopped</string>
     <string name="playpause">Start/Pause/Resume Session</string>

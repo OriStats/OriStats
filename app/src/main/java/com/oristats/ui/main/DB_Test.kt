@@ -37,7 +37,9 @@ class DB_Test : Fragment() {
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(context)
 
-        db_ViewModel = ViewModelProvider(this).get(DB_ViewModel::class.java)
+        // db_ViewModel = ViewModelProvider(this).get(DB_ViewModel::class.java) // Created in MainActivity.kt instead to last longer.
+        db_ViewModel = (getActivity() as MainActivity).db_ViewModel
+
         db_ViewModel.allWords.observe(viewLifecycleOwner, Observer { db_entities ->
             // Update the cached copy of entities in the adapter.
             db_entities?.let {
