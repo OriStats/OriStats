@@ -1,4 +1,4 @@
-package com.oristats.ui.main
+package com.oristats.db
 
 import androidx.lifecycle.LiveData
 import androidx.room.Dao

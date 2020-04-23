@@ -1,4 +1,4 @@
-package com.oristats.ui.main
+package com.oristats.db
 
 import android.app.Activity
 import android.content.Intent
@@ -9,11 +9,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.oristats.DB_New_Entry_Activity
 import com.oristats.MainActivity
 import com.oristats.R
 

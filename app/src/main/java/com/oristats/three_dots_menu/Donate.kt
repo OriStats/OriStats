@@ -1,4 +1,4 @@
-package com.oristats.ui.main
+package com.oristats.three_dots_menu
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

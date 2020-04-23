@@ -1,6 +1,8 @@
-package com.oristats.ui.main
+package com.oristats.db
 
 import androidx.lifecycle.LiveData
+import com.oristats.db.DB_Dao
+import com.oristats.db.DB_Entity
 
 // Declares the DAO as a private property in the constructor. Pass in the DAO
 // instead of the whole database, because you only need access to the DAO

@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/statistics"
-        android:name="com.oristats.ui.main.Statistics"
+        android:name="com.oristats.statistics.Statistics"
         android:label="@string/fragment_statistics"
         tools:layout="@layout/statistics_fragment"/>
     <fragment
@@ -26,7 +26,7 @@
         tools:layout="@layout/tags_fragment"/>
     <fragment
         android:id="@+id/settings"
-        android:name="com.oristats.ui.main.Settings"
+        android:name="com.oristats.three_dots_menu.Settings"
         android:label="settings_fragment"
         tools:layout="@layout/settings_fragment" />
     <action
@@ -34,15 +34,15 @@
         app:destination="@id/settings" />
     <fragment
         android:id="@+id/about"
-        android:name="com.oristats.ui.main.About"
+        android:name="com.oristats.three_dots_menu.About"
         android:label="About" />
     <fragment
         android:id="@+id/donate"
-        android:name="com.oristats.ui.main.Donate"
+        android:name="com.oristats.three_dots_menu.Donate"
         android:label="Donate" />
     <fragment
         android:id="@+id/help"
-        android:name="com.oristats.ui.main.Help"
+        android:name="com.oristats.three_dots_menu.Help"
         android:label="Help" />
     <action
         android:id="@+id/action_global_help"

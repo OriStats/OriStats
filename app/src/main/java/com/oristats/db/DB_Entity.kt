@@ -1,4 +1,4 @@
-package com.oristats.ui.main
+package com.oristats.db
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

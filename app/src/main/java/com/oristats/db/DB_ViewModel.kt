@@ -1,9 +1,12 @@
-package com.oristats.ui.main
+package com.oristats.db
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
+import com.oristats.db.DB_Entity
+import com.oristats.db.DB_Repository
+import com.oristats.db.DB_Room
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 

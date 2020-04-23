@@ -1,4 +1,4 @@
-package com.oristats.ui.main
+package com.oristats.db
 
 import android.content.Context
 import androidx.room.Database

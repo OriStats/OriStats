@@ -1,4 +1,4 @@
-package com.oristats.ui.main
+package com.oristats.statistics
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,15 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
-import com.github.mikephil.charting.data.Entry
-import com.github.mikephil.charting.data.LineData
-import com.github.mikephil.charting.data.LineDataSet
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.oristats.MainActivity
 import com.oristats.R
-import com.oristats.ui.main.StatisticsStateAdapter
-import kotlinx.android.synthetic.main.statistics_fragment.*
 
 
 class Statistics : Fragment() {
@@ -39,7 +34,8 @@ class Statistics : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         (activity as MainActivity).supportActionBar?.title = getString(R.string.app_name)
 
-        statisticsStateAdapter = StatisticsStateAdapter(this)
+        statisticsStateAdapter =
+            StatisticsStateAdapter(this)
         viewPager = view.findViewById(R.id.statistics_viewpager)
         viewPager.adapter = statisticsStateAdapter
 

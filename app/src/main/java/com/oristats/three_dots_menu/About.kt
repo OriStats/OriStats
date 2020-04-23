@@ -1,4 +1,4 @@
-package com.oristats.ui.main
+package com.oristats.three_dots_menu
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -9,23 +9,23 @@ import com.oristats.MainActivity
 import com.oristats.R
 
 
-class Help : Fragment() {
+class About : Fragment() {
 
     companion object {
-        fun newInstance() = Help()
+        fun newInstance() = About()
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.help_fragment, container, false)
+        return inflater.inflate(R.layout.about_fragment, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         (activity as MainActivity).supportActionBar?.title = getString(
-            R.string.fragment_help
+            R.string.fragment_about
         )
     }
 
