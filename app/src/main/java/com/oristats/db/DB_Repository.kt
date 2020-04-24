@@ -1,18 +1,20 @@
 package com.oristats.db
 
 import androidx.lifecycle.LiveData
-import com.oristats.db.DB_Dao
-import com.oristats.db.DB_Entity
 
 // Declares the DAO as a private property in the constructor. Pass in the DAO
 // instead of the whole database, because you only need access to the DAO
-class DB_Repository(private val db_Dao: DB_Dao) {
+class DB_Repository(private val db_Raw_Dao: DB_Raw_Dao) {
 
     // Room executes all queries on a separate thread.
     // Observed LiveData will notify the observer when the data has changed.
-    val allWords: LiveData<List<DB_Entity>> = db_Dao.getAlphabetizedWords()
+    val allRaws: LiveData<List<DB_Raw_Entity>> = db_Raw_Dao.getAll()
 
-    suspend fun insert(db_Entity: DB_Entity){
-        db_Dao.insert(db_Entity)
+    suspend fun raw_insert(db_Raw_Entity: DB_Raw_Entity){
+        db_Raw_Dao.insert(db_Raw_Entity)
+    }
+
+    suspend fun raw_delete_all(){
+        db_Raw_Dao.deleteAll()
     }
 }

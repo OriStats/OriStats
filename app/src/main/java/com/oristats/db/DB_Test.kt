@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.oristats.MainActivity
 import com.oristats.R
+import kotlinx.coroutines.launch
 
 class DB_Test : Fragment() {
 
@@ -35,22 +36,32 @@ class DB_Test : Fragment() {
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(context)
 
-        // db_ViewModel = ViewModelProvider(this).get(DB_ViewModel::class.java) // Created in MainActivity.kt instead to last longer.
         db_ViewModel = (getActivity() as MainActivity).db_ViewModel
 
-        db_ViewModel.allWords.observe(viewLifecycleOwner, Observer { db_entities ->
+        db_ViewModel.allRaws.observe(viewLifecycleOwner, Observer { db_raw_entities ->
             // Update the cached copy of entities in the adapter.
-            db_entities?.let {
+            db_raw_entities?.let {
                 if (adapter != null) {
-                    adapter.setDB_Entities(it)
+                    adapter.setDB_Raw_Entities(it)
                 }
             }
         })
 
-        val fab = view.findViewById<FloatingActionButton>(R.id.db_test_fab)
-        fab.setOnClickListener {
+        val fab_add = view.findViewById<FloatingActionButton>(R.id.db_test_fab_add)
+        fab_add.setOnClickListener {
             val intent = Intent(context, DB_New_Entry_Activity::class.java)
             startActivityForResult(intent, DB_New_Entry_ActivityRequestCode)
+        }
+
+        val fab_reset = view.findViewById<FloatingActionButton>(R.id.db_test_fab_reset)
+        fab_reset.setOnClickListener {
+            // Delete all content here.
+            db_ViewModel.raw_delete_all()
+            // Add sample numbers here.
+            var db_Raw_Entity = DB_Raw_Entity(123)
+            db_ViewModel.raw_insert(db_Raw_Entity)
+            db_Raw_Entity = DB_Raw_Entity(136)
+            db_ViewModel.raw_insert(db_Raw_Entity)
         }
 
         return view
@@ -61,13 +72,13 @@ class DB_Test : Fragment() {
 
         if (requestCode == DB_New_Entry_ActivityRequestCode && resultCode == Activity.RESULT_OK) {
             data?.getStringExtra(DB_New_Entry_Activity.EXTRA_REPLY)?.let {
-                val db_entity = DB_Entity(it)
-                db_ViewModel.insert(db_entity)
+                val db_raw_entity = DB_Raw_Entity(it.toLong())
+                db_ViewModel.raw_insert(db_raw_entity)
             }
         } else {
             Toast.makeText(
                 context,
-                R.string.empty_not_saved,
+                R.string.raw_not_saved,
                 Toast.LENGTH_LONG).show()
         }
     }

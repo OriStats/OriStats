@@ -13,7 +13,7 @@ class DB_Test_ListAdapter internal constructor(
 ) : RecyclerView.Adapter<DB_Test_ListAdapter.DB_Test_ViewHolder>() {
 
     private val inflater: LayoutInflater = LayoutInflater.from(context)
-    private var db_entities = emptyList<DB_Entity>() // Cached copy of DB's entries
+    private var db_raw_entities = emptyList<DB_Raw_Entity>() // Cached copy of DB Raw's entries
 
     inner class DB_Test_ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val db_ItemView: TextView = itemView.findViewById(R.id.db_test_recyclerview_textView)
@@ -25,14 +25,14 @@ class DB_Test_ListAdapter internal constructor(
     }
 
     override fun onBindViewHolder(holder: DB_Test_ViewHolder, position: Int) {
-        val current = db_entities[position]
-        holder.db_ItemView.text = current.word
+        val current = db_raw_entities[position]
+        holder.db_ItemView.text = current.millis.toString()
     }
 
-    internal fun setDB_Entities(db_entities: List<DB_Entity>) {
-        this.db_entities = db_entities
+    internal fun setDB_Raw_Entities(db_Raw_entities: List<DB_Raw_Entity>) {
+        this.db_raw_entities = db_Raw_entities
         notifyDataSetChanged()
     }
 
-    override fun getItemCount() = db_entities.size
+    override fun getItemCount() = db_raw_entities.size
 }

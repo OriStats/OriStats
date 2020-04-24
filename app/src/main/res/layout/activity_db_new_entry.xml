@@ -12,7 +12,7 @@
         android:layout_height="match_parent">
 
         <EditText
-            android:id="@+id/edit_db_entry_word"
+            android:id="@+id/edit_db_entry"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:minHeight="@dimen/min_height"
@@ -26,10 +26,9 @@
             android:id="@+id/button_db_entry_save"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorPrimary"
+            style="@style/button_with_text"
             android:text="@string/button_save"
-            android:layout_margin="@dimen/big_padding"
-            android:textColor="@color/buttonLabel" />
+            android:layout_margin="@dimen/big_padding"/>
 
     </LinearLayout>
 

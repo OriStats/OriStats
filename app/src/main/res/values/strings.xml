@@ -40,8 +40,9 @@
     <string name="three_dots_menu_Donate">Donate</string>
 
     <string name="db_test_add">DBPlus</string>
-    <string name="hint_word">Word…</string>
+    <string name="db_test_reset">DBReset</string>
+    <string name="hint_word">MillisForDB()…</string>
     <string name="button_save">Save</string>
-    <string name="empty_not_saved">Word not saved because it is empty.</string>
+    <string name="raw_not_saved">Millis Not Saved: Digits Only</string>
 
 </resources>

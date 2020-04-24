@@ -11,12 +11,15 @@ import androidx.constraintlayout.widget.ConstraintSet
 import androidx.fragment.app.Fragment
 import com.oristats.MainActivity
 import com.oristats.R
+import com.oristats.db.DB_Raw_Entity
+import com.oristats.db.DB_ViewModel
 import kotlinx.android.synthetic.main.stopwatch_fragment.*
 
 
 class Stopwatch : Fragment() {
 
     private lateinit var stopwatch_ViewModel: Stopwatch_ViewModel
+    private lateinit var db_ViewModel: DB_ViewModel
 
     companion object {
         fun newInstance() = Stopwatch()
@@ -35,6 +38,7 @@ class Stopwatch : Fragment() {
         (activity as MainActivity).supportActionBar?.title = getString(R.string.app_name)
 
         stopwatch_ViewModel = (getActivity() as MainActivity).stopwatch_ViewModel
+        db_ViewModel = (getActivity() as MainActivity).db_ViewModel
 
         if (!stopwatch_ViewModel.getStart()){
             RestoreChrono()
@@ -122,6 +126,9 @@ class Stopwatch : Fragment() {
         stopwatch_ViewModel.setStart(false)
         stopwatch_ViewModel.setIsWorking(true)
         updateButtons("start")
+
+        // Store to DB
+        db_ViewModel.raw_insert(DB_Raw_Entity(MillisForDB()))
     }
 
     private fun PauseChrono() {
@@ -134,6 +141,9 @@ class Stopwatch : Fragment() {
         // Update State Vars & Buttons
         stopwatch_ViewModel.setIsWorking(false)
         updateButtons("pause")
+
+        // Store to DB
+        db_ViewModel.raw_insert(DB_Raw_Entity(MillisForDB()))
     }
 
     private fun ResumeChrono() {
@@ -144,6 +154,9 @@ class Stopwatch : Fragment() {
         // Update State Vars & Buttons
         stopwatch_ViewModel.setIsWorking(true)
         updateButtons("resume")
+
+        // Store to DB
+        db_ViewModel.raw_insert(DB_Raw_Entity(MillisForDB()))
     }
 
     private fun StopChrono() {
@@ -152,6 +165,9 @@ class Stopwatch : Fragment() {
         stopwatch_ViewModel.setStart(true)
         stopwatch_ViewModel.setIsWorking(false)
         updateButtons("stop")
+
+        // Store to DB
+        db_ViewModel.raw_insert(DB_Raw_Entity(MillisForDB()))
     }
 
     // Visual Functions

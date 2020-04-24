@@ -17,13 +17,25 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/db_test_fab"
+        android:id="@+id/db_test_fab_add"
+        app:backgroundTint="@color/colorPrimary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         android:contentDescription="@string/db_test_add"
-        android:src="@drawable/ic_add_black_24dp"/>
+        android:src="@drawable/ic_add_colorsecondary_24dp"/>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/db_test_fab_reset"
+        app:backgroundTint="@color/colorPrimary"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:contentDescription="@string/db_test_reset"
+        android:src="@drawable/ic_replay_colorsecondary_24dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
