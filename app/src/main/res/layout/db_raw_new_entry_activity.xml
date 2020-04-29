@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".db.DB_New_Entry_Activity">
+    tools:context=".db.Raw_New_Entry_Activity">
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:orientation="vertical"
@@ -12,22 +11,22 @@
         android:layout_height="match_parent">
 
         <EditText
-            android:id="@+id/edit_db_entry"
+            android:id="@+id/edit_raw_millis"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:minHeight="@dimen/min_height"
             android:fontFamily="sans-serif-light"
-            android:hint="@string/hint_word"
-            android:inputType="textAutoComplete"
+            android:hint="@string/hint_raw_millis"
+            android:inputType="number"
             android:layout_margin="@dimen/big_padding"
-            android:textSize="18sp" />
+            android:textSize="18sp"/>
 
         <Button
-            android:id="@+id/button_db_entry_save"
+            android:id="@+id/button_raw_entry_save"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             style="@style/button_with_text"
-            android:text="@string/button_save"
+            android:text="@string/button_raw_save"
             android:layout_margin="@dimen/big_padding"/>
 
     </LinearLayout>

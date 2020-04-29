@@ -21,9 +21,9 @@
         tools:layout="@layout/statistics_fragment"/>
     <fragment
         android:id="@+id/tags"
-        android:name="com.oristats.ui.main.Tags"
+        android:name="com.oristats.db.Tag_Fragment"
         android:label="@string/fragment_tags"
-        tools:layout="@layout/tags_fragment"/>
+        tools:layout="@layout/db_tag_fragment"/>
     <fragment
         android:id="@+id/settings"
         android:name="com.oristats.three_dots_menu.Settings"

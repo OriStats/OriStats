@@ -8,28 +8,30 @@ import kotlinx.coroutines.CoroutineScope
 import androidx.sqlite.db.SupportSQLiteDatabase
 import kotlinx.coroutines.launch
 
-@Database(entities = arrayOf(DB_Raw_Entity::class), version = 1, exportSchema = false)
+@Database(entities = arrayOf(DB_Raw_Entity::class, DB_Main_Entity::class, DB_Tag_Entity::class), version = 1, exportSchema = false)
 public abstract class DB_Room : RoomDatabase() {
 
     abstract fun db_Raw_Dao(): DB_Raw_Dao
+    abstract fun db_Main_Dao(): DB_Main_Dao
+    abstract fun db_Tag_Dao(): DB_Tag_Dao
 
     private class DB_Callback(
         private val scope: CoroutineScope
     ) : RoomDatabase.Callback() {
 
         override fun onOpen(db: SupportSQLiteDatabase) {
-            super.onOpen(db)
+            super.onOpen(db)/*  // And the commented section said: "Let me be here. Please... I know I'm doing no more than wasting space, but I'm hurting no one and I can be necessary in the future."
+                                // Uncomment this section to set "on launch operations" everytime the DB is launched (basically everytime the app is opened).
             INSTANCE?.let { database ->
                 scope.launch {
-                    var db_Raw_Dao = database.db_Raw_Dao()  // Let me be here. I know I cause a warning, but I'm hurting no one and I can be necessary in the future.
-
                     // On Launch Operations here:
                     // E.g.:
-                    // db_Raw_Dao.deleteAll()
-                    // var db_Raw_Entity = DB_Raw_Entity(123)
-                    // db_Raw_Dao.insert(db_Raw_Entity)
+                    var db_Raw_Dao = database.db_Raw_Dao()
+                    db_Raw_Dao.deleteAll()
+                    var db_Raw_Entity = DB_Raw_Entity(123)
+                    db_Raw_Dao.insert(db_Raw_Entity)
                 }
-            }
+            }*/
         }
     }
 

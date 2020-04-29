@@ -30,7 +30,6 @@
     <string name="fragment_donate">Donate</string>
     <string name="fragment_pie_chart">Pie Chart</string>
     <string name="fragment_time_chart">Time Chart</string>
-    <string name="fragment_db_test">Data Base Test</string>
 
     <string name="three_dots_menu_Settings">Settings</string>
     <string name="three_dots_menu_Export">Export Data</string>
@@ -39,10 +38,35 @@
     <string name="three_dots_menu_About">About</string>
     <string name="three_dots_menu_Donate">Donate</string>
 
-    <string name="db_test_add">DBPlus</string>
-    <string name="db_test_reset">DBReset</string>
-    <string name="hint_word">MillisForDB()…</string>
-    <string name="button_save">Save</string>
-    <string name="raw_not_saved">Millis Not Saved: Digits Only</string>
+    <string name="fragment_db_raw">Data Base: raw_table</string>
+    <string name="db_raw_item_view_description">id (P.Key-Auto); millis</string>
+    <string name="db_raw_item_view">%d; %d</string>
+    <string name="db_raw_add">DB Raw Plus</string>
+    <string name="db_raw_reset">DB Raw Reset</string>
+    <string name="hint_raw_millis">MillisForDB()…</string>
+    <string name="button_raw_save">Save</string>
+    <string name="raw_not_saved">Millis Not Saved: Entry Not Valid</string>
+
+    <string name="fragment_db_main">Data Base: main_table</string>
+    <string name="db_main_item_view_description">start_time (P.Key); tag_id; start_raw_id; end_raw_id; minus_one_day</string>
+    <string name="db_main_item_view">%d; %d; %d; %d; %b</string>
+    <string name="db_main_add">DB Main Plus</string>
+    <string name="db_main_reset">DB Main Reset</string>
+    <string name="hint_main_start_time">System.currentTimeMillis()…</string>
+    <string name="hint_main_tag_id">tag_id</string>
+    <string name="hint_main_start_raw_id">start_raw_id</string>
+    <string name="hint_main_end_raw_id">end_raw_id</string>
+    <string name="hint_main_minus_one_day">minus_one_day (Boolean)</string>
+    <string name="button_main_save">Save</string>
+    <string name="main_not_saved">Session Not Saved: Entry Not Valid</string>
+
+    <string name="fragment_db_tag">Data Base: tag_table</string>
+    <string name="db_tag_item_view_description">id (P.Key-Auto); path_name</string>
+    <string name="db_tag_item_view">%d; \"%s\"</string>
+    <string name="db_tag_add">DB Tag Plus</string>
+    <string name="db_tag_reset">DB Tag Reset</string>
+    <string name="hint_tag_path_name">folder/subfolder/(…)/name</string>
+    <string name="button_tag_save">Save</string>
+    <string name="tag_not_saved">Path Not Saved: Entry Not Valid</string>
 
 </resources>

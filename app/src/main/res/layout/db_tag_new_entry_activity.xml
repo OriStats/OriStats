@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".db.Tag_New_Entry_Activity">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <EditText
+            android:id="@+id/edit_tag_path_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="@dimen/min_height"
+            android:fontFamily="sans-serif-light"
+            android:hint="@string/hint_tag_path_name"
+            android:inputType="text"
+            android:layout_margin="@dimen/big_padding"
+            android:textSize="18sp" />
+
+        <Button
+            android:id="@+id/button_tag_entry_save"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/button_with_text"
+            android:text="@string/button_tag_save"
+            android:layout_margin="@dimen/big_padding"/>
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

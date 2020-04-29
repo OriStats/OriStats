@@ -5,7 +5,6 @@ import android.os.SystemClock
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout.LayoutParams.PARENT_ID
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.fragment.app.Fragment
@@ -128,7 +127,9 @@ class Stopwatch : Fragment() {
         updateButtons("start")
 
         // Store to DB
-        db_ViewModel.raw_insert(DB_Raw_Entity(MillisForDB()))
+        stopwatch_ViewModel.setMainStartTime(System.currentTimeMillis())
+        db_ViewModel.raw_insert_and_main_insert(DB_Raw_Entity(MillisForDB()),stopwatch_ViewModel.getMainStartTime(),-1,false)
+        // Choose tag_id and minus_one_day UI not implemented yet. Using -1 and false for default. "-1" means tagless.
     }
 
     private fun PauseChrono() {
@@ -143,7 +144,7 @@ class Stopwatch : Fragment() {
         updateButtons("pause")
 
         // Store to DB
-        db_ViewModel.raw_insert(DB_Raw_Entity(MillisForDB()))
+        db_ViewModel.raw_insert_and_main_update_end_raw_id(DB_Raw_Entity(MillisForDB()), stopwatch_ViewModel.getMainStartTime())
     }
 
     private fun ResumeChrono() {
@@ -156,7 +157,7 @@ class Stopwatch : Fragment() {
         updateButtons("resume")
 
         // Store to DB
-        db_ViewModel.raw_insert(DB_Raw_Entity(MillisForDB()))
+        db_ViewModel.raw_insert_and_main_update_end_raw_id(DB_Raw_Entity(MillisForDB()), stopwatch_ViewModel.getMainStartTime())
     }
 
     private fun StopChrono() {
@@ -167,12 +168,12 @@ class Stopwatch : Fragment() {
         updateButtons("stop")
 
         // Store to DB
-        db_ViewModel.raw_insert(DB_Raw_Entity(MillisForDB()))
+        db_ViewModel.raw_insert_and_main_update_end_raw_id(DB_Raw_Entity(MillisForDB()), stopwatch_ViewModel.getMainStartTime())
     }
 
     // Visual Functions
 
-    private fun updateButtons(situation: String) { // Also updates break_textView.
+    private fun updateButtons(situation: String? = null) { // Also updates break_textView.
         if(situation=="start") {
             // fabStop now visible
             fabStop.setVisibility(View.VISIBLE)

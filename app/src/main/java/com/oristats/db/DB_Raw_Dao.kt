@@ -15,7 +15,7 @@ interface DB_Raw_Dao {
     fun loadAllByIds(raw_ids: IntArray): LiveData<List<DB_Raw_Entity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(db_Raw_entity: DB_Raw_Entity)
+    suspend fun insert(db_Raw_entity: DB_Raw_Entity) : Long
 
     @Query("DELETE FROM raw_table")
     suspend fun deleteAll()

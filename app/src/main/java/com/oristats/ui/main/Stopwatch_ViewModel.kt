@@ -7,7 +7,7 @@ import androidx.lifecycle.AndroidViewModel
 class Stopwatch_ViewModel(application: Application) : AndroidViewModel(application) {
 
     // Keep info/chrono even if app is closed.
-    val stopwatch_save = application.getSharedPreferences("com.oristates.STOPWATCH_SAVE", Context.MODE_PRIVATE)
+    val stopwatch_save = application.getSharedPreferences("com.oristats.STOPWATCH_SAVE", Context.MODE_PRIVATE)
 
     // Start: Is it starting over (0:00)?
     fun setStart(start : Boolean) {
@@ -40,6 +40,17 @@ class Stopwatch_ViewModel(application: Application) : AndroidViewModel(applicati
     }
     fun getBreaks(): Int {
         return stopwatch_save.getInt("Breaks", 0)
+    }
+
+    // Current Session main_table PrimaryKey: start_time
+    fun setMainStartTime(mainStartTime: Long) {
+        with (stopwatch_save.edit()) {
+            putLong("MainStartTime", mainStartTime)
+            apply()
+        }
+    }
+    fun getMainStartTime(): Long {
+        return stopwatch_save.getLong("MainStartTime", 0)
     }
 
     // store info between pause<->resume
@@ -83,11 +94,12 @@ class Stopwatch_ViewModel(application: Application) : AndroidViewModel(applicati
     }
 
     // KEEP COUNTING AFTER REBOOT:
-    // See MainActivity.kt : RebootDectector(). Stopwatch.kt : MillisForDB()
+    // See MainActivity.kt : RebootDetector(). Stopwatch.kt : MillisForDB()
 
     // LastBootCompare is the millisecond timestamp in a hour of last boot: (System.currentTimeMillis()-SystemClock.elapsedRealtime())%3600000
     // Why using %3600000? Because the hour can change because of Summer Time or Timezone...
     // There will be used a margin of +-5000 milliseconds for eventual clock updates based on internet.
+    // If right after you boot a phone you use OriStats and reboot the system and manage to do you it all within 5 seconds it won't detect it. But does it need to? A 5second error in a session is not important.
     fun setLastBootCompare(lastBootCompare : Long) {
         with (stopwatch_save.edit()) {
             putLong("LastBootCompare", lastBootCompare)

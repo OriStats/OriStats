@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity() {
         stopwatch_ViewModel = ViewModelProvider(this).get(Stopwatch_ViewModel::class.java)
         db_ViewModel = ViewModelProvider(this).get(DB_ViewModel::class.java)
 
-        RebootDectector() // If necessary, it calls automatically Correct_Stopwatch_ViewModel().
+        RebootDetector() // If necessary, it calls automatically Correct_Stopwatch_ViewModel().
 
         val navController = findNavController(R.id.nav_host_fragment)
         findViewById<BottomNavigationView>(R.id.bottom_nav)
@@ -96,7 +96,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun RebootDectector() { // Reacts if there was a reboot since last time the app was used. See Stopwatch_ViewModel.kt : LastBootCompare, etc. Stopwatch.kt : MillisForDB()
+    private fun RebootDetector() { // Reacts if there was a reboot since last time the app was used. See Stopwatch_ViewModel.kt : LastBootCompare, etc. Stopwatch.kt : MillisForDB()
         val RealLastBoot : Long = System.currentTimeMillis()-SystemClock.elapsedRealtime()
         val RealLastBootCompare : Long = RealLastBoot%3600000
 

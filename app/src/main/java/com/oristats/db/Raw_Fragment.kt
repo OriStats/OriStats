@@ -14,25 +14,24 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.oristats.MainActivity
 import com.oristats.R
-import kotlinx.coroutines.launch
 
-class DB_Test : Fragment() {
+class Raw_Fragment : Fragment() {
 
-    private val DB_New_Entry_ActivityRequestCode = 1
+    private val DB_Raw_New_Entry_ActivityRequestCode = 1
     private lateinit var db_ViewModel: DB_ViewModel
 
     companion object {
-        fun newInstance() = DB_Test()
+        fun newInstance() = Raw_Fragment()
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.db_test_fragment, container, false)
+        val view = inflater.inflate(R.layout.db_raw_fragment, container, false)
 
-        val recyclerView = view.findViewById<RecyclerView>(R.id.db_test_recyclerview)
-        val adapter = context?.let { DB_Test_ListAdapter(it) }
+        val recyclerView = view.findViewById<RecyclerView>(R.id.db_raw_recyclerview)
+        val adapter = context?.let { Raw_ListAdapter(it) }
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(context)
 
@@ -47,21 +46,21 @@ class DB_Test : Fragment() {
             }
         })
 
-        val fab_add = view.findViewById<FloatingActionButton>(R.id.db_test_fab_add)
-        fab_add.setOnClickListener {
-            val intent = Intent(context, DB_New_Entry_Activity::class.java)
-            startActivityForResult(intent, DB_New_Entry_ActivityRequestCode)
+        val raw_fab_add = view.findViewById<FloatingActionButton>(R.id.db_raw_fab_add)
+        raw_fab_add.setOnClickListener {
+            val intent = Intent(context, Raw_New_Entry_Activity::class.java)
+            startActivityForResult(intent, DB_Raw_New_Entry_ActivityRequestCode)
         }
 
-        val fab_reset = view.findViewById<FloatingActionButton>(R.id.db_test_fab_reset)
-        fab_reset.setOnClickListener {
+        val raw_fab_reset = view.findViewById<FloatingActionButton>(R.id.db_raw_fab_reset)
+        raw_fab_reset.setOnClickListener {
             // Delete all content here.
             db_ViewModel.raw_delete_all()
             // Add sample numbers here.
-            var db_Raw_Entity = DB_Raw_Entity(123)
-            db_ViewModel.raw_insert(db_Raw_Entity)
-            db_Raw_Entity = DB_Raw_Entity(136)
-            db_ViewModel.raw_insert(db_Raw_Entity)
+            // var db_Raw_Entity = DB_Raw_Entity(123)
+            // db_ViewModel.raw_insert(db_Raw_Entity)
+            // db_Raw_Entity = DB_Raw_Entity(136)
+            // db_ViewModel.raw_insert(db_Raw_Entity)
         }
 
         return view
@@ -70,8 +69,8 @@ class DB_Test : Fragment() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if (requestCode == DB_New_Entry_ActivityRequestCode && resultCode == Activity.RESULT_OK) {
-            data?.getStringExtra(DB_New_Entry_Activity.EXTRA_REPLY)?.let {
+        if (requestCode == DB_Raw_New_Entry_ActivityRequestCode && resultCode == Activity.RESULT_OK) {
+            data?.getStringExtra(Raw_New_Entry_Activity.EXTRA_REPLY_MILLIS)?.let {
                 val db_raw_entity = DB_Raw_Entity(it.toLong())
                 db_ViewModel.raw_insert(db_raw_entity)
             }
@@ -85,12 +84,12 @@ class DB_Test : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        (activity as MainActivity).supportActionBar?.title = getString(R.string.fragment_db_test)
+        (activity as MainActivity).supportActionBar?.title = getString(R.string.fragment_db_raw)
     }
 
     //Update action bar title when viewpager focuses this fragment
     override fun onResume() {
         super.onResume()
-        (activity as MainActivity).supportActionBar?.title = getString(R.string.fragment_db_test)
+        (activity as MainActivity).supportActionBar?.title = getString(R.string.fragment_db_raw)
     }
 }
