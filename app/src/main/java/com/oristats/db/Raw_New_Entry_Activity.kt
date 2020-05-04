@@ -8,6 +8,7 @@ import android.text.TextUtils
 import android.widget.Button
 import android.widget.EditText
 import com.oristats.R
+import com.oristats.R.id.edit_raw_millis
 
 class Raw_New_Entry_Activity : AppCompatActivity() {
 
@@ -16,7 +17,7 @@ class Raw_New_Entry_Activity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.db_raw_new_entry_activity)
-        edit_millis_view = findViewById(R.id.edit_raw_millis)
+        edit_millis_view = findViewById(edit_raw_millis)
 
         val button = findViewById<Button>(R.id.button_raw_entry_save)
         button.setOnClickListener {

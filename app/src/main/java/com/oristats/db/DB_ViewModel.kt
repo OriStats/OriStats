@@ -31,6 +31,12 @@ class DB_ViewModel(application: Application) : AndroidViewModel(application) {
         repository.raw_delete_all()
     }
 
+    //added lastly
+    fun raw_load_id(raw_ids: IntArray) = viewModelScope.launch(Dispatchers.IO) {
+        repository.raw_load_id(raw_ids)
+    }
+
+
     fun main_insert(db_Main_entity: DB_Main_Entity) = viewModelScope.launch(Dispatchers.IO) {
         repository.main_insert(db_Main_entity)
     }

@@ -27,6 +27,7 @@ class Raw_ListAdapter internal constructor(
     override fun onBindViewHolder(holder: DB_Raw_ViewHolder, position: Int) {
         val current = db_raw_entities[position]
         holder.db_Raw_ItemView.setText(holder.db_Raw_ItemView.getContext().getResources().getString(R.string.db_raw_item_view,current.id,current.millis))
+        
     }
 
     internal fun setDB_Raw_Entities(db_Raw_entities: List<DB_Raw_Entity>) {

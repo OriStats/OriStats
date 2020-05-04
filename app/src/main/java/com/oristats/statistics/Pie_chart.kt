@@ -51,6 +51,7 @@ class Pie_chart : Fragment() {
         piechart.data = data
         piechart.description.text = ""
         piechart.isDrawHoleEnabled = false
+        piechart.isRotationEnabled = false
         data.setValueTextSize(13f)
 
 
