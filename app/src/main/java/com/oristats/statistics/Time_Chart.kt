@@ -6,6 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.Observer
 import androidx.room.Room
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.Description
@@ -16,9 +18,11 @@ import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.oristats.MainActivity
 import com.oristats.R
+import com.oristats.db.DB_Raw_Entity
 import com.oristats.db.DB_Room
 import com.oristats.db.DB_ViewModel
 import kotlinx.android.synthetic.main.time_chart_fragment.*
+import kotlinx.coroutines.Job
 
 
 class Time_Chart : Fragment() {
@@ -40,7 +44,6 @@ class Time_Chart : Fragment() {
         val view: View = inflater.inflate(R.layout.time_chart_fragment, container, false)
 
         db_ViewModel = (getActivity() as MainActivity).db_ViewModel
-
         return view
 
 
@@ -92,47 +95,34 @@ return view*/
               yAxis.setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART)
               yAxis.setDrawGridLines(true)
 
-          SetData()
-          lineChart.notifyDataSetChanged()
-          lineChart.invalidate()
-
-       //Example plot
-        //Part1
-        val entries = ArrayList<Entry>()
-
-//Part2
-        entries.add(Entry(1f, 10f))
-        entries.add(Entry(2f, 2f))
-        entries.add(Entry(3f, 7f))
-        entries.add(Entry(4f, 20f))
-        entries.add(Entry(5f, 16f))
-
-//Part3
-        val vl = LineDataSet(entries, "My Type")
-
-//Part4
-        vl.setDrawValues(false)
-        vl.setDrawFilled(true)
-        vl.lineWidth = 3f
-        vl.fillColor = R.color.Blue
-        vl.fillAlpha = R.color.Red
-
-//Part5
-        lineChart.xAxis.labelRotationAngle = 0f
-
-//Part6
-        lineChart.data = LineData(vl)
-
-//Part7
-        lineChart.axisRight.isEnabled = false
+              SetData()
+              lineChart.notifyDataSetChanged()
+              lineChart.invalidate()
+                lineChart.xAxis.labelRotationAngle = 0f
+            lineChart.axisRight.isEnabled = false
 
     }
 
     private fun SetData(){
 
-        val ides: IntArray = intArrayOf(1, 2, 3)
-        db_ViewModel.raw_load_id(ides)
+        val ides: IntArray = intArrayOf(3,4,5)
+        val entries = ArrayList<Entry>()
+      //  val aa=db_ViewModel.raw_load_id(ides)
+      //  val ab=db_ViewModel.get_millis(0)
 
+        //the one I want
+        entries.add(Entry(1f, 2f))
+        entries.add(Entry(2f, 2f))
+        entries.add(Entry(3f, 7f))
+        entries.add(Entry(4f, 20f))
+        entries.add(Entry(5f, 16f))
+        val vl = LineDataSet(entries, "My Type")
+        vl.setDrawValues(false)
+        vl.setDrawFilled(true)
+        vl.lineWidth = 3f
+        vl.fillColor = R.color.Blue
+        vl.fillAlpha = R.color.Red
+        lineChart.data = LineData(vl)
 
     }
 
@@ -144,5 +134,8 @@ return view*/
             R.string.fragment_time_chart
         )
     }
+
+
 }
+
 

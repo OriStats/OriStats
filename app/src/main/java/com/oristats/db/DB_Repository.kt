@@ -19,9 +19,15 @@ class DB_Repository(private val db_Raw_Dao: DB_Raw_Dao, private val db_Main_Dao:
     }
 
     //added lastly in case of app error
-    fun raw_load_id(raw_ids: IntArray){
-     db_Raw_Dao.loadAllByIds(raw_ids)
+    fun raw_load_id(raw_ids: IntArray):LiveData<List<DB_Raw_Entity>>{
+     return db_Raw_Dao.loadAllByIds(raw_ids)
     }
+
+    //adicionado pelo mesquita just in case
+    fun get_millis(raw_ids: Int):Long{
+        return db_Raw_Dao.getmillis(raw_ids)
+    }
+
 
     suspend fun main_insert(db_Main_Entity: DB_Main_Entity){
         db_Main_Dao.insert(db_Main_Entity)

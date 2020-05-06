@@ -32,9 +32,20 @@ class DB_ViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     //added lastly
-    fun raw_load_id(raw_ids: IntArray) = viewModelScope.launch(Dispatchers.IO) {
-        repository.raw_load_id(raw_ids)
+    fun raw_load_id(raw_ids: IntArray):LiveData<List<DB_Raw_Entity>>
+    {
+        return repository.raw_load_id(raw_ids)
     }
+
+
+    //adicionado pelo mesquita
+    fun get_millis(raw_ids: Int): Long{
+        return repository.get_millis(raw_ids)
+    }
+
+
+
+
 
 
     fun main_insert(db_Main_entity: DB_Main_Entity) = viewModelScope.launch(Dispatchers.IO) {

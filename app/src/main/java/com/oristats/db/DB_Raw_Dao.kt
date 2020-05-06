@@ -19,4 +19,11 @@ interface DB_Raw_Dao {
 
     @Query("DELETE FROM raw_table")
     suspend fun deleteAll()
+
+    //adicionado pelo mesquita in case
+    @Query("SELECT millis FROM raw_table WHERE id = :raw_ids LIMIT 1")
+    fun getmillis(raw_ids: Int): Long
+
+
+
 }
