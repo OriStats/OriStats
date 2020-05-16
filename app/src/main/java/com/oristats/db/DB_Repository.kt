@@ -23,9 +23,9 @@ class DB_Repository(private val db_Raw_Dao: DB_Raw_Dao, private val db_Main_Dao:
      return db_Raw_Dao.loadAllByIds(raw_ids)
     }
 
-    //adicionado pelo mesquita just in case
-    fun get_millis(raw_ids: Int):Long{
-        return db_Raw_Dao.getmillis(raw_ids)
+    // just in case
+    fun get_millis():LiveData<List<Long>>{
+        return db_Raw_Dao.getmillis()
     }
 
 

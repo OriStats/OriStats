@@ -1,5 +1,8 @@
 package com.oristats.statistics
 
+import android.content.Context
+import android.database.sqlite.SQLiteDatabase
+import android.database.sqlite.SQLiteOpenHelper
 import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -107,9 +110,11 @@ return view*/
 
         val ides: IntArray = intArrayOf(3,4,5)
         val entries = ArrayList<Entry>()
-      //  val aa=db_ViewModel.raw_load_id(ides)
-      //  val ab=db_ViewModel.get_millis(0)
-
+        //val aa=db_ViewModel.raw_load_id(ides)
+        val ab=db_ViewModel.get_millis()
+        val aa= ab.value?.get(0)?.toFloat()
+        println("FUUUUUUUUUUUUUUUUCKKKKKKKKKKKKK")
+        print(ab.value?.size)
         //the one I want
         entries.add(Entry(1f, 2f))
         entries.add(Entry(2f, 2f))
@@ -124,6 +129,7 @@ return view*/
         vl.fillAlpha = R.color.Red
         lineChart.data = LineData(vl)
 
+
     }
 
 
@@ -137,5 +143,6 @@ return view*/
 
 
 }
+
 
 
