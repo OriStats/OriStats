@@ -65,6 +65,10 @@ class DB_ViewModel(application: Application) : AndroidViewModel(application) {
         repository.tag_delete_all()
     }
 
+    fun tag_delete_by_ids(tag_ids: IntArray) = viewModelScope.launch(Dispatchers.IO){
+        repository.tag_delete_by_ids(tag_ids)
+    }
+
     // COMBINED OPERATIONS, BECAUSE OF COROUTINES: Coroutines are blocks executed on a different thread, so I have to send all the information at once.
     fun raw_insert_and_main_insert(db_Raw_Entity: DB_Raw_Entity, start_time: Long, tag_id: Int, minus_one_day: Boolean) = viewModelScope.launch(Dispatchers.IO) {
         repository.raw_insert_and_main_insert(db_Raw_Entity, start_time, tag_id, minus_one_day)

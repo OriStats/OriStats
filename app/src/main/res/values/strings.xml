@@ -16,6 +16,9 @@
     <string name="working">Started</string>
     <string name="stopped">Stopped</string>
     <string name="playpause">Start/Pause/Resume Session</string>
+    <string name="tag">tag</string>
+    <string name="folder">folder</string>
+    <string name="edit">edit</string>
 
     <string name="Graphic1">Graph1</string>
     <string name="Graphic2">Graph2</string>
@@ -67,8 +70,12 @@
     <string name="db_tag_item_view">%d; \"%s\"</string>
     <string name="db_tag_add">DB Tag Plus</string>
     <string name="db_tag_reset">DB Tag Reset</string>
+    <string name="db_folder_add">DB Folder Plus</string>
     <string name="hint_tag_path_name">folder/subfolder/(…)/name</string>
     <string name="button_tag_save">Save</string>
     <string name="tag_not_saved">Path Not Saved: Entry Not Valid</string>
 
+    <string name="tag_edit_move">Move</string>
+    <string name="tag_edit_rename">Rename</string>
+    <string name="tag_edit_delete">Delete</string>
 </resources>

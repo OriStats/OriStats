@@ -19,4 +19,7 @@ interface DB_Tag_Dao {
 
     @Query("DELETE FROM tag_table")
     suspend fun deleteAll()
+
+    @Query("DELETE FROM tag_table WHERE id IN (:tag_ids)")
+    suspend fun deleteAllByIds(tag_ids: IntArray)
 }

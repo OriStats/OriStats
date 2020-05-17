@@ -46,6 +46,10 @@ class DB_Repository(private val db_Raw_Dao: DB_Raw_Dao, private val db_Main_Dao:
         db_Tag_Dao.deleteAll()
     }
 
+    suspend fun tag_delete_by_ids(tag_ids: IntArray){
+        db_Tag_Dao.deleteAllByIds(tag_ids)
+    }
+
     // COMBINED OPERATIONS, BECAUSE OF COROUTINES: Coroutines are blocks executed on a different thread, so I have to send all the information at once.
     suspend fun raw_insert_and_main_insert(db_Raw_Entity: DB_Raw_Entity, start_time: Long, tag_id: Int, minus_one_day: Boolean){
         val raw_id: Int = db_Raw_Dao.insert(db_Raw_Entity).toInt()

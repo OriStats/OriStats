@@ -15,8 +15,8 @@
         app:layout_constraintBottom_toBottomOf="@id/db_tag_recyclerview_textView"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:srcCompat="@drawable/ic_tags"
-        android:contentDescription="@string/tag" />
+        app:srcCompat="@drawable/ic_folder_24dp"
+        android:contentDescription="@string/folder" />
 
     <TextView
         android:id="@+id/db_tag_recyclerview_textView"
@@ -24,12 +24,12 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:padding="8dp"
-        app:layout_constraintEnd_toStartOf="@id/edit_tag_button"
+        app:layout_constraintEnd_toStartOf="@id/edit_folder_button"
         app:layout_constraintStart_toEndOf="@id/imageView"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
-        android:id="@+id/edit_tag_button"
+        android:id="@+id/edit_folder_button"
         android:layout_width="@dimen/tag_recyclerview_icon_width"
         android:layout_height="0dp"
         android:background="@color/colorSecondary"

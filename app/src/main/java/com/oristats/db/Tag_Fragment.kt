@@ -3,6 +3,7 @@ package com.oristats.db
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -82,14 +83,15 @@ class Tag_Fragment : Fragment() {
         }
     }
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        (activity as MainActivity).supportActionBar?.title = getString(R.string.fragment_db_tag)
+        (activity as MainActivity).supportActionBar?.title = getString(R.string.app_name)
     }
 
     //Update action bar title when viewpager focuses this fragment
     override fun onResume() {
         super.onResume()
-        (activity as MainActivity).supportActionBar?.title = getString(R.string.fragment_db_tag)
+        (activity as MainActivity).supportActionBar?.title = getString(R.string.app_name)
     }
 }
