@@ -72,6 +72,7 @@
     <string name="db_tag_reset">DB Tag Reset</string>
     <string name="db_folder_add">DB Folder Plus</string>
     <string name="hint_tag_path_name">Tag name</string>
+    <string name="hint_folder_name">Folder name</string>
     <string name="hint_tag_rename" >New tag name</string>
     <string name="button_tag_save">Save</string>
     <string name="tag_not_saved">Path Not Saved: Entry Not Valid</string>

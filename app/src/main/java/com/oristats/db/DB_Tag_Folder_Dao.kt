@@ -11,7 +11,7 @@ interface DB_Tag_Folder_Dao {
     @Query("SELECT * FROM tag_folder_table")
     fun getAll(): LiveData<List<DB_Tag_Folder_Entity>>
 
-    @Query("SELECT * FROM tag_table WHERE id IN (:tag_folder_ids)")
+    @Query("SELECT * FROM tag_folder_table WHERE id IN (:tag_folder_ids)")
     fun loadAllByIds(tag_folder_ids: IntArray): LiveData<List<DB_Tag_Folder_Entity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

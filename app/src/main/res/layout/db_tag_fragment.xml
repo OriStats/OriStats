@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    >
 
     <TextView
         android:id="@+id/db_tag_recyclerview_title"
@@ -21,7 +21,6 @@
         android:id="@+id/db_tag_recyclerview"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        tools:listitem="@layout/db_tag_recyclerview_item"
         android:padding="@dimen/small_padding"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -40,7 +39,7 @@
         android:src="@drawable/ic_add_tag_24dp"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/db_tag_folder_add"
+        android:id="@+id/db_tag_folder_fab_add"
         app:backgroundTint="@color/colorPrimary"
         app:layout_constraintLeft_toRightOf="@id/db_tag_fab_reset"
         app:layout_constraintRight_toLeftOf="@id/db_tag_fab_add"

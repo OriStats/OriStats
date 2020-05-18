@@ -3,13 +3,20 @@ package com.oristats.db
 import androidx.lifecycle.LiveData
 
 // Declares the DAO as a private property in the constructor. Pass in the DAO instead of the whole database, because you only need access to the DAO.
-class DB_Repository(private val db_Raw_Dao: DB_Raw_Dao, private val db_Main_Dao: DB_Main_Dao, private val db_Tag_Dao: DB_Tag_Dao) {
+class DB_Repository(private val db_Raw_Dao: DB_Raw_Dao,
+                    private val db_Main_Dao: DB_Main_Dao,
+                    private val db_Tag_Dao: DB_Tag_Dao,
+                    private val db_Tag_Folder_Dao: DB_Tag_Folder_Dao,
+                    private val db_Folder_Item_Dao: DB_Folder_Item_Dao
+) {
 
     // Room executes all queries on a separate thread.
     // Observed LiveData will notify the observer when the data has changed.
     val allRaws: LiveData<List<DB_Raw_Entity>> = db_Raw_Dao.getAll()
     val allMains: LiveData<List<DB_Main_Entity>> = db_Main_Dao.getAll()
     val allTags: LiveData<List<DB_Tag_Entity>> = db_Tag_Dao.getAll()
+    val allFolders: LiveData<List<DB_Tag_Folder_Entity>> = db_Tag_Folder_Dao.getAll()
+    val allFolderItems: LiveData<List<DB_Folder_Item_Entity>> = db_Folder_Item_Dao.getAll()
 
     suspend fun raw_insert(db_Raw_Entity: DB_Raw_Entity){
         db_Raw_Dao.insert(db_Raw_Entity)
@@ -39,6 +46,7 @@ class DB_Repository(private val db_Raw_Dao: DB_Raw_Dao, private val db_Main_Dao:
         db_Main_Dao.deleteAll()
     }
 
+    // Tag Functions
     suspend fun tag_insert(db_Tag_Entity: DB_Tag_Entity){
         db_Tag_Dao.insert(db_Tag_Entity)
     }
@@ -52,6 +60,32 @@ class DB_Repository(private val db_Raw_Dao: DB_Raw_Dao, private val db_Main_Dao:
 
     suspend fun  tag_rename_by_id(new_name: String, tag_id: Int){
         db_Tag_Dao.renameById(new_name,tag_id)
+    }
+
+    // Folder Funcions
+    suspend fun folder_insert(db_Tag_Folder_Entity: DB_Tag_Folder_Entity){
+        db_Tag_Folder_Dao.insert(db_Tag_Folder_Entity)
+    }
+
+    suspend fun folder_delete_all(){
+        db_Tag_Folder_Dao.deleteAll()
+    }
+
+    fun folder_load_by_ids(folder_ids: IntArray){
+        db_Tag_Folder_Dao.loadAllByIds(folder_ids)
+    }
+
+    // Folder Item Functions
+    suspend fun folder_item_insert(db_Folder_Item_Entity: DB_Folder_Item_Entity){
+        db_Folder_Item_Dao.insert(db_Folder_Item_Entity)
+    }
+
+    suspend fun folder_item_delete_all(){
+        db_Folder_Item_Dao.deleteAll()
+    }
+
+    fun folder_content_by_type(id: Int, type: String){
+        db_Folder_Item_Dao.getFolderContentByType(id,type)
     }
 
 

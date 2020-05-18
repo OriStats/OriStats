@@ -13,15 +13,21 @@ class DB_ViewModel(application: Application) : AndroidViewModel(application) {
     val allRaws: LiveData<List<DB_Raw_Entity>>
     val allMains: LiveData<List<DB_Main_Entity>>
     val allTags: LiveData<List<DB_Tag_Entity>>
+    val allFolders: LiveData<List<DB_Tag_Folder_Entity>>
+    val allFolderItems: LiveData<List<DB_Folder_Item_Entity>>
 
     init {
         val raws_Dao = DB_Room.getDatabase(application, viewModelScope).db_Raw_Dao()
         val mains_Dao = DB_Room.getDatabase(application, viewModelScope).db_Main_Dao()
         val tags_Dao = DB_Room.getDatabase(application, viewModelScope).db_Tag_Dao()
-        repository = DB_Repository(raws_Dao, mains_Dao, tags_Dao)
+        val tag_folders_Dao = DB_Room.getDatabase(application, viewModelScope).db_Tag_Folder_Dao()
+        val folder_items_Dao = DB_Room.getDatabase(application,viewModelScope).db_Folder_Item_Dao()
+        repository = DB_Repository(raws_Dao, mains_Dao, tags_Dao,tag_folders_Dao,folder_items_Dao)
         allRaws = repository.allRaws
         allMains = repository.allMains
         allTags = repository.allTags
+        allFolders = repository.allFolders
+        allFolderItems = repository.allFolderItems
     }
 
     fun raw_insert(db_Raw_entity: DB_Raw_Entity) = viewModelScope.launch(Dispatchers.IO) {
@@ -58,6 +64,8 @@ class DB_ViewModel(application: Application) : AndroidViewModel(application) {
         repository.main_delete_all()
     }
 
+    // Tag Functions
+
     fun tag_insert(db_Tag_entity: DB_Tag_Entity) = viewModelScope.launch(Dispatchers.IO) {
         repository.tag_insert(db_Tag_entity)
     }
@@ -72,6 +80,34 @@ class DB_ViewModel(application: Application) : AndroidViewModel(application) {
     fun tag_rename_by_id(new_name: String, tag_id: Int)= viewModelScope.launch(Dispatchers.IO){
         repository.tag_rename_by_id(new_name,tag_id)
     }
+
+    // Folder Functions
+    fun folder_insert(db_Tag_Folder: DB_Tag_Folder_Entity) = viewModelScope.launch(Dispatchers.IO){
+        repository.folder_insert(db_Tag_Folder)
+    }
+
+    fun folder_delete_all() = viewModelScope.launch(Dispatchers.IO){
+        repository.folder_delete_all()
+    }
+
+    fun folder_load_by_ids(folder_ids: IntArray) = viewModelScope.launch(Dispatchers.IO){
+        repository.folder_load_by_ids(folder_ids)
+    }
+
+    // Folder Item Functions
+    fun folder_item_insert(db_Folder_Item_Entity: DB_Folder_Item_Entity) = viewModelScope.launch(Dispatchers.IO){
+        repository.folder_item_insert(db_Folder_Item_Entity)
+    }
+
+    fun folder_item_delete_all() = viewModelScope.launch(Dispatchers.IO){
+        repository.folder_item_delete_all()
+    }
+
+    fun folder_content_by_type(id: Int, type: String) = viewModelScope.launch(Dispatchers.IO){
+        repository.folder_content_by_type(id,type)
+    }
+
+
 
     // COMBINED OPERATIONS, BECAUSE OF COROUTINES: Coroutines are blocks executed on a different thread, so I have to send all the information at once.
     fun raw_insert_and_main_insert(db_Raw_Entity: DB_Raw_Entity, start_time: Long, tag_id: Int, minus_one_day: Boolean) = viewModelScope.launch(Dispatchers.IO) {

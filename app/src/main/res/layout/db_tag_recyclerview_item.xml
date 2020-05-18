@@ -23,22 +23,23 @@
         style="@style/tag_recyclerview_style"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:padding="8dp"
+        android:paddingBottom="15dp"
+        android:paddingTop="15dp"
         app:layout_constraintEnd_toStartOf="@id/edit_tag_button"
         app:layout_constraintStart_toEndOf="@id/imageView"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
         android:id="@+id/edit_tag_button"
-        android:layout_width="@dimen/tag_recyclerview_icon_width"
+        android:layout_width="@dimen/tag_recyclerview_button_width"
         android:layout_height="0dp"
         android:background="@color/colorSecondary"
-        android:scaleType="fitCenter"
+        android:contentDescription="@string/edit"
+        android:scaleType="centerInside"
         app:layout_constraintBottom_toBottomOf="@id/db_tag_recyclerview_textView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_edit_24dp"
-        android:contentDescription="@string/edit" />
+        app:srcCompat="@drawable/ic_edit_24dp" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
