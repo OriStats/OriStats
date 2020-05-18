@@ -1,13 +1,17 @@
 package com.oristats.db
 
 import android.app.Activity
+import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
+import android.text.TextUtils
+import android.util.DisplayMetrics
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,6 +19,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.oristats.MainActivity
 import com.oristats.R
+import kotlinx.android.synthetic.main.db_tag_new_entry_activity.view.*
+import kotlinx.android.synthetic.main.db_tag_rename_activity.view.*
+import kotlinx.android.synthetic.main.db_tag_rename_activity.view.button_tag_entry_save
 
 class Tag_Fragment : Fragment() {
 
@@ -32,7 +39,11 @@ class Tag_Fragment : Fragment() {
         val view = inflater.inflate(R.layout.db_tag_fragment, container, false)
 
         val recyclerView = view.findViewById<RecyclerView>(R.id.db_tag_recyclerview)
-        val adapter = context?.let { Tag_ListAdapter(it) }
+        val dm = DisplayMetrics()
+        (activity as MainActivity).windowManager.defaultDisplay.getMetrics(dm)
+        val width = dm.widthPixels
+        val height = dm.heightPixels
+        val adapter = context?.let { Tag_ListAdapter(it,width,height) }
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(context)
 
@@ -49,8 +60,24 @@ class Tag_Fragment : Fragment() {
 
         val tag_fab_add = view.findViewById<FloatingActionButton>(R.id.db_tag_fab_add)
         tag_fab_add.setOnClickListener {
-            val intent = Intent(context, Tag_New_Entry_Activity::class.java)
-            startActivityForResult(intent, DB_Tag_New_Entry_ActivityRequestCode)
+            //AlertDialog implementation
+            val dialog = AlertDialog.Builder(context)
+            val dialogview = inflater.inflate(R.layout.db_tag_new_entry_activity,null)
+            dialog.setView(dialogview)
+            dialog.setTitle("Name Tag")
+            val alertDialog = dialog.show()
+            dialogview.button_tag_entry_save.setOnClickListener{
+                alertDialog.dismiss()
+                val name = dialogview.edit_tag_name.text.toString()
+                if(name.isNotEmpty()) {
+                    val newTagEntity = DB_Tag_Entity(name)
+                    db_ViewModel.tag_insert(newTagEntity)
+                    Toast.makeText(context, "New tag: $name",Toast.LENGTH_SHORT).show()
+                }
+                else{
+                    Toast.makeText(context, "Tag not created",Toast.LENGTH_SHORT).show()
+                }
+            }
         }
 
         val tag_fab_reset = view.findViewById<FloatingActionButton>(R.id.db_tag_fab_reset)
@@ -65,22 +92,6 @@ class Tag_Fragment : Fragment() {
         }
 
         return view
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        if (requestCode == DB_Tag_New_Entry_ActivityRequestCode && resultCode == Activity.RESULT_OK) {
-            data?.getStringExtra(Tag_New_Entry_Activity.EXTRA_REPLY_PATH_NAME)?.let {
-                val db_tag_entity = DB_Tag_Entity(it)
-                db_ViewModel.tag_insert(db_tag_entity)
-            }
-        } else {
-            Toast.makeText(
-                context,
-                R.string.tag_not_saved,
-                Toast.LENGTH_LONG).show()
-        }
     }
 
 

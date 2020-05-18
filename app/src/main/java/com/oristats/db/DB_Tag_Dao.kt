@@ -22,4 +22,7 @@ interface DB_Tag_Dao {
 
     @Query("DELETE FROM tag_table WHERE id IN (:tag_ids)")
     suspend fun deleteAllByIds(tag_ids: IntArray)
+
+    @Query("UPDATE tag_table SET path_name = :new_path_name WHERE id = :current_id")
+    suspend fun renameById(new_path_name: String, current_id: Int)
 }
