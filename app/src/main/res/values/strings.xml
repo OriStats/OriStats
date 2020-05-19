@@ -19,6 +19,7 @@
     <string name="tag">tag</string>
     <string name="folder">folder</string>
     <string name="edit">edit</string>
+    <string name="arrow_back">arrow back</string>
 
     <string name="Graphic1">Graph1</string>
     <string name="Graphic2">Graph2</string>
@@ -74,6 +75,7 @@
     <string name="hint_tag_path_name">Tag name</string>
     <string name="hint_folder_name">Folder name</string>
     <string name="hint_tag_rename" >New tag name</string>
+    <string name="hint_folder_rename">New folder name</string>
     <string name="button_tag_save">Save</string>
     <string name="tag_not_saved">Path Not Saved: Entry Not Valid</string>
 

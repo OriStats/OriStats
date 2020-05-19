@@ -7,18 +7,19 @@ import android.content.Context
 import android.content.res.Resources
 import android.graphics.Color
 import android.util.DisplayMetrics
-import android.util.Log
 import android.view.*
 import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
 import com.oristats.MainActivity
 import com.oristats.R
 import kotlinx.android.synthetic.main.confirmation.view.*
+import kotlinx.android.synthetic.main.db_tag_folder_rename.view.*
 import kotlinx.android.synthetic.main.db_tag_rename_activity.view.*
 import java.util.zip.Inflater
 
 class Tag_ListAdapter internal constructor(
-    context: Context
+    context: Context,
+    private val fragInterface: frag_interface
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val inflater: LayoutInflater = LayoutInflater.from(context)
@@ -36,6 +37,7 @@ class Tag_ListAdapter internal constructor(
     inner class DB_Folder_ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
         val db_Folder_ItemView: TextView = itemView.findViewById(R.id.db_folder_recyclerview_textView)
         val Folder_edit: ImageButton = itemView.findViewById(R.id.edit_folder_button)
+        val Folder_select: Button = itemView.findViewById(R.id.select_folder)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -72,8 +74,13 @@ class Tag_ListAdapter internal constructor(
         notifyDataSetChanged()
     }
 
+    interface frag_interface{
+        fun updateTitle()
+        fun updateFolders()
+        fun updateTags()
+    }
+
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        Log.d("teste","ola $position ${getItemViewType(position)} $itemCount")
         when(getItemViewType(position)){
             0 -> onBindViewHolderFolder(holder as DB_Folder_ViewHolder,position)
             1 -> onBindViewHolderTag(holder as DB_Tag_ViewHolder,position)
@@ -140,6 +147,7 @@ class Tag_ListAdapter internal constructor(
     private fun onBindViewHolderFolder(holder: DB_Folder_ViewHolder, position: Int) {
         val current = db_folder_entities[position]
         holder.db_Folder_ItemView.text = holder.db_Folder_ItemView.context.resources.getString(R.string.db_tag_item_view,current.id,current.folder_name)
+        //edit menu
         holder.Folder_edit.setOnClickListener { //creating a popup menu
             val popup = PopupMenu(mCtx, holder.Folder_edit)
             //inflating menu from xml resource
@@ -147,50 +155,46 @@ class Tag_ListAdapter internal constructor(
             //adding click listener
             popup.setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener { item ->
                 when(item.itemId){
-                    R.id.tag_edit_delete -> {
-                        /*
+                    R.id.folder_edit_delete -> {
                         if (mCtx is MainActivity) {
                             //AlertDialog implementation
                             val dialog = AlertDialog.Builder(mCtx)
                             val dialogview = inflater.inflate(R.layout.confirmation,null)
                             dialog.setView(dialogview)
-                            val tag_name = current.path_name
-                            dialog.setTitle("Delete $tag_name tag? \n(this action is irreversible)")
+                            val folder_name = current.folder_name
+                            dialog.setTitle("Delete $folder_name folder? \n(Folder content will also be deleted)")
                             val alertDialog = dialog.show()
                             dialogview.confirmation_button.setOnClickListener{
                                 alertDialog.dismiss()
                                 val id = IntArray(1)
                                 id.set(0,current.id!!)
-                                mCtx.db_ViewModel.tag_delete_by_ids(id)
-                                Toast.makeText(mCtx,"Tag $tag_name Deleted",Toast.LENGTH_SHORT).show()
+                                mCtx.db_ViewModel.folder_delete_by_id(id)
+                                Toast.makeText(mCtx,"Folder $folder_name Deleted",Toast.LENGTH_SHORT).show()
                             }
                             dialogview.cancel_button.setOnClickListener{
                                 alertDialog.dismiss()
                             }
                         }
-                         */
-                        Toast.makeText(mCtx,"You Clicked "+item.title,Toast.LENGTH_SHORT).show()
                     }
-                    R.id.tag_edit_rename ->{
-                        /*
+                    R.id.folder_edit_rename ->{
                         //AlertDialog implementation
                         val dialog = AlertDialog.Builder(mCtx)
-                        val dialogview = inflater.inflate(R.layout.db_tag_rename_activity,null)
+                        val dialogview = inflater.inflate(R.layout.db_tag_folder_rename,null)
                         dialog.setView(dialogview)
-                        dialog.setTitle("Rename Tag")
+                        dialog.setTitle("Rename Folder")
                         val alertDialog = dialog.show()
-                        dialogview.button_tag_entry_save.setOnClickListener{
+                        dialogview.button_folder_entry_save.setOnClickListener{
                             alertDialog.dismiss()
-                            val new_name = dialogview.new_tag_name.text.toString()
+                            val new_name = dialogview.new_folder_name.text.toString()
+                            val new_path = "${current.folder_path.dropLastWhile { it != '/' }}$new_name"
                             if(mCtx is MainActivity){
-                                mCtx.db_ViewModel.tag_rename_by_id(new_name,current.id!!)
+                                mCtx.db_ViewModel.folder_rename_by_id(new_name,current.id!!)
+                                mCtx.db_ViewModel.folder_rename_path_by_id(new_path,current.id!!)
                             }
-                            Toast.makeText(mCtx,"New name: "+ new_name,Toast.LENGTH_SHORT).show()
+                            Toast.makeText(mCtx,"New name: $new_name\nNew path: $new_path",Toast.LENGTH_SHORT).show()
                         }
-                         */
-                        Toast.makeText(mCtx,"You Clicked "+item.title,Toast.LENGTH_SHORT).show()
                     }
-                    R.id.tag_edit_move ->
+                    R.id.folder_edit_move ->
                         Toast.makeText(mCtx,"You Clicked "+item.title,Toast.LENGTH_SHORT).show()
                 }
                 true
@@ -198,6 +202,14 @@ class Tag_ListAdapter internal constructor(
             //displaying the popup
             popup.show()
         }
+        holder.Folder_select.setOnClickListener{
+            if(mCtx is MainActivity){
+                mCtx.db_ViewModel.current_folder = current.id
+                mCtx.db_ViewModel.current_path = current.folder_path
+                fragInterface.updateTitle()
+                fragInterface.updateFolders()
+                fragInterface.updateTags()
+            }
+        }
     }
-
 }

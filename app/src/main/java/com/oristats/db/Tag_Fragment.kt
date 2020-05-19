@@ -12,7 +12,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
+import android.widget.ImageButton
+import android.widget.TextView
 import android.widget.Toast
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -24,9 +27,10 @@ import kotlinx.android.synthetic.main.db_tag_new_entry_activity.view.*
 import kotlinx.android.synthetic.main.db_tag_rename_activity.view.*
 import kotlinx.android.synthetic.main.db_tag_rename_activity.view.button_tag_entry_save
 
-class Tag_Fragment : Fragment() {
+class Tag_Fragment : Fragment(), Tag_ListAdapter.frag_interface {
 
     private lateinit var db_ViewModel: DB_ViewModel
+    private var adapter: Tag_ListAdapter? = null
 
     companion object {
         fun newInstance() = Tag_Fragment()
@@ -39,30 +43,34 @@ class Tag_Fragment : Fragment() {
         val view = inflater.inflate(R.layout.db_tag_fragment, container, false)
 
         val recyclerView = view.findViewById<RecyclerView>(R.id.db_tag_recyclerview)
-        val adapter = context?.let { Tag_ListAdapter(it) }
+        adapter = context?.let { Tag_ListAdapter(it,this) }
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(context)
 
         db_ViewModel = (getActivity() as MainActivity).db_ViewModel
 
+        db_ViewModel.allFolders.observe(viewLifecycleOwner, Observer {db_folder_entities ->
+            db_folder_entities?.let{
+                if(db_folder_entities.isEmpty()){
+                    val rootEntity = DB_Tag_Folder_Entity("root","/",1)
+                    db_ViewModel.folder_insert(rootEntity)
+                }
+                else {
+                    db_ViewModel.currentFolders = db_folder_entities
+                    updateFolders()
+                }
+            }
+        })
+
         db_ViewModel.allTags.observe(viewLifecycleOwner, Observer { db_tag_entities ->
             // Update the cached copy of entities in the adapter.
             db_tag_entities?.let {
-                if (adapter != null) {
-                    adapter.setDB_Tag_Entities(it)
+                if(db_ViewModel.current_folder != null) {
+                    db_ViewModel.currentTags = db_tag_entities
+                    updateTags()
                 }
             }
         })
-
-        db_ViewModel.allFolders.observe(viewLifecycleOwner, Observer {db_folder_entities ->
-            db_folder_entities?.let{
-                if (adapter != null){
-                    adapter.setDB_Folder_Entities(it)
-                }
-            }
-        })
-
-
 
         val tag_fab_add = view.findViewById<FloatingActionButton>(R.id.db_tag_fab_add)
         tag_fab_add.setOnClickListener {
@@ -76,7 +84,7 @@ class Tag_Fragment : Fragment() {
                 alertDialog.dismiss()
                 val name = dialogview.edit_tag_name.text.toString()
                 if(name.isNotEmpty()) {
-                    val newTagEntity = DB_Tag_Entity(name)
+                    val newTagEntity = DB_Tag_Entity(name,db_ViewModel.current_folder!!)
                     db_ViewModel.tag_insert(newTagEntity)
                     Toast.makeText(context, "New tag: $name",Toast.LENGTH_SHORT).show()
                 }
@@ -90,6 +98,7 @@ class Tag_Fragment : Fragment() {
         tag_fab_reset.setOnClickListener {
             // Delete all content here.
             db_ViewModel.tag_delete_all()
+            db_ViewModel.folder_delete_all()
             // Add sample paths here.
             // var db_Tag_Entity = DB_Tag_Entity("MEFT/LIDes")
             // db_ViewModel.tag_insert(db_Tag_Entity)
@@ -108,13 +117,25 @@ class Tag_Fragment : Fragment() {
                 alertDialog.dismiss()
                 val name = dialogview.edit_folder_name.text.toString()
                 if(name.isNotEmpty()) {
-                    val newFolderEntity = DB_Tag_Folder_Entity(name,"/$name")
+                    val newFolderEntity = DB_Tag_Folder_Entity(name,"${db_ViewModel.current_path}$name/",db_ViewModel.current_folder!!)
                     db_ViewModel.folder_insert(newFolderEntity)
                     Toast.makeText(context, "New folder: $name",Toast.LENGTH_SHORT).show()
                 }
                 else{
                     Toast.makeText(context, "Folder not created",Toast.LENGTH_SHORT).show()
                 }
+            }
+        }
+
+        val folder_up: ImageButton = view.findViewById<ImageButton>(R.id.up_folder_button)
+        folder_up.setOnClickListener{
+            val folder = db_ViewModel.currentFolders.filter { it.id == db_ViewModel.current_folder }[0]
+            if(folder.id != 1) {
+                db_ViewModel.current_folder = folder.folder_id
+                db_ViewModel.current_path = db_ViewModel.currentFolders.filter { it.id == folder.folder_id }[0].folder_path
+                updateTags()
+                updateFolders()
+                updateTitle()
             }
         }
 
@@ -125,11 +146,32 @@ class Tag_Fragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         (activity as MainActivity).supportActionBar?.title = getString(R.string.app_name)
+        updateTitle()
     }
 
     //Update action bar title when viewpager focuses this fragment
     override fun onResume() {
         super.onResume()
         (activity as MainActivity).supportActionBar?.title = getString(R.string.app_name)
+
+    }
+
+    override fun updateTitle() {
+        val currentdirTextView = view?.findViewById<TextView>(R.id.db_tag_recyclerview_title)
+        if (currentdirTextView != null) {
+            currentdirTextView.text = db_ViewModel.current_path
+        }
+    }
+
+    override fun updateFolders() {
+        if(adapter != null){
+            adapter!!.setDB_Folder_Entities(db_ViewModel.currentFolders.filter { it.folder_id == db_ViewModel.current_folder && it.id != 1})
+        }
+    }
+
+    override fun updateTags() {
+        if(adapter != null){
+            adapter!!.setDB_Tag_Entities(db_ViewModel.currentTags.filter { it.folder_id == db_ViewModel.current_folder})
+        }
     }
 }

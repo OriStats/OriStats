@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/tag_edit_move"
+        android:id="@+id/folder_edit_move"
         android:title="@string/tag_edit_move" />
     <item
-        android:id="@+id/tag_edit_rename"
+        android:id="@+id/folder_edit_rename"
         android:title="@string/tag_edit_rename" />
     <item
-        android:id="@+id/tag_edit_delete"
+        android:id="@+id/folder_edit_delete"
         android:title="@string/tag_edit_delete" />
 </menu>

@@ -1,13 +1,13 @@
 package com.oristats.db
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 
 // Declares the DAO as a private property in the constructor. Pass in the DAO instead of the whole database, because you only need access to the DAO.
 class DB_Repository(private val db_Raw_Dao: DB_Raw_Dao,
                     private val db_Main_Dao: DB_Main_Dao,
                     private val db_Tag_Dao: DB_Tag_Dao,
-                    private val db_Tag_Folder_Dao: DB_Tag_Folder_Dao,
-                    private val db_Folder_Item_Dao: DB_Folder_Item_Dao
+                    private val db_Tag_Folder_Dao: DB_Tag_Folder_Dao
 ) {
 
     // Room executes all queries on a separate thread.
@@ -16,7 +16,6 @@ class DB_Repository(private val db_Raw_Dao: DB_Raw_Dao,
     val allMains: LiveData<List<DB_Main_Entity>> = db_Main_Dao.getAll()
     val allTags: LiveData<List<DB_Tag_Entity>> = db_Tag_Dao.getAll()
     val allFolders: LiveData<List<DB_Tag_Folder_Entity>> = db_Tag_Folder_Dao.getAll()
-    val allFolderItems: LiveData<List<DB_Folder_Item_Entity>> = db_Folder_Item_Dao.getAll()
 
     suspend fun raw_insert(db_Raw_Entity: DB_Raw_Entity){
         db_Raw_Dao.insert(db_Raw_Entity)
@@ -62,6 +61,11 @@ class DB_Repository(private val db_Raw_Dao: DB_Raw_Dao,
         db_Tag_Dao.renameById(new_name,tag_id)
     }
 
+    fun tag_load_by_folder_id(id: Int) : LiveData<List<DB_Tag_Entity>> {
+        Log.d("teste","Repository $id")
+        return db_Tag_Dao.loadByFolderId(id)
+    }
+
     // Folder Funcions
     suspend fun folder_insert(db_Tag_Folder_Entity: DB_Tag_Folder_Entity){
         db_Tag_Folder_Dao.insert(db_Tag_Folder_Entity)
@@ -75,19 +79,22 @@ class DB_Repository(private val db_Raw_Dao: DB_Raw_Dao,
         db_Tag_Folder_Dao.loadAllByIds(folder_ids)
     }
 
-    // Folder Item Functions
-    suspend fun folder_item_insert(db_Folder_Item_Entity: DB_Folder_Item_Entity){
-        db_Folder_Item_Dao.insert(db_Folder_Item_Entity)
+    fun folder_load_by_folder_id(id: Int) : LiveData<List<DB_Tag_Folder_Entity>> {
+        Log.d("teste","Repository $id")
+        return db_Tag_Folder_Dao.loadByFolderId(id)
     }
 
-    suspend fun folder_item_delete_all(){
-        db_Folder_Item_Dao.deleteAll()
+    suspend fun folder_delete_by_id(tag_folder_ids: IntArray){
+        db_Tag_Folder_Dao.deleteAllByIds(tag_folder_ids)
     }
 
-    fun folder_content_by_type(id: Int, type: String){
-        db_Folder_Item_Dao.getFolderContentByType(id,type)
+    suspend fun folder_rename_by_id(new_name: String, id: Int){
+        db_Tag_Folder_Dao.renameById(new_name,id)
     }
 
+    suspend fun folder_rename_path_by_id(new_path: String, id: Int){
+        db_Tag_Folder_Dao.renamePathById(new_path,id)
+    }
 
     // COMBINED OPERATIONS, BECAUSE OF COROUTINES: Coroutines are blocks executed on a different thread, so I have to send all the information at once.
     suspend fun raw_insert_and_main_insert(db_Raw_Entity: DB_Raw_Entity, start_time: Long, tag_id: Int, minus_one_day: Boolean){

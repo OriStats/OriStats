@@ -1,6 +1,7 @@
 package com.oristats.db
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
@@ -14,20 +15,25 @@ class DB_ViewModel(application: Application) : AndroidViewModel(application) {
     val allMains: LiveData<List<DB_Main_Entity>>
     val allTags: LiveData<List<DB_Tag_Entity>>
     val allFolders: LiveData<List<DB_Tag_Folder_Entity>>
-    val allFolderItems: LiveData<List<DB_Folder_Item_Entity>>
+
+    lateinit var currentFolders: List<DB_Tag_Folder_Entity>
+    lateinit var currentTags: List<DB_Tag_Entity>
+    var current_folder: Int?
+    var current_path: String?
 
     init {
         val raws_Dao = DB_Room.getDatabase(application, viewModelScope).db_Raw_Dao()
         val mains_Dao = DB_Room.getDatabase(application, viewModelScope).db_Main_Dao()
         val tags_Dao = DB_Room.getDatabase(application, viewModelScope).db_Tag_Dao()
         val tag_folders_Dao = DB_Room.getDatabase(application, viewModelScope).db_Tag_Folder_Dao()
-        val folder_items_Dao = DB_Room.getDatabase(application,viewModelScope).db_Folder_Item_Dao()
-        repository = DB_Repository(raws_Dao, mains_Dao, tags_Dao,tag_folders_Dao,folder_items_Dao)
+        repository = DB_Repository(raws_Dao, mains_Dao, tags_Dao,tag_folders_Dao)
         allRaws = repository.allRaws
         allMains = repository.allMains
         allTags = repository.allTags
         allFolders = repository.allFolders
-        allFolderItems = repository.allFolderItems
+
+        current_folder = 1
+        current_path = "/"
     }
 
     fun raw_insert(db_Raw_entity: DB_Raw_Entity) = viewModelScope.launch(Dispatchers.IO) {
@@ -81,6 +87,10 @@ class DB_ViewModel(application: Application) : AndroidViewModel(application) {
         repository.tag_rename_by_id(new_name,tag_id)
     }
 
+    fun tag_load_by_folder_id(id: Int) : LiveData<List<DB_Tag_Entity>> {
+        return repository.tag_load_by_folder_id(id)
+    }
+
     // Folder Functions
     fun folder_insert(db_Tag_Folder: DB_Tag_Folder_Entity) = viewModelScope.launch(Dispatchers.IO){
         repository.folder_insert(db_Tag_Folder)
@@ -94,17 +104,20 @@ class DB_ViewModel(application: Application) : AndroidViewModel(application) {
         repository.folder_load_by_ids(folder_ids)
     }
 
-    // Folder Item Functions
-    fun folder_item_insert(db_Folder_Item_Entity: DB_Folder_Item_Entity) = viewModelScope.launch(Dispatchers.IO){
-        repository.folder_item_insert(db_Folder_Item_Entity)
+    fun folder_load_by_folder_id(id: Int) : LiveData<List<DB_Tag_Folder_Entity>> {
+        return repository.folder_load_by_folder_id(id)
     }
 
-    fun folder_item_delete_all() = viewModelScope.launch(Dispatchers.IO){
-        repository.folder_item_delete_all()
+    fun folder_delete_by_id(folder_ids: IntArray) = viewModelScope.launch(Dispatchers.IO){
+        repository.folder_delete_by_id(folder_ids)
     }
 
-    fun folder_content_by_type(id: Int, type: String) = viewModelScope.launch(Dispatchers.IO){
-        repository.folder_content_by_type(id,type)
+    fun folder_rename_by_id(new_name: String, id: Int) = viewModelScope.launch(Dispatchers.IO){
+        repository.folder_rename_by_id(new_name,id)
+    }
+
+    fun folder_rename_path_by_id(new_path: String, id: Int) = viewModelScope.launch(Dispatchers.IO){
+        repository.folder_rename_path_by_id(new_path,id)
     }
 
 
