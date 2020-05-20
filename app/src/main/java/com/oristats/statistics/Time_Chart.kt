@@ -5,6 +5,7 @@ import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -47,6 +48,9 @@ class Time_Chart : Fragment() {
         val view: View = inflater.inflate(R.layout.time_chart_fragment, container, false)
 
         db_ViewModel = (getActivity() as MainActivity).db_ViewModel
+
+
+
         return view
 
 
@@ -101,8 +105,10 @@ return view*/
               SetData()
               lineChart.notifyDataSetChanged()
               lineChart.invalidate()
+
                 lineChart.xAxis.labelRotationAngle = 0f
             lineChart.axisRight.isEnabled = false
+
 
     }
 
@@ -113,21 +119,45 @@ return view*/
         //val aa=db_ViewModel.raw_load_id(ides)
         val ab=db_ViewModel.get_millis()
         val aa= ab.value?.get(0)?.toFloat()
-        println("FUUUUUUUUUUUUUUUUCKKKKKKKKKKKKK")
-        print(ab.value?.size)
         //the one I want
-        entries.add(Entry(1f, 2f))
-        entries.add(Entry(2f, 2f))
-        entries.add(Entry(3f, 7f))
-        entries.add(Entry(4f, 20f))
-        entries.add(Entry(5f, 16f))
-        val vl = LineDataSet(entries, "My Type")
-        vl.setDrawValues(false)
-        vl.setDrawFilled(true)
-        vl.lineWidth = 3f
-        vl.fillColor = R.color.Blue
-        vl.fillAlpha = R.color.Red
-        lineChart.data = LineData(vl)
+        db_ViewModel.allRaws.observe(viewLifecycleOwner, Observer {db_raw_entities ->
+            db_raw_entities?.let{
+                if(db_raw_entities.isEmpty()){
+                    Log.d("debug1","it's empty")
+                }
+                else {
+                    Log.d("debug3", db_raw_entities[0].id.toString())
+                    for(i in db_raw_entities.indices) {
+                        if(i>0) {
+                            db_raw_entities[i].id?.toFloat()?.let { it1 ->
+                                Entry(
+                                    it1,
+                                    (db_raw_entities[i].millis-db_raw_entities[i-1].millis).toFloat()
+                                )
+                            }
+                                ?.let { it2 -> entries.add(it2) }
+                        }
+                    }
+                    //entries.add(Entry(1f, 2f))
+                    //entries.add(Entry(2f, db_raw_entities[1].millis.div(1000).toFloat()))
+                    //entries.add(Entry(3f, db_raw_entities[2].millis.div(1000).toFloat()))
+                    //entries.add(Entry(4f, db_raw_entities[3].millis.div(1000).toFloat()))
+                    //entries.add(Entry(5f, db_raw_entities[4].millis.div(1000).toFloat()))
+                    //entries.add(Entry(6f, db_raw_entities[5].millis.div(1000).toFloat()))
+
+                   // entries.add(Entry(5f, 16f))
+                    val vl = LineDataSet(entries, "Millis/1000")
+                    vl.setDrawValues(false)
+                    vl.setDrawFilled(true)
+                    vl.lineWidth = 3f
+                    vl.color = R.color.colorPrimaryDark
+                    vl.fillAlpha = R.color.Red
+                    lineChart.data = LineData(vl)
+
+                }
+            }
+        })
+
 
 
     }
