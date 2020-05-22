@@ -1,8 +1,5 @@
 package com.oristats.statistics
 
-import android.content.Context
-import android.database.sqlite.SQLiteDatabase
-import android.database.sqlite.SQLiteOpenHelper
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
@@ -10,23 +7,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
-import androidx.room.Room
-import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.Description
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.components.YAxis
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
+import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
 import com.oristats.MainActivity
 import com.oristats.R
-import com.oristats.db.DB_Raw_Entity
-import com.oristats.db.DB_Room
 import com.oristats.db.DB_ViewModel
 import kotlinx.android.synthetic.main.time_chart_fragment.*
-import kotlinx.coroutines.Job
 
 
 class Time_Chart : Fragment() {
@@ -115,7 +107,8 @@ return view*/
     private fun SetData(){
 
         val ides: IntArray = intArrayOf(3,4,5)
-        val entries = ArrayList<Entry>()
+        val work = ArrayList<Entry>()
+        val pause=ArrayList<Entry>()
         //val aa=db_ViewModel.raw_load_id(ides)
         val ab=db_ViewModel.get_millis()
         val aa= ab.value?.get(0)?.toFloat()
@@ -128,14 +121,33 @@ return view*/
                 else {
                     Log.d("debug3", db_raw_entities[0].id.toString())
                     for(i in db_raw_entities.indices) {
-                        if(i>0) {
+                        if(i==0) {
+                            db_raw_entities[i].id?.toFloat()?.let { it1 ->
+                                Entry(
+                                    it1,
+                                    (db_raw_entities[1].millis-db_raw_entities[0].millis).toFloat()
+                                )
+                            }
+                                ?.let { it2 -> work.add(it2) }
+                        }
+
+                        if(i>0 && i%2==0 && db_raw_entities[i].millis-db_raw_entities[i-1].millis>0) {
                             db_raw_entities[i].id?.toFloat()?.let { it1 ->
                                 Entry(
                                     it1,
                                     (db_raw_entities[i].millis-db_raw_entities[i-1].millis).toFloat()
                                 )
                             }
-                                ?.let { it2 -> entries.add(it2) }
+                                ?.let { it2 -> work.add(it2) }
+                        }
+                        if(i>0 && i%2!=0 && db_raw_entities[i].millis-db_raw_entities[i-1].millis>0) {
+                            db_raw_entities[i].id?.toFloat()?.let { it1 ->
+                                Entry(
+                                    it1,
+                                    (db_raw_entities[i].millis-db_raw_entities[i-1].millis).toFloat()
+                                )
+                            }
+                                ?.let { it2 -> pause.add(it2) }
                         }
                     }
                     //entries.add(Entry(1f, 2f))
@@ -146,13 +158,24 @@ return view*/
                     //entries.add(Entry(6f, db_raw_entities[5].millis.div(1000).toFloat()))
 
                    // entries.add(Entry(5f, 16f))
-                    val vl = LineDataSet(entries, "Millis/1000")
+                    val lines = ArrayList<LineDataSet>()
+                    val vl = LineDataSet(work, "Work")
                     vl.setDrawValues(false)
                     vl.setDrawFilled(true)
                     vl.lineWidth = 3f
                     vl.color = R.color.colorPrimaryDark
                     vl.fillAlpha = R.color.Red
                     lineChart.data = LineData(vl)
+
+                    val vl1 = LineDataSet(pause, "Pause")
+                    vl1.setDrawValues(false)
+                    vl1.setDrawFilled(true)
+                    vl1.lineWidth = 3f
+                   // vl1.color = R.color.Red
+                    vl1.fillAlpha = R.color.Red
+                    lines.add(vl)
+                    lines.add(vl1)
+                    lineChart.data = LineData(lines as List<ILineDataSet>?)
 
                 }
             }

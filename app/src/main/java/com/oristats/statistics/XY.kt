@@ -46,8 +46,10 @@ class XY : Fragment() {
 //Part2
         // create a couple arrays of y-values to plot:
         // create a couple arrays of y-values to plot:
-        val domain= ArrayList<Number>()
+        val domain1= ArrayList<Number>()
+        val domain=ArrayList<Number>()
         val value= ArrayList<Number>()
+        val value1= ArrayList<Number>()
         // turn the above arrays into XYSeries':
         // (Y_VALS_ONLY means use the element index as the x value)
 
@@ -60,17 +62,37 @@ class XY : Fragment() {
                 }
                 else {
                     for(i in db_raw_entities.indices) {
-                        if(i>0) {
+                        if(i==0) {
+                            value.add(db_raw_entities[1].millis-db_raw_entities[0].millis)
+                            db_raw_entities[0].id?.let { it1 -> domain.add(it1) }
+                        }
+                        if(i>0&& i%2==0 && db_raw_entities[i].millis-db_raw_entities[i-1].millis>0) {
                            value.add(db_raw_entities[i].millis-db_raw_entities[i-1].millis)
                             db_raw_entities[i].id?.let { it1 -> domain.add(it1) }
                         }
+                        if(i>0&& i%2!=0 && db_raw_entities[i].millis-db_raw_entities[i-1].millis>0) {
+                            value1.add(db_raw_entities[i].millis-db_raw_entities[i-1].millis)
+                            db_raw_entities[i].id?.let { it1 -> domain1.add(it1) }
+                        }
+
                     }
                     Log.d("debug12", db_raw_entities[0].millis.toString())
-                    val series1: XYSeries = SimpleXYSeries(domain,value, "Series1")
+                    val series1: XYSeries = SimpleXYSeries(domain,value, "Work")
                     val series1Format = LineAndPointFormatter(context, R.xml.line_point_formatter_with_labels)
                     series1Format.interpolationParams = CatmullRomInterpolator.Params(10, CatmullRomInterpolator.Type.Centripetal)
                     plot.addSeries(series1, series1Format)
 
+                    val series2: XYSeries = SimpleXYSeries(domain1,value1, "Pause")
+                    val series2Format =
+                        LineAndPointFormatter(context, R.xml.line_point_formatter_with_labels_2)
+                    series2Format.linePaint.pathEffect = DashPathEffect(
+                        floatArrayOf( // always use DP when specifying pixel sizes, to keep things consistent across devices:
+                            PixelUtils.dpToPix(20F),
+                            PixelUtils.dpToPix(15F)
+                        ), 0F
+                    )
+                    series2Format.interpolationParams = CatmullRomInterpolator.Params(10, CatmullRomInterpolator.Type.Centripetal)
+                    plot.addSeries(series2, series2Format)
                 }
             }
         })
@@ -87,7 +109,7 @@ class XY : Fragment() {
        // val series1Format =
         //    LineAndPointFormatter(context, R.xml.line_point_formatter_with_labels)
 
-        val series2Format =
+       /* val series2Format =
             LineAndPointFormatter(context, R.xml.line_point_formatter_with_labels_2)
 
         // add an "dash" effect to the series2 line:
@@ -113,6 +135,6 @@ class XY : Fragment() {
 
         // add a new series' to the xyplot:
         //plot.addSeries(series1, series1Format)
-        //plot.addSeries(series2, series2Format)
+        //plot.addSeries(series2, series2Format)*/
     }
 }
