@@ -11,8 +11,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:text="@string/fragment_about"
-        tools:layout_editor_absoluteX="-14dp"
-        tools:layout_editor_absoluteY="-276dp" />
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp" />
 
     <TextView
         android:id="@+id/textView"
