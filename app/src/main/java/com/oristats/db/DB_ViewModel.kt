@@ -93,6 +93,10 @@ class DB_ViewModel(application: Application) : AndroidViewModel(application) {
         repository.tag_rename_by_id(new_name,tag_id)
     }
 
+    fun tag_change_folder_by_id(new_folder: Int, tag_id: Int) = viewModelScope.launch(Dispatchers.IO){
+        repository.tag_change_folder_by_id(new_folder, tag_id)
+    }
+
     fun tag_load_by_folder_id(id: Int) : LiveData<List<DB_Tag_Entity>> {
         return repository.tag_load_by_folder_id(id)
     }
@@ -124,6 +128,10 @@ class DB_ViewModel(application: Application) : AndroidViewModel(application) {
 
     fun folder_rename_path_by_id(new_path: String, id: Int) = viewModelScope.launch(Dispatchers.IO){
         repository.folder_rename_path_by_id(new_path,id)
+    }
+
+    fun folder_change_folder_by_id(new_folder: Int, id: Int) = viewModelScope.launch(Dispatchers.IO){
+        repository.folder_change_folder_by_id(new_folder,id)
     }
 
 

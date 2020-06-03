@@ -139,6 +139,8 @@ class Tag_ListAdapter internal constructor(
                         if(mCtx is MainActivity){
                             mCtx.db_ViewModel.tagMode = "move"
                             fragInterface.updateButtons(mCtx.db_ViewModel.tagMode)
+                            mCtx.db_ViewModel.moved_tag = current.id
+                            fragInterface.updateTags()
                         }
                     }
                 }
@@ -191,7 +193,7 @@ class Tag_ListAdapter internal constructor(
                         dialogview.button_folder_entry_save.setOnClickListener{
                             alertDialog.dismiss()
                             val new_name = dialogview.new_folder_name.text.toString()
-                            val new_path = "${current.folder_path.dropLastWhile { it != '/' }}$new_name"
+                            val new_path = "${current.folder_path.dropLast(1).dropLastWhile { it != '/' }}$new_name/"
                             if(mCtx is MainActivity){
                                 mCtx.db_ViewModel.folder_rename_by_id(new_name,current.id!!)
                                 mCtx.db_ViewModel.folder_rename_path_by_id(new_path,current.id!!)
@@ -203,6 +205,8 @@ class Tag_ListAdapter internal constructor(
                         if (mCtx is MainActivity) {
                             mCtx.db_ViewModel.tagMode = "move"
                             fragInterface.updateButtons(mCtx.db_ViewModel.tagMode)
+                            mCtx.db_ViewModel.moved_folder = current.id
+                            fragInterface.updateFolders()
                         }
                     }
                 }

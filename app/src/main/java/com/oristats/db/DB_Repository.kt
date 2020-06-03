@@ -61,6 +61,10 @@ class DB_Repository(private val db_Raw_Dao: DB_Raw_Dao,
         db_Tag_Dao.renameById(new_name,tag_id)
     }
 
+    suspend fun  tag_change_folder_by_id(new_folder: Int, tag_id: Int){
+        db_Tag_Dao.changeFolderById(new_folder,tag_id)
+    }
+
     fun tag_load_by_folder_id(id: Int) : LiveData<List<DB_Tag_Entity>> {
         Log.d("teste","Repository $id")
         return db_Tag_Dao.loadByFolderId(id)
@@ -94,6 +98,10 @@ class DB_Repository(private val db_Raw_Dao: DB_Raw_Dao,
 
     suspend fun folder_rename_path_by_id(new_path: String, id: Int){
         db_Tag_Folder_Dao.renamePathById(new_path,id)
+    }
+
+    suspend fun  folder_change_folder_by_id(new_folder:Int , id: Int){
+        db_Tag_Folder_Dao.changeFolderById(new_folder,id)
     }
 
     // COMBINED OPERATIONS, BECAUSE OF COROUTINES: Coroutines are blocks executed on a different thread, so I have to send all the information at once.

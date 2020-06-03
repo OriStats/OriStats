@@ -142,14 +142,36 @@ class Tag_Fragment : Fragment(), Tag_ListAdapter.frag_interface {
 
         val buttonOk: Button = view.findViewById<Button>(R.id.ok_button)
         buttonOk.setOnClickListener{
+            if(db_ViewModel.tagMode == "move"){
+                if(db_ViewModel.moved_tag != null){
+                    db_ViewModel.tag_change_folder_by_id(db_ViewModel.current_folder!!,db_ViewModel.moved_tag!!)
+                    db_ViewModel.moved_tag = null
+                }
+                else if(db_ViewModel.moved_folder != null){
+                    updateFolderPaths(db_ViewModel.moved_folder,db_ViewModel.current_path!!)
+                    db_ViewModel.folder_change_folder_by_id(db_ViewModel.current_folder!!, db_ViewModel.moved_folder!!)
+                }
+            }
             db_ViewModel.tagMode = "normal"
-           updateButtons(db_ViewModel.tagMode)
+            updateButtons(db_ViewModel.tagMode)
+            updateFolders()
+            updateTags()
         }
 
         val buttonCancel: Button = view.findViewById<Button>(R.id.cancel_button)
         buttonCancel.setOnClickListener {
+            if(db_ViewModel.tagMode == "move"){
+                if(db_ViewModel.moved_tag != null){
+                    db_ViewModel.moved_tag = null
+                }
+                if(db_ViewModel.moved_folder != null){
+                    db_ViewModel.moved_folder = null
+                }
+            }
             db_ViewModel.tagMode = "normal"
             updateButtons(db_ViewModel.tagMode)
+            updateFolders()
+            updateTags()
         }
 
         updateButtons(db_ViewModel.tagMode)
@@ -182,13 +204,23 @@ class Tag_Fragment : Fragment(), Tag_ListAdapter.frag_interface {
 
     override fun updateFolders() {
         if(adapter != null){
-            adapter!!.setDB_Folder_Entities(db_ViewModel.currentFolders.filter { it.folder_id == db_ViewModel.current_folder && it.id != 1})
+            if(db_ViewModel.tagMode == "move" && db_ViewModel.moved_folder != null){
+                adapter!!.setDB_Folder_Entities(db_ViewModel.currentFolders.filter { it.folder_id == db_ViewModel.current_folder && it.id != 1 && it.id != db_ViewModel.moved_folder})
+            }
+            else {
+                adapter!!.setDB_Folder_Entities(db_ViewModel.currentFolders.filter { it.folder_id == db_ViewModel.current_folder && it.id != 1 })
+            }
         }
     }
 
     override fun updateTags() {
         if(adapter != null){
-            adapter!!.setDB_Tag_Entities(db_ViewModel.currentTags.filter { it.folder_id == db_ViewModel.current_folder})
+            if(db_ViewModel.tagMode == "move" && db_ViewModel.moved_tag != null){
+                adapter!!.setDB_Tag_Entities(db_ViewModel.currentTags.filter { it.folder_id == db_ViewModel.current_folder && it.id != db_ViewModel.moved_tag})
+            }
+            else {
+                adapter!!.setDB_Tag_Entities(db_ViewModel.currentTags.filter { it.folder_id == db_ViewModel.current_folder })
+            }
         }
     }
 
@@ -232,5 +264,13 @@ class Tag_Fragment : Fragment(), Tag_ListAdapter.frag_interface {
                buttonCancel.visibility = View.VISIBLE
            }
        }
+    }
+
+    private fun updateFolderPaths(folder_id: Int?,parent_path:String){
+        val folder = db_ViewModel.currentFolders.filter{it.id == folder_id}[0]
+        val newpath = "$parent_path${folder.folder_name}/"
+        db_ViewModel.folder_rename_path_by_id(newpath,folder_id!!)
+        val insideFolders = db_ViewModel.currentFolders.filter { it.folder_id == folder_id }
+        insideFolders.forEach { updateFolderPaths(it.id,newpath) }
     }
 }

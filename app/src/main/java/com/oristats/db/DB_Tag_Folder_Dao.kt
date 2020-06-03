@@ -31,4 +31,7 @@ interface DB_Tag_Folder_Dao {
 
     @Query("UPDATE tag_folder_table SET folder_path = :new_path WHERE id = :current_id")
     suspend fun renamePathById(new_path: String, current_id: Int)
+
+    @Query("UPDATE tag_folder_table SET folder_id = :new_folder_id WHERE id = :current_id")
+    suspend fun changeFolderById(new_folder_id: Int, current_id: Int)
 }
