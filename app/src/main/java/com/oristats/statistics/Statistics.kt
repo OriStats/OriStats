@@ -10,11 +10,13 @@ import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.oristats.MainActivity
 import com.oristats.R
+import com.oristats.db.DB_ViewModel
 
 
 class Statistics : Fragment() {
 
     private lateinit var statisticsStateAdapter: StatisticsStateAdapter
+    private lateinit var db_Viewmodel: DB_ViewModel
     private lateinit var viewPager: ViewPager2
     private lateinit var tabLayout: TabLayout
 
@@ -26,7 +28,7 @@ class Statistics : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
+        db_Viewmodel = (activity as MainActivity).db_ViewModel
         return inflater.inflate(R.layout.statistics_fragment, container, false)
     }
 
@@ -48,6 +50,11 @@ class Statistics : Fragment() {
                 //Why '_'? Because warning: "Parameter 'tab' is never used, could be renamed to _"
             }).attach()
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+        db_Viewmodel.tagMode = "normal"
     }
 
 }

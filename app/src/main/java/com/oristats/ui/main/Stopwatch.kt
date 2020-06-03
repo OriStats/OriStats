@@ -60,6 +60,11 @@ class Stopwatch : Fragment() {
             })
     }
 
+    override fun onResume() {
+        super.onResume()
+        db_ViewModel.tagMode = "normal"
+    }
+
     // Maintenance Functions
 
     private fun RestoreChrono () {

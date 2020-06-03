@@ -12,6 +12,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
+import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
@@ -139,6 +140,19 @@ class Tag_Fragment : Fragment(), Tag_ListAdapter.frag_interface {
             }
         }
 
+        val buttonOk: Button = view.findViewById<Button>(R.id.ok_button)
+        buttonOk.setOnClickListener{
+            db_ViewModel.tagMode = "normal"
+           updateButtons(db_ViewModel.tagMode)
+        }
+
+        val buttonCancel: Button = view.findViewById<Button>(R.id.cancel_button)
+        buttonCancel.setOnClickListener {
+            db_ViewModel.tagMode = "normal"
+            updateButtons(db_ViewModel.tagMode)
+        }
+
+        updateButtons(db_ViewModel.tagMode)
         return view
     }
 
@@ -153,6 +167,9 @@ class Tag_Fragment : Fragment(), Tag_ListAdapter.frag_interface {
     override fun onResume() {
         super.onResume()
         (activity as MainActivity).supportActionBar?.title = getString(R.string.app_name)
+        if(db_ViewModel.tagMode == "normal"){
+            updateButtons("normal")
+        }
 
     }
 
@@ -173,5 +190,47 @@ class Tag_Fragment : Fragment(), Tag_ListAdapter.frag_interface {
         if(adapter != null){
             adapter!!.setDB_Tag_Entities(db_ViewModel.currentTags.filter { it.folder_id == db_ViewModel.current_folder})
         }
+    }
+
+    override fun updateButtons(situation: String?){
+        val tag_fab_add = view?.findViewById<FloatingActionButton>(R.id.db_tag_fab_add)
+        val tag_fab_reset = view?.findViewById<FloatingActionButton>(R.id.db_tag_fab_reset)
+        val folder_fab_add = view?.findViewById<FloatingActionButton>(R.id.db_tag_folder_fab_add)
+        val buttonOk: Button? = view?.findViewById<Button>(R.id.ok_button)
+        val buttonCancel: Button? = view?.findViewById<Button>(R.id.cancel_button)
+        if(situation == "normal"){
+            if (tag_fab_add != null) {
+                tag_fab_add.visibility = View.VISIBLE
+            }
+            if (tag_fab_reset != null) {
+                tag_fab_reset.visibility = View.VISIBLE
+            }
+            if (folder_fab_add != null) {
+                folder_fab_add.visibility = View.VISIBLE
+            }
+            if (buttonOk != null) {
+                buttonOk.visibility = View.INVISIBLE
+            }
+            if (buttonCancel != null) {
+                buttonCancel.visibility = View.INVISIBLE
+            }
+        }
+       if (situation == "move"){
+           if (tag_fab_add != null) {
+               tag_fab_add.visibility = View.INVISIBLE
+           }
+           if (tag_fab_reset != null) {
+               tag_fab_reset.visibility = View.INVISIBLE
+           }
+           if (folder_fab_add != null) {
+               folder_fab_add.visibility = View.INVISIBLE
+           }
+           if (buttonOk != null) {
+               buttonOk.visibility = View.VISIBLE
+           }
+           if (buttonCancel != null) {
+               buttonCancel.visibility = View.VISIBLE
+           }
+       }
     }
 }

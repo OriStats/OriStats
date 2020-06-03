@@ -78,6 +78,7 @@ class Tag_ListAdapter internal constructor(
         fun updateTitle()
         fun updateFolders()
         fun updateTags()
+        fun updateButtons(situation: String? = null)
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
@@ -134,8 +135,12 @@ class Tag_ListAdapter internal constructor(
                             Toast.makeText(mCtx,"New name: "+ new_name,Toast.LENGTH_SHORT).show()
                         }
                     }
-                    R.id.tag_edit_move ->
-                        Toast.makeText(mCtx,"You Clicked "+item.title,Toast.LENGTH_SHORT).show()
+                    R.id.tag_edit_move ->{
+                        if(mCtx is MainActivity){
+                            mCtx.db_ViewModel.tagMode = "move"
+                            fragInterface.updateButtons(mCtx.db_ViewModel.tagMode)
+                        }
+                    }
                 }
                 true
             })
@@ -194,8 +199,12 @@ class Tag_ListAdapter internal constructor(
                             Toast.makeText(mCtx,"New name: $new_name\nNew path: $new_path",Toast.LENGTH_SHORT).show()
                         }
                     }
-                    R.id.folder_edit_move ->
-                        Toast.makeText(mCtx,"You Clicked "+item.title,Toast.LENGTH_SHORT).show()
+                    R.id.folder_edit_move -> {
+                        if (mCtx is MainActivity) {
+                            mCtx.db_ViewModel.tagMode = "move"
+                            fragInterface.updateButtons(mCtx.db_ViewModel.tagMode)
+                        }
+                    }
                 }
                 true
             })

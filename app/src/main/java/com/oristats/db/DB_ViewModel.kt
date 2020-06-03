@@ -20,6 +20,9 @@ class DB_ViewModel(application: Application) : AndroidViewModel(application) {
     lateinit var currentTags: List<DB_Tag_Entity>
     var current_folder: Int?
     var current_path: String?
+    var moved_folder: Int?
+    var moved_tag: Int?
+    var tagMode: String
 
     init {
         val raws_Dao = DB_Room.getDatabase(application, viewModelScope).db_Raw_Dao()
@@ -34,6 +37,9 @@ class DB_ViewModel(application: Application) : AndroidViewModel(application) {
 
         current_folder = 1
         current_path = "/"
+        moved_folder = null
+        moved_tag = null
+        tagMode = "normal"
     }
 
     fun raw_insert(db_Raw_entity: DB_Raw_Entity) = viewModelScope.launch(Dispatchers.IO) {
