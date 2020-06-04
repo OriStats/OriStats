@@ -10,4 +10,5 @@
     <color name="White">#ffffff</color>
     <color name="Black">#000000</color>
     <color name="buttonLabel">#FFFFFF</color>
+    <color name="selected">#0394fc</color>
 </resources>

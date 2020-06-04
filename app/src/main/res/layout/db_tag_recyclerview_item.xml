@@ -42,4 +42,15 @@
         app:srcCompat="@drawable/ic_edit_24dp" />
 
 
+    <Button
+        android:id="@+id/select_tag"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="@id/db_tag_recyclerview_textView"
+        app:layout_constraintTop_toTopOf="@id/db_tag_recyclerview_textView"
+        app:layout_constraintLeft_toLeftOf="@id/imageView"
+        app:layout_constraintRight_toRightOf="@id/db_tag_recyclerview_textView"
+        android:background="@color/ap_transparent"
+        />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

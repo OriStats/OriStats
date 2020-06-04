@@ -8,10 +8,13 @@ import android.view.ViewGroup
 import androidx.constraintlayout.widget.ConstraintLayout.LayoutParams.PARENT_ID
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.NavHostFragment
 import com.oristats.MainActivity
+import com.oristats.NavGraphDirections
 import com.oristats.R
 import com.oristats.db.DB_Raw_Entity
 import com.oristats.db.DB_ViewModel
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.stopwatch_fragment.*
 
 
@@ -58,6 +61,26 @@ class Stopwatch : Fragment() {
                     if(!stopwatch_ViewModel.getStart()) StopChrono()
                 }
             })
+
+        tagselect.setOnClickListener{
+            db_ViewModel.tagMode = "chronoSelect"
+            val action = NavGraphDirections.actionGlobalTags()
+            NavHostFragment.findNavController(nav_host_fragment).navigate(action)
+        }
+
+        if(db_ViewModel.chronoTag == null){
+            taginfo.text = context!!.resources.getString(R.string.notagchrono)
+        }
+        else{
+            val tag = db_ViewModel.currentTags.filter { it.id == db_ViewModel.chronoTag }
+            if(tag.size ==1) {
+                taginfo.text = tag[0].path_name
+            }
+            else{
+                db_ViewModel.chronoTag = null
+                taginfo.text = context!!.resources.getString(R.string.notagchrono)
+            }
+        }
     }
 
     override fun onResume() {
@@ -133,7 +156,12 @@ class Stopwatch : Fragment() {
 
         // Store to DB
         stopwatch_ViewModel.setMainStartTime(System.currentTimeMillis())
-        db_ViewModel.raw_insert_and_main_insert(DB_Raw_Entity(MillisForDB()),stopwatch_ViewModel.getMainStartTime(),-1,false)
+        if(db_ViewModel.chronoTag != null) {
+            db_ViewModel.raw_insert_and_main_insert( DB_Raw_Entity(MillisForDB()), stopwatch_ViewModel.getMainStartTime(), db_ViewModel.chronoTag!!, false )
+        }
+        else{
+            db_ViewModel.raw_insert_and_main_insert( DB_Raw_Entity(MillisForDB()), stopwatch_ViewModel.getMainStartTime(), -1, false )
+        }
         // Choose tag_id and minus_one_day UI not implemented yet. Using -1 and false for default. "-1" means tagless.
     }
 

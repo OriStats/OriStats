@@ -18,11 +18,14 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.oristats.MainActivity
+import com.oristats.NavGraphDirections
 import com.oristats.R
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.db_tag_folder_new_entry.view.*
 import kotlinx.android.synthetic.main.db_tag_new_entry_activity.view.*
 import kotlinx.android.synthetic.main.db_tag_rename_activity.view.*
@@ -152,6 +155,28 @@ class Tag_Fragment : Fragment(), Tag_ListAdapter.frag_interface {
                     db_ViewModel.folder_change_folder_by_id(db_ViewModel.current_folder!!, db_ViewModel.moved_folder!!)
                 }
             }
+            else if(db_ViewModel.tagMode == "chronoSelect"){
+                if(db_ViewModel.chronoTag_temp == null){
+                    Toast.makeText(context,"No tag selected",Toast.LENGTH_LONG).show()
+                }
+                else{
+                    db_ViewModel.chronoTag = db_ViewModel.chronoTag_temp
+                    db_ViewModel.chronoTag_temp = null
+                    val action = NavGraphDirections.actionGlobalStopwatch()
+                    NavHostFragment.findNavController(nav_host_fragment).navigate(action)
+                }
+            }
+            else if(db_ViewModel.tagMode == "statSelect"){
+                if(db_ViewModel.statTags_temp.size == 0){
+                    Toast.makeText(context,"No tags selected",Toast.LENGTH_LONG).show()
+                }
+                else{
+                    db_ViewModel.statTags = db_ViewModel.statTags_temp.toIntArray()
+                    db_ViewModel.statTags_temp.clear()
+                    val action = NavGraphDirections.actionGlobalStatistics()
+                    NavHostFragment.findNavController(nav_host_fragment).navigate(action)
+                }
+            }
             db_ViewModel.tagMode = "normal"
             updateButtons(db_ViewModel.tagMode)
             updateFolders()
@@ -167,6 +192,16 @@ class Tag_Fragment : Fragment(), Tag_ListAdapter.frag_interface {
                 if(db_ViewModel.moved_folder != null){
                     db_ViewModel.moved_folder = null
                 }
+            }
+            else if(db_ViewModel.tagMode == "chronoSelect"){
+                db_ViewModel.chronoTag_temp = null
+                val action = NavGraphDirections.actionGlobalStopwatch()
+                NavHostFragment.findNavController(nav_host_fragment).navigate(action)
+            }
+            else if(db_ViewModel.tagMode == "statSelect"){
+                db_ViewModel.statTags_temp.clear()
+                val action = NavGraphDirections.actionGlobalStatistics()
+                NavHostFragment.findNavController(nav_host_fragment).navigate(action)
             }
             db_ViewModel.tagMode = "normal"
             updateButtons(db_ViewModel.tagMode)
@@ -189,9 +224,7 @@ class Tag_Fragment : Fragment(), Tag_ListAdapter.frag_interface {
     override fun onResume() {
         super.onResume()
         (activity as MainActivity).supportActionBar?.title = getString(R.string.app_name)
-        if(db_ViewModel.tagMode == "normal"){
-            updateButtons("normal")
-        }
+        updateButtons(db_ViewModel.tagMode)
 
     }
 
@@ -247,7 +280,7 @@ class Tag_Fragment : Fragment(), Tag_ListAdapter.frag_interface {
                 buttonCancel.visibility = View.INVISIBLE
             }
         }
-       if (situation == "move"){
+       if (situation == "move" || situation == "chronoSelect" || situation == "statSelect"){
            if (tag_fab_add != null) {
                tag_fab_add.visibility = View.INVISIBLE
            }
@@ -266,7 +299,7 @@ class Tag_Fragment : Fragment(), Tag_ListAdapter.frag_interface {
        }
     }
 
-    private fun updateFolderPaths(folder_id: Int?,parent_path:String){
+    override fun updateFolderPaths(folder_id: Int?,parent_path:String){
         val folder = db_ViewModel.currentFolders.filter{it.id == folder_id}[0]
         val newpath = "$parent_path${folder.folder_name}/"
         db_ViewModel.folder_rename_path_by_id(newpath,folder_id!!)

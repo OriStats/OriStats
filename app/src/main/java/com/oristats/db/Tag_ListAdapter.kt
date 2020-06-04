@@ -9,6 +9,7 @@ import android.graphics.Color
 import android.util.DisplayMetrics
 import android.view.*
 import android.widget.*
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.oristats.MainActivity
 import com.oristats.R
@@ -32,6 +33,8 @@ class Tag_ListAdapter internal constructor(
     inner class DB_Tag_ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val db_Tag_ItemView: TextView = itemView.findViewById(R.id.db_tag_recyclerview_textView)
         val Tag_edit: ImageButton = itemView.findViewById(R.id.edit_tag_button)
+        val Tag_select: Button = itemView.findViewById(R.id.select_tag)
+        val Tag_icon: ImageView = itemView.findViewById(R.id.imageView)
     }
 
     inner class DB_Folder_ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
@@ -79,6 +82,7 @@ class Tag_ListAdapter internal constructor(
         fun updateFolders()
         fun updateTags()
         fun updateButtons(situation: String? = null)
+        fun updateFolderPaths(folder_id: Int?, parent_path:String)
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
@@ -88,8 +92,16 @@ class Tag_ListAdapter internal constructor(
         }
     }
 
+    @SuppressLint("ResourceAsColor")
     private fun onBindViewHolderTag(holder: DB_Tag_ViewHolder, position: Int) {
         val current = db_tag_entities[position-nFolders]
+        if (mCtx is MainActivity){
+            if((current.id != mCtx.db_ViewModel.chronoTag_temp && mCtx.db_ViewModel.tagMode == "chronoSelect") || mCtx.db_ViewModel.tagMode == "normal" || mCtx.db_ViewModel.tagMode == "move"){
+                holder.Tag_icon.setBackgroundColor(ContextCompat.getColor(mCtx,R.color.colorSecondary))
+                holder.Tag_edit.setBackgroundColor(ContextCompat.getColor(mCtx,R.color.colorSecondary))
+                holder.db_Tag_ItemView.setBackgroundColor(ContextCompat.getColor(mCtx,R.color.colorSecondary))
+            }
+        }
         holder.db_Tag_ItemView.setText(holder.db_Tag_ItemView.getContext().getResources().getString(R.string.db_tag_item_view,current.id,current.path_name))
         holder.Tag_edit.setOnClickListener { //creating a popup menu
             val popup = PopupMenu(mCtx, holder.Tag_edit)
@@ -149,6 +161,25 @@ class Tag_ListAdapter internal constructor(
             //displaying the popup
             popup.show()
         }
+        holder.Tag_select.setOnClickListener{
+            if(mCtx is MainActivity){
+                if (mCtx.db_ViewModel.tagMode == "chronoSelect") {
+                    mCtx.db_ViewModel.chronoTag_temp = current.id
+                    holder.Tag_icon.setBackgroundColor(ContextCompat.getColor(mCtx,R.color.selected))
+                    holder.Tag_edit.setBackgroundColor(ContextCompat.getColor(mCtx,R.color.selected))
+                    holder.db_Tag_ItemView.setBackgroundColor(ContextCompat.getColor(mCtx,R.color.selected))
+                    fragInterface.updateTags()
+                }
+                else if(mCtx.db_ViewModel.tagMode == "statSelect"){
+                    mCtx.db_ViewModel.statTags_temp.add(current.id!!)
+                    holder.Tag_icon.setBackgroundColor(ContextCompat.getColor(mCtx,R.color.selected))
+                    holder.Tag_edit.setBackgroundColor(ContextCompat.getColor(mCtx,R.color.selected))
+                    holder.db_Tag_ItemView.setBackgroundColor(ContextCompat.getColor(mCtx,R.color.selected))
+                    fragInterface.updateTags()
+                }
+            }
+        }
+
     }
 
     private fun onBindViewHolderFolder(holder: DB_Folder_ViewHolder, position: Int) {
@@ -197,6 +228,7 @@ class Tag_ListAdapter internal constructor(
                             if(mCtx is MainActivity){
                                 mCtx.db_ViewModel.folder_rename_by_id(new_name,current.id!!)
                                 mCtx.db_ViewModel.folder_rename_path_by_id(new_path,current.id!!)
+                                mCtx.db_ViewModel.currentFolders.filter { it.folder_id == current.id }.forEach { fragInterface.updateFolderPaths(it.id,new_path) }
                             }
                             Toast.makeText(mCtx,"New name: $new_name\nNew path: $new_path",Toast.LENGTH_SHORT).show()
                         }
@@ -212,6 +244,15 @@ class Tag_ListAdapter internal constructor(
                 }
                 true
             })
+            holder.Folder_select.setOnClickListener{
+                if(mCtx is MainActivity){
+                    mCtx.db_ViewModel.current_folder = current.id
+                    mCtx.db_ViewModel.current_path = current.folder_path
+                    fragInterface.updateTitle()
+                    fragInterface.updateFolders()
+                    fragInterface.updateTags()
+                }
+            }
             //displaying the popup
             popup.show()
         }

@@ -111,14 +111,31 @@
         android:visibility="invisible"
         tools:visibility="visible"/>
 
-    <Button
-        android:id="@+id/button"
+    <ImageButton
+        android:id="@+id/tagselect"
+        android:layout_width="60dp"
+        android:layout_height="50dp"
+        android:background="@android:color/transparent"
+        android:scaleType="fitCenter"
+        android:src="@drawable/ic_tags"
+        android:contentDescription="@string/tag"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fabPlayPause"
+        app:layout_constraintVertical_bias="0.3" />
+
+    <TextView
+        android:id="@+id/taginfo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Button"
-        tools:layout_editor_absoluteX="34dp"
-        tools:layout_editor_absoluteY="544dp"
-        tools:ignore="MissingConstraints" />
+        android:text="@string/notagchrono"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tagselect"
+        app:layout_constraintVertical_bias="0.0" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 
