@@ -9,7 +9,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".db.Tag_New_Entry_Activity" />
+
+
+        <!-- splash screen -->
+        <activity android:name=".SplashActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+       <!-- <activity android:name=".db.Tag_New_Entry_Activity" />-->
         <activity android:name=".db.Main_New_Entry_Activity" />
         <activity android:name=".db.Raw_New_Entry_Activity" />
         <activity
@@ -17,13 +28,20 @@
             android:label="@string/app_name"
             android:theme="@style/AppTheme">
 
+
             <!-- Before three_dots_menu: android:theme="@style/AppTheme.NoActionBar" -->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
+               <!-- COMMENTED AFTER INTRODUCING SPLASH SCREEN-->
+               <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+                <!--ADDED AFTER THE SPLASH SCREEN-->
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>

@@ -57,14 +57,13 @@ class DB_ViewModel(application: Application) : AndroidViewModel(application) {
         repository.raw_delete_all()
     }
 
-    //added lastly
+
     fun raw_load_id(raw_ids: IntArray) : LiveData<List<DB_Raw_Entity>>
     {
         return repository.raw_load_id(raw_ids)
     }
 
 
-    //adicionado pelo mesquita
     fun get_millis(): LiveData<List<Long>>{
         return repository.get_millis()
     }
