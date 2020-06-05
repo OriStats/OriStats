@@ -2,12 +2,14 @@ package com.oristats.ui.main
 
 import android.os.Bundle
 import android.os.SystemClock
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.constraintlayout.widget.ConstraintLayout.LayoutParams.PARENT_ID
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.NavHostFragment
 import com.oristats.MainActivity
 import com.oristats.NavGraphDirections
@@ -22,6 +24,7 @@ class Stopwatch : Fragment() {
 
     private lateinit var stopwatch_ViewModel: Stopwatch_ViewModel
     private lateinit var db_ViewModel: DB_ViewModel
+    private var stopped: Boolean = true
 
     companion object {
         fun newInstance() = Stopwatch()
@@ -81,6 +84,18 @@ class Stopwatch : Fragment() {
                 taginfo.text = context!!.resources.getString(R.string.notagchrono)
             }
         }
+
+        db_ViewModel.allMains.observe(viewLifecycleOwner, Observer {
+            if (stopped){
+                db_ViewModel.currentMains = it
+            }
+        })
+
+        db_ViewModel.allRaws.observe(viewLifecycleOwner, Observer {
+            if (stopped){
+                db_ViewModel.currentRaws = it
+            }
+        })
     }
 
     override fun onResume() {
@@ -140,6 +155,7 @@ class Stopwatch : Fragment() {
 
     private fun StartChrono() {
         // Clean Reboot Correction
+        stopped = false
         stopwatch_ViewModel.setRebootCorrection(0)  // Necessary
 
         stopwatch_ViewModel.setLastPlay(SystemClock.elapsedRealtime())
@@ -199,6 +215,7 @@ class Stopwatch : Fragment() {
         stopwatch_ViewModel.setStart(true)
         stopwatch_ViewModel.setIsWorking(false)
         updateButtons("stop")
+        stopped = true
 
         // Store to DB
         db_ViewModel.raw_insert_and_main_update_end_raw_id(DB_Raw_Entity(MillisForDB()), stopwatch_ViewModel.getMainStartTime())

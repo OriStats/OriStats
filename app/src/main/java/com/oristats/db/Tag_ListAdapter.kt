@@ -89,6 +89,12 @@ class Tag_ListAdapter internal constructor(
         fun uncheckInside(folder_id: Int?)
     }
 
+    private fun checkuntagged(){
+        if(mCtx is MainActivity){
+            mCtx.db_ViewModel.allMains
+        }
+    }
+
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when(getItemViewType(position)){
             0 -> onBindViewHolderFolder(holder as DB_Folder_ViewHolder,position)

@@ -18,6 +18,8 @@ class DB_ViewModel(application: Application) : AndroidViewModel(application) {
 
     lateinit var currentFolders: List<DB_Tag_Folder_Entity>
     lateinit var currentTags: List<DB_Tag_Entity>
+    lateinit var currentMains: List<DB_Main_Entity>
+    lateinit var currentRaws: List<DB_Raw_Entity>
     var current_folder: Int?
     var current_path: String?
     var moved_folder: Int?
