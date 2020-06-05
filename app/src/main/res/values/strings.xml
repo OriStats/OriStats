@@ -85,4 +85,38 @@
     <string name="tag_edit_move">Move</string>
     <string name="tag_edit_rename">Rename</string>
     <string name="tag_edit_delete">Delete</string>
+
+    <!--Splash Screen-->
+    <string name="splash_title">ORISTATS</string>
+    <string name="splash_authors">Designed by: HMO, HRL, JML</string>
+
+    <!--About Page -->
+    <string name="project_title">The Project</string>
+    <string name="project_description_p1">
+        This project was created in the context of the course \"Innovation and Development Laboratory\" in the Engineering Physics degree at IST (Instituto Superior Técnico).\n
+        It was founded by three Engineering Physics students as a way for them to get in touch with the development of android apps.
+    </string>
+    <string name="project_description_p2">
+        The app is meant to help students, and workers in general, track their working time and time spent on breaks, in order to increase productivity.\n
+        This app will always be free and open sourced, without ads or in-app purchases except for donation purposes.
+    </string>
+    <string name="contributors_title">Contributors</string>
+    <string name="contributors_description">
+        Heitor Östherdahl - Developer\nHugo Lóio - Developer\nJoão Mesquita - Developer
+    </string>
+    <string name="licenses_title">Licenses</string>
+    <string name="license1">Oristats (project license)</string>
+    <string name="license1_description">Temos de escolher uma licensa</string>
+    <string name="license2">MPAndroidChart (third party library)</string>
+    <string name="license2_description">
+        Copyright 2020 Philipp Jahoda\n\n
+        Licensed under the Apache License, Version 2.0 (the "License");
+        you may not use this software except in compliance with the License.\n
+        You may obtain a copy of the License at\n\n
+        \ \ \ http://www.apache.org/licenses/LICENSE-2.0\n\n
+        Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an
+        "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n
+        See the License for the specific language governing permissions and limitations under the License.
+    </string>
+
 </resources>
