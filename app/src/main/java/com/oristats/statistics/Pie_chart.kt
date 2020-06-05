@@ -1,6 +1,5 @@
 package com.oristats.statistics
 
-import android.content.Context
 import android.graphics.Typeface
 import android.os.Bundle
 import android.util.Log
@@ -15,7 +14,6 @@ import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
 import com.github.mikephil.charting.formatter.PercentFormatter
-import com.github.mikephil.charting.utils.ColorTemplate
 import com.oristats.MainActivity
 import com.oristats.R
 import com.oristats.db.DB_ViewModel
@@ -47,85 +45,122 @@ class Pie_chart : Fragment() {
             R.string.fragment_pie_chart
         )
 
-        val xvalues = ArrayList<PieEntry>()
+        //val xvalues = ArrayList<PieEntry>()
+        val xvalues= mutableListOf<PieEntry>()
+
         db_ViewModel.allMains.observe(viewLifecycleOwner, Observer { db_main_entities ->
             db_main_entities?.let {
 
                 if (db_main_entities.isEmpty()) {
                     Log.d("debug1", "it's empty")
-                } else {
-                    var tag1=db_main_entities[1].tag_id
-                    Log.d("Checkup de tags", tag1.toString())
+
                 }
 
+                else if(db_main_entities.size==1) {
+                    Log.d("Checkpoint1", "it's 1")
+                    xvalues.add(PieEntry( 1f, "tag1"))
+                    piechart.setUsePercentValues(true)
+                    val dataSet = PieDataSet(xvalues, "")
+                    val data = PieData(dataSet)
+                    // In Percentage
+                    data.setValueFormatter(PercentFormatter())
+
+                    dataSet.setColors(
+                        resources.getColor(R.color.colorPrimaryDark),
+                        resources.getColor(R.color.Red),
+                        resources.getColor(R.color.Blue),
+                        resources.getColor(R.color.Black)
+                    )
+                    piechart.animateXY(500, 500);
+                    piechart.data = data
+                    piechart.description.text = ""
+                    piechart.isDrawHoleEnabled = false
+                    piechart.isRotationEnabled = false
+                    data.setValueTextSize(13f)
+                    piechart.notifyDataSetChanged();
+                }
+                else {
+                    with(xvalues){
+                        clear()}
+                    // var tag1=db_main_entities[1].tag_id
+                    //Log.d("Checkup de tags", tag1.toString())
 
 
-                db_ViewModel.allRaws.observe(viewLifecycleOwner, Observer { db_raw_entities ->
-                    db_raw_entities?.let {
-                        if (db_raw_entities.isEmpty()) {
-                            Log.d("debug1", "it's empty")
-                        } else {
-                            var pausa = 0f
-                            var work = 0f
-                            var total=0f
-for(j in db_main_entities.indices ) {
-    for (i in db_raw_entities.indices) {
-        if (i == 0) {
-            work += db_raw_entities[1].millis - db_raw_entities[0].millis
-        }
-        if (db_main_entities[j].start_raw_id < db_raw_entities[i].id!! && db_raw_entities[i].id!!< db_main_entities[j].end_raw_id)
-            if (i > 0 && i % 2 == 0 && db_raw_entities[i].millis - db_raw_entities[i - 1].millis > 0) {
-                work += db_raw_entities[i].millis - db_raw_entities[i - 1].millis
-            }
-        if (i > 0 && i % 2 != 0 && db_raw_entities[i].millis - db_raw_entities[i - 1].millis > 0) {
-            pausa += db_raw_entities[i].millis - db_raw_entities[i - 1].millis
-        }
+                    db_ViewModel.allRaws.observe(viewLifecycleOwner, Observer { db_raw_entities ->
+                        db_raw_entities?.let {
+                            if (db_raw_entities.isEmpty()) {
+                                Log.d("debug1", "it's empty")
+                            } else {
+                                var pausa = 0f
+                                var work = 0f
+                                var total = 0f
 
+                                for (j in db_main_entities.indices) {
+                                    for (i in db_raw_entities.indices) {
+                                        if (i == 0) {
+                                            work += db_raw_entities[1].millis - db_raw_entities[0].millis
+                                        }
+                                        if (db_main_entities[j].start_raw_id < db_raw_entities[i].id!! && db_raw_entities[i].id!! < db_main_entities[j].end_raw_id)
+                                            if (i > 0 && i % 2 == 0 && db_raw_entities[i].millis - db_raw_entities[i - 1].millis > 0) {
+                                                work += db_raw_entities[i].millis - db_raw_entities[i - 1].millis
+                                            }
+                                        if (i > 0 && i % 2 != 0 && db_raw_entities[i].millis - db_raw_entities[i - 1].millis > 0) {
+                                            pausa += db_raw_entities[i].millis - db_raw_entities[i - 1].millis
+                                        }
+
+
+                                    }
+                                    total += work
+                                    Log.d("CHECKPOINT DOPIECHART: ", total.toString())
+                                    Log.d("CHECKPOINT PIECHART2: ", work.toString())
+                                    xvalues.add(PieEntry(work / (total) * 100, "Work_j"))
+                                }
+                                piechart.setUsePercentValues(true)
+                                val dataSet = PieDataSet(xvalues, "")
+                                val data = PieData(dataSet)
+                                // In Percentage
+                                data.setValueFormatter(PercentFormatter())
+
+                                dataSet.setColors(
+                                    resources.getColor(R.color.colorPrimaryDark),
+                                    resources.getColor(R.color.Red),
+                                    resources.getColor(R.color.Blue),
+                                    resources.getColor(R.color.Black)
+                                )
+                                piechart.animateXY(500, 500);
+                                piechart.data = data
+                                piechart.description.text = ""
+                                piechart.isDrawHoleEnabled = false
+                                piechart.isRotationEnabled = false
+                                data.setValueTextSize(13f)
+                                piechart.notifyDataSetChanged();
+                                // piechart.invalidate();
+
+                            }
+                        }
+
+
+                    })
+
+                }  }})
 
     }
-    total+=work
-    xvalues.add(PieEntry(work / (total) * 100, "Work_j"))
-}
-                            piechart.setUsePercentValues(true)
-                            val dataSet = PieDataSet(xvalues, "")
-                            val data = PieData(dataSet)
-                            // In Percentage
-                            data.setValueFormatter(PercentFormatter())
 
-                            dataSet.setColors(resources.getColor(R.color.colorPrimaryDark), resources.getColor(R.color.Red),resources.getColor(R.color.Blue),resources.getColor(R.color.Black))
-                            piechart.animateXY(500, 500);
-                            piechart.data = data
-                            piechart.description.text = ""
-                            piechart.isDrawHoleEnabled = false
-                            piechart.isRotationEnabled = false
-                            data.setValueTextSize(13f)
+    /* piechart.setUsePercentValues(true)
+     val xvalues = ArrayList<PieEntry>()
+     xvalues.add(PieEntry(34.0f, "London"))
+     xvalues.add(PieEntry(28.2f, "Coventry"))
+     xvalues.add(PieEntry(37.9f, "Manchester"))
+     val dataSet = PieDataSet(xvalues, "")
+     val data = PieData(dataSet)
+     // In Percentage
+     data.setValueFormatter(PercentFormatter())
 
-
-                        }
-                    }
-
-
-                })
-
-            }})
-
-        }
-
-       /* piechart.setUsePercentValues(true)
-        val xvalues = ArrayList<PieEntry>()
-        xvalues.add(PieEntry(34.0f, "London"))
-        xvalues.add(PieEntry(28.2f, "Coventry"))
-        xvalues.add(PieEntry(37.9f, "Manchester"))
-        val dataSet = PieDataSet(xvalues, "")
-        val data = PieData(dataSet)
-        // In Percentage
-        data.setValueFormatter(PercentFormatter())
-
-        piechart.data = data
-        piechart.description.text = ""
-        piechart.isDrawHoleEnabled = false
-        piechart.isRotationEnabled = false
-        data.setValueTextSize(13f)
+     piechart.data = data
+     piechart.description.text = ""
+     piechart.isDrawHoleEnabled = false
+     piechart.isRotationEnabled = false
+     data.setValueTextSize(13f)
 */
 
 
@@ -166,7 +201,7 @@ for(j in db_main_entities.indices ) {
 
 
 
-//Update action bar title when viewpager focuses this fragment
+    //Update action bar title when viewpager focuses this fragment
     override fun onResume() {
         super.onResume()
         (activity as MainActivity).supportActionBar?.title = getString(
