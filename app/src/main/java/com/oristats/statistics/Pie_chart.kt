@@ -47,7 +47,7 @@ class Pie_chart : Fragment() {
             R.string.fragment_pie_chart
         )
 
-
+        val xvalues = ArrayList<PieEntry>()
         db_ViewModel.allMains.observe(viewLifecycleOwner, Observer { db_main_entities ->
             db_main_entities?.let {
 
@@ -67,6 +67,7 @@ class Pie_chart : Fragment() {
                         } else {
                             var pausa = 0f
                             var work = 0f
+                            var total=0f
 for(j in db_main_entities.indices ) {
     for (i in db_raw_entities.indices) {
         if (i == 0) {
@@ -82,18 +83,16 @@ for(j in db_main_entities.indices ) {
 
 
     }
+    total+=work
+    xvalues.add(PieEntry(work / (total) * 100, "Work_j"))
 }
                             piechart.setUsePercentValues(true)
-                            val xvalues = ArrayList<PieEntry>()
-                            xvalues.add(PieEntry(pausa / (pausa + work) * 100, "Work1"))
-                            xvalues.add(PieEntry(work / (pausa + work) * 100, "Work2"))
-                            //xvalues.add(PieEntry(37.9f, "Manchester"))
                             val dataSet = PieDataSet(xvalues, "")
                             val data = PieData(dataSet)
                             // In Percentage
                             data.setValueFormatter(PercentFormatter())
 
-                            dataSet.setColors(R.color.colorPrimaryDark, R.color.Red)
+                            dataSet.setColors(resources.getColor(R.color.colorPrimaryDark), resources.getColor(R.color.Red),resources.getColor(R.color.Blue),resources.getColor(R.color.Black))
                             piechart.animateXY(500, 500);
                             piechart.data = data
                             piechart.description.text = ""
