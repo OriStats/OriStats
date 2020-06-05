@@ -48,64 +48,63 @@ class Pie_chart : Fragment() {
         //val xvalues = ArrayList<PieEntry>()
         val xvalues= mutableListOf<PieEntry>()
 
-        db_ViewModel.allMains.observe(viewLifecycleOwner, Observer { db_main_entities ->
-            db_main_entities?.let {
 
-                if (db_main_entities.isEmpty()) {
+
+
+                if (db_ViewModel.currentMains.isEmpty()) {
                     Log.d("debug1", "it's empty")
 
                 }
-
-                else if(db_main_entities.size==1) {
-                    Log.d("Checkpoint1", "it's 1")
-                    xvalues.add(PieEntry( 1f, "tag1"))
-                    piechart.setUsePercentValues(true)
-                    val dataSet = PieDataSet(xvalues, "")
-                    val data = PieData(dataSet)
-                    // In Percentage
-                    data.setValueFormatter(PercentFormatter())
-
-                    dataSet.setColors(
-                        resources.getColor(R.color.colorPrimaryDark),
-                        resources.getColor(R.color.Red),
-                        resources.getColor(R.color.Blue),
-                        resources.getColor(R.color.Black)
-                    )
-                    piechart.animateXY(500, 500);
-                    piechart.data = data
-                    piechart.description.text = ""
-                    piechart.isDrawHoleEnabled = false
-                    piechart.isRotationEnabled = false
-                    data.setValueTextSize(13f)
-                    piechart.notifyDataSetChanged();
-                }
                 else {
-                    with(xvalues){
-                        clear()}
-                    // var tag1=db_main_entities[1].tag_id
-                    //Log.d("Checkup de tags", tag1.toString())
+                    if (db_ViewModel.statTags == null) {
+                        if (db_ViewModel.currentMains.size == 1) {
+                            Log.d("Checkpoint1", "it's 1")
+                            xvalues.add(PieEntry(1f,  db_ViewModel.currentTags[0].path_name))
+                            piechart.setUsePercentValues(true)
+                            val dataSet = PieDataSet(xvalues, "")
+                            val data = PieData(dataSet)
+                            // In Percentage
+                            data.setValueFormatter(PercentFormatter())
+
+                            dataSet.setColors(
+                                resources.getColor(R.color.colorPrimaryDark),
+                                resources.getColor(R.color.Red),
+                                resources.getColor(R.color.Blue),
+                                resources.getColor(R.color.Black)
+                            )
+                            piechart.animateXY(500, 500);
+                            piechart.data = data
+                            piechart.description.text = ""
+                            piechart.isDrawHoleEnabled = false
+                            piechart.isRotationEnabled = false
+                            data.setValueTextSize(13f)
+                            piechart.notifyDataSetChanged();
+                        } else {
+                            with(xvalues) {
+                                clear()
+                            }
+                            // var tag1=db_ViewModel.currentMains[1].tag_id
+                            //Log.d("Checkup de tags", tag1.toString())
 
 
-                    db_ViewModel.allRaws.observe(viewLifecycleOwner, Observer { db_raw_entities ->
-                        db_raw_entities?.let {
-                            if (db_raw_entities.isEmpty()) {
+                            if (db_ViewModel.currentRaws.isEmpty()) {
                                 Log.d("debug1", "it's empty")
                             } else {
                                 var pausa = 0f
                                 var work = 0f
                                 var total = 0f
 
-                                for (j in db_main_entities.indices) {
-                                    for (i in db_raw_entities.indices) {
+                                for (j in db_ViewModel.currentMains.indices) {
+                                    for (i in db_ViewModel.currentRaws.indices) {
                                         if (i == 0) {
-                                            work += db_raw_entities[1].millis - db_raw_entities[0].millis
+                                            work += db_ViewModel.currentRaws[1].millis - db_ViewModel.currentRaws[0].millis
                                         }
-                                        if (db_main_entities[j].start_raw_id < db_raw_entities[i].id!! && db_raw_entities[i].id!! < db_main_entities[j].end_raw_id)
-                                            if (i > 0 && i % 2 == 0 && db_raw_entities[i].millis - db_raw_entities[i - 1].millis > 0) {
-                                                work += db_raw_entities[i].millis - db_raw_entities[i - 1].millis
+                                        if (db_ViewModel.currentMains[j].start_raw_id < db_ViewModel.currentRaws[i].id!! && db_ViewModel.currentRaws[i].id!! < db_ViewModel.currentMains[j].end_raw_id)
+                                            if (i > 0 && i % 2 == 0 && db_ViewModel.currentRaws[i].millis - db_ViewModel.currentRaws[i - 1].millis > 0) {
+                                                work += db_ViewModel.currentRaws[i].millis - db_ViewModel.currentRaws[i - 1].millis
                                             }
-                                        if (i > 0 && i % 2 != 0 && db_raw_entities[i].millis - db_raw_entities[i - 1].millis > 0) {
-                                            pausa += db_raw_entities[i].millis - db_raw_entities[i - 1].millis
+                                        if (i > 0 && i % 2 != 0 && db_ViewModel.currentRaws[i].millis - db_ViewModel.currentRaws[i - 1].millis > 0) {
+                                            pausa += db_ViewModel.currentRaws[i].millis - db_ViewModel.currentRaws[i - 1].millis
                                         }
 
 
@@ -113,7 +112,7 @@ class Pie_chart : Fragment() {
                                     total += work
                                     Log.d("CHECKPOINT DOPIECHART: ", total.toString())
                                     Log.d("CHECKPOINT PIECHART2: ", work.toString())
-                                    xvalues.add(PieEntry(work / (total) * 100, "Work_j"))
+                                    xvalues.add(PieEntry(work / (total) * 100, db_ViewModel.currentTags[j].path_name))
                                 }
                                 piechart.setUsePercentValues(true)
                                 val dataSet = PieDataSet(xvalues, "")
@@ -140,9 +139,71 @@ class Pie_chart : Fragment() {
                         }
 
 
-                    })
+                    }
+                    else {
+                        with(xvalues) {
+                            clear()
+                        }
+                        Log.d("DEbugg das tags", 234321.toString())
+                        var filtered_mains =
+                            db_ViewModel.currentMains.filter { db_ViewModel.statTags!!.contains(it.tag_id)&&it.tag_id!=-1}
 
-                }  }})
+                        Log.d("DEBUGG", filtered_mains.indices.toString())
+
+                        if (db_ViewModel.currentRaws.isEmpty()) {
+                            Log.d("debug1", "it's empty")
+                        } else {
+                            var pausa = 0f
+                            var work = 0f
+                            var total = 0f
+
+                            for (j in filtered_mains.indices) {
+                                for (i in db_ViewModel.currentRaws.indices) {
+                                    if (i == 0) {
+                                        work += db_ViewModel.currentRaws[1].millis - db_ViewModel.currentRaws[0].millis
+                                    }
+                                    if (filtered_mains[j].start_raw_id < db_ViewModel.currentRaws[i].id!! && db_ViewModel.currentRaws[i].id!! < filtered_mains[j].end_raw_id)
+                                        if (i > 0 && i % 2 == 0 && db_ViewModel.currentRaws[i].millis - db_ViewModel.currentRaws[i - 1].millis > 0) {
+                                            work += db_ViewModel.currentRaws[i].millis - db_ViewModel.currentRaws[i - 1].millis
+                                        }
+                                    if (i > 0 && i % 2 != 0 && db_ViewModel.currentRaws[i].millis - db_ViewModel.currentRaws[i - 1].millis > 0) {
+                                        pausa += db_ViewModel.currentRaws[i].millis - db_ViewModel.currentRaws[i - 1].millis
+                                    }
+
+
+                                }
+                                total += work
+                                Log.d("CHECKPOINT DOPIECHART: ", total.toString())
+                                Log.d("CHECKPOINT PIECHART2: ", work.toString())
+                                xvalues.add(PieEntry(work / (total) * 100,  db_ViewModel.currentTags[j].path_name))
+                            }
+                            piechart.setUsePercentValues(true)
+                            val dataSet = PieDataSet(xvalues, "")
+                            val data = PieData(dataSet)
+                            // In Percentage
+                            data.setValueFormatter(PercentFormatter())
+
+                            dataSet.setColors(
+                                resources.getColor(R.color.colorPrimaryDark),
+                                resources.getColor(R.color.Red),
+                                resources.getColor(R.color.Blue),
+                                resources.getColor(R.color.Black)
+                            )
+                            piechart.animateXY(500, 500);
+                            piechart.data = data
+                            piechart.description.text = ""
+                            piechart.isDrawHoleEnabled = false
+                            piechart.isRotationEnabled = false
+                            data.setValueTextSize(13f)
+                            piechart.notifyDataSetChanged()
+                            piechart.invalidate()
+
+
+                        }
+
+                    }
+
+                }
 
     }
 
