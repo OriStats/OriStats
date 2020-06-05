@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.NavHostFragment
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
@@ -40,8 +41,7 @@ class Statistics : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         (activity as MainActivity).supportActionBar?.title = getString(R.string.app_name)
 
-        statisticsStateAdapter =
-            StatisticsStateAdapter(this)
+        statisticsStateAdapter = StatisticsStateAdapter(this)
         viewPager = view.findViewById(R.id.statistics_viewpager)
         viewPager.adapter = statisticsStateAdapter
 
@@ -56,6 +56,14 @@ class Statistics : Fragment() {
             val action = NavGraphDirections.actionGlobalTags()
             NavHostFragment.findNavController(nav_host_fragment).navigate(action)
         }
+
+        db_Viewmodel.allMains.observe(viewLifecycleOwner, Observer {
+            db_Viewmodel.currentMains = it
+        })
+
+        db_Viewmodel.allRaws.observe(viewLifecycleOwner, Observer {
+            db_Viewmodel.currentRaws = it
+        })
 
         checkuntagged()
     }
