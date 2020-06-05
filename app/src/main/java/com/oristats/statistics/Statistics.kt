@@ -41,15 +41,6 @@ class Statistics : Fragment() {
         viewPager = view.findViewById(R.id.statistics_viewpager)
         viewPager.adapter = statisticsStateAdapter
 
-        //Things added to put the dots
-        //the dots aren't displayed
-        //because of tablayoutmediator
-        tabLayout = view.findViewById(R.id.statistics_tab_layout)
-        TabLayoutMediator(tabLayout, viewPager,
-            TabLayoutMediator.TabConfigurationStrategy {_, position ->position+1
-                //Why '_'? Because warning: "Parameter 'tab' is never used, could be renamed to _"
-            }).attach()
-
     }
 
     override fun onResume() {

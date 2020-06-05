@@ -21,6 +21,8 @@
     <string name="edit">edit</string>
     <string name="arrow_back">arrow back</string>
     <string name="notagchrono">No tag selected</string>
+    <string name="untagcheck">View untagged events</string>
+    <string name="tagfilter">Filter viewed tags</string>
 
     <string name="Graphic1">Graph1</string>
     <string name="Graphic2">Graph2</string>
