@@ -144,27 +144,26 @@ class Tag_Fragment : Fragment(), Tag_ListAdapter.frag_interface {
                 }
             }
             else if(db_ViewModel.tagMode == "chronoSelect"){
-                if(db_ViewModel.chronoTag_temp == null){
-                    Toast.makeText(context,"No tag selected",Toast.LENGTH_LONG).show()
+                if(db_ViewModel.chronoTag_temp == null) {
+                    Toast.makeText(context, "No tag selected", Toast.LENGTH_LONG).show()
                 }
-                else{
-                    db_ViewModel.chronoTag = db_ViewModel.chronoTag_temp
-                    db_ViewModel.chronoTag_temp = null
-                    val action = NavGraphDirections.actionGlobalStopwatch()
-                    NavHostFragment.findNavController(nav_host_fragment).navigate(action)
-                }
+                db_ViewModel.chronoTag = db_ViewModel.chronoTag_temp
+                db_ViewModel.chronoTag_temp = null
+                val action = NavGraphDirections.actionGlobalStopwatch()
+                NavHostFragment.findNavController(nav_host_fragment).navigate(action)
             }
             else if(db_ViewModel.tagMode == "statSelect"){
                 if(db_ViewModel.statTags_temp.size == 0){
-                    Toast.makeText(context,"No tags selected",Toast.LENGTH_LONG).show()
+                    Toast.makeText(context,"No filter: all tags selected",Toast.LENGTH_LONG).show()
+                    db_ViewModel.statTags = null
                 }
-                else{
+                else {
                     db_ViewModel.statTags = db_ViewModel.statTags_temp.toIntArray()
                     db_ViewModel.statTags_temp.clear()
-                    db_ViewModel.statFolders_temp.clear()
-                    val action = NavGraphDirections.actionGlobalStatistics()
-                    NavHostFragment.findNavController(nav_host_fragment).navigate(action)
                 }
+                db_ViewModel.statFolders_temp.clear()
+                val action = NavGraphDirections.actionGlobalStatistics()
+                NavHostFragment.findNavController(nav_host_fragment).navigate(action)
             }
             db_ViewModel.tagMode = "normal"
             updateButtons(db_ViewModel.tagMode)

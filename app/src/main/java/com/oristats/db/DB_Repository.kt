@@ -45,6 +45,10 @@ class DB_Repository(private val db_Raw_Dao: DB_Raw_Dao,
         db_Main_Dao.deleteAll()
     }
 
+    suspend fun main_untagged_by_id(id: Int){
+        db_Main_Dao.setUntaggedById(id)
+    }
+
     // Tag Functions
     suspend fun tag_insert(db_Tag_Entity: DB_Tag_Entity){
         db_Tag_Dao.insert(db_Tag_Entity)

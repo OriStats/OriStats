@@ -20,6 +20,9 @@ interface DB_Main_Dao {
     @Query("UPDATE main_table SET end_raw_id = :new_end_raw_id WHERE start_time = :current_start_time")
     suspend fun updateEndRawId(current_start_time: Long, new_end_raw_id: Int)
 
+    @Query("UPDATE main_table SET tag_id = -1 WHERE tag_id = :id")
+    suspend fun setUntaggedById(id: Int)
+
     @Query("DELETE FROM main_table")
     suspend fun deleteAll()
 }

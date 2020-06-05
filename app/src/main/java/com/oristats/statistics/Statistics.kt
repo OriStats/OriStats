@@ -56,18 +56,24 @@ class Statistics : Fragment() {
             val action = NavGraphDirections.actionGlobalTags()
             NavHostFragment.findNavController(nav_host_fragment).navigate(action)
         }
+
+        checkuntagged()
     }
 
     override fun onResume() {
         super.onResume()
         db_Viewmodel.tagMode = "normal"
         checkuntagged.isChecked = db_Viewmodel.viewUntagged
-        /*
-        db_Viewmodel.statTags?.forEach {
-            val id :Int? = it
-            Log.d("teste", db_Viewmodel.currentTags.filter { it.id == id }[0].path_name)
+        checkuntagged()
+    }
+
+    private fun checkuntagged(){
+        db_Viewmodel.currentMains.forEach {
+            val main = it.tag_id
+            if(db_Viewmodel.currentTags.filter { it.id == main }.isEmpty() && main != -1){
+                db_Viewmodel.main_untagged_by_id(main)
+            }
         }
-         */
     }
 
 }

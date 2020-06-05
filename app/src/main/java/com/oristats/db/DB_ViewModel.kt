@@ -89,6 +89,10 @@ class DB_ViewModel(application: Application) : AndroidViewModel(application) {
         repository.main_delete_all()
     }
 
+    fun main_untagged_by_id(id: Int) = viewModelScope.launch(Dispatchers.IO){
+        repository.main_untagged_by_id(id)
+    }
+
     // Tag Functions
 
     fun tag_insert(db_Tag_entity: DB_Tag_Entity) = viewModelScope.launch(Dispatchers.IO) {
