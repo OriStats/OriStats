@@ -26,7 +26,9 @@ class DB_ViewModel(application: Application) : AndroidViewModel(application) {
     var chronoTag: Int?
     var chronoTag_temp : Int?
     var statTags_temp: MutableList<Int>
+    var statFolders_temp: MutableList<Int>
     var statTags: IntArray?
+    var viewUntagged: Boolean
 
     init {
         val raws_Dao = DB_Room.getDatabase(application, viewModelScope).db_Raw_Dao()
@@ -47,7 +49,9 @@ class DB_ViewModel(application: Application) : AndroidViewModel(application) {
         chronoTag = null
         chronoTag_temp = null
         statTags_temp = ArrayList()
+        statFolders_temp = ArrayList()
         statTags = null
+        viewUntagged = true
     }
 
     fun raw_insert(db_Raw_entity: DB_Raw_Entity) = viewModelScope.launch(Dispatchers.IO) {

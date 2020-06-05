@@ -161,6 +161,7 @@ class Tag_Fragment : Fragment(), Tag_ListAdapter.frag_interface {
                 else{
                     db_ViewModel.statTags = db_ViewModel.statTags_temp.toIntArray()
                     db_ViewModel.statTags_temp.clear()
+                    db_ViewModel.statFolders_temp.clear()
                     val action = NavGraphDirections.actionGlobalStatistics()
                     NavHostFragment.findNavController(nav_host_fragment).navigate(action)
                 }
@@ -188,6 +189,7 @@ class Tag_Fragment : Fragment(), Tag_ListAdapter.frag_interface {
             }
             else if(db_ViewModel.tagMode == "statSelect"){
                 db_ViewModel.statTags_temp.clear()
+                db_ViewModel.statFolders_temp.clear()
                 val action = NavGraphDirections.actionGlobalStatistics()
                 NavHostFragment.findNavController(nav_host_fragment).navigate(action)
             }
@@ -286,5 +288,31 @@ class Tag_Fragment : Fragment(), Tag_ListAdapter.frag_interface {
         db_ViewModel.folder_rename_path_by_id(newpath,folder_id!!)
         val insideFolders = db_ViewModel.currentFolders.filter { it.folder_id == folder_id }
         insideFolders.forEach { updateFolderPaths(it.id,newpath) }
+    }
+
+    override fun checkInside(folder_id: Int?){
+        val insideTags = db_ViewModel.currentTags.filter { it.folder_id == folder_id }
+        insideTags.forEach {
+            if (db_ViewModel.statTags_temp.indexOf(it.id!!) == -1){
+                db_ViewModel.statTags_temp.add(it.id!!)
+            }
+        }
+        val insideFolders = db_ViewModel.currentFolders.filter { it.folder_id == folder_id }
+        insideFolders.forEach {
+            if (db_ViewModel.statFolders_temp.indexOf(it.id!!) == -1){
+                db_ViewModel.statFolders_temp.add(it.id!!)
+            }
+            checkInside(it.id)
+        }
+    }
+
+    override fun uncheckInside(folder_id: Int?){
+        val insideTags = db_ViewModel.currentTags.filter { it.folder_id == folder_id }
+        insideTags.forEach { db_ViewModel.statTags_temp.remove(it.id!!) }
+        val insideFolders = db_ViewModel.currentFolders.filter { it.folder_id == folder_id }
+        insideFolders.forEach {
+            db_ViewModel.statFolders_temp.remove(it.id!!)
+            uncheckInside(it.id)
+        }
     }
 }

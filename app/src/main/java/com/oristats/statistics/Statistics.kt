@@ -1,16 +1,21 @@
 package com.oristats.statistics
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.NavHostFragment
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.oristats.MainActivity
+import com.oristats.NavGraphDirections
 import com.oristats.R
 import com.oristats.db.DB_ViewModel
+import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.statistics_fragment.*
 
 
 class Statistics : Fragment() {
@@ -18,7 +23,6 @@ class Statistics : Fragment() {
     private lateinit var statisticsStateAdapter: StatisticsStateAdapter
     private lateinit var db_Viewmodel: DB_ViewModel
     private lateinit var viewPager: ViewPager2
-    private lateinit var tabLayout: TabLayout
 
     companion object {
         fun newInstance() = Statistics()
@@ -41,11 +45,29 @@ class Statistics : Fragment() {
         viewPager = view.findViewById(R.id.statistics_viewpager)
         viewPager.adapter = statisticsStateAdapter
 
+        checkuntagged.isChecked = db_Viewmodel.viewUntagged
+
+        checkuntagged.setOnClickListener {
+            db_Viewmodel.viewUntagged = checkuntagged.isChecked
+        }
+
+        tagfilter.setOnClickListener {
+            db_Viewmodel.tagMode = "statSelect"
+            val action = NavGraphDirections.actionGlobalTags()
+            NavHostFragment.findNavController(nav_host_fragment).navigate(action)
+        }
     }
 
     override fun onResume() {
         super.onResume()
         db_Viewmodel.tagMode = "normal"
+        checkuntagged.isChecked = db_Viewmodel.viewUntagged
+        /*
+        db_Viewmodel.statTags?.forEach {
+            val id :Int? = it
+            Log.d("teste", db_Viewmodel.currentTags.filter { it.id == id }[0].path_name)
+        }
+         */
     }
 
 }

@@ -85,6 +85,8 @@ class Tag_ListAdapter internal constructor(
         fun updateTags()
         fun updateButtons(situation: String? = null)
         fun updateFolderPaths(folder_id: Int?, parent_path:String)
+        fun checkInside(folder_id: Int?)
+        fun uncheckInside(folder_id: Int?)
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
@@ -94,7 +96,6 @@ class Tag_ListAdapter internal constructor(
         }
     }
 
-    @SuppressLint("ResourceAsColor")
     private fun onBindViewHolderTag(holder: DB_Tag_ViewHolder, position: Int) {
         if (mCtx is MainActivity){
             val current = db_tag_entities[position-nFolders]
@@ -124,11 +125,7 @@ class Tag_ListAdapter internal constructor(
                                     val id = IntArray(1)
                                     id.set(0, current.id!!)
                                     mCtx.db_ViewModel.tag_delete_by_ids(id)
-                                    Toast.makeText(
-                                        mCtx,
-                                        "Tag $tag_name Deleted",
-                                        Toast.LENGTH_SHORT
-                                    ).show()
+                                    Toast.makeText( mCtx, "Tag $tag_name Deleted", Toast.LENGTH_SHORT ).show()
                                 }
                                 dialogview.cancel_button.setOnClickListener {
                                     alertDialog.dismiss()
@@ -137,8 +134,7 @@ class Tag_ListAdapter internal constructor(
                             R.id.tag_edit_rename -> {
                                 //AlertDialog implementation
                                 val dialog = AlertDialog.Builder(mCtx)
-                                val dialogview =
-                                    inflater.inflate(R.layout.db_tag_rename_activity, null)
+                                val dialogview = inflater.inflate(R.layout.db_tag_rename_activity, null)
                                 dialog.setView(dialogview)
                                 dialog.setTitle("Rename Tag")
                                 val alertDialog = dialog.show()
@@ -146,11 +142,7 @@ class Tag_ListAdapter internal constructor(
                                     alertDialog.dismiss()
                                     val new_name = dialogview.new_tag_name.text.toString()
                                     mCtx.db_ViewModel.tag_rename_by_id(new_name, current.id!!)
-                                    Toast.makeText(
-                                        mCtx,
-                                        "New name: " + new_name,
-                                        Toast.LENGTH_SHORT
-                                    ).show()
+                                    Toast.makeText( mCtx, "New name: " + new_name, Toast.LENGTH_SHORT ).show()
                                 }
                             }
                             R.id.tag_edit_move -> {
@@ -169,7 +161,10 @@ class Tag_ListAdapter internal constructor(
             else {
                 holder.Tag_edit.visibility = View.INVISIBLE
                 holder.Tag_edit_hide.visibility = View.VISIBLE
-                if (mCtx.db_ViewModel.tagMode == "chronoSelect") {
+                if (mCtx.db_ViewModel.tagMode == "move"){
+                    holder.Tag_check.visibility = View.INVISIBLE
+                }
+                else if (mCtx.db_ViewModel.tagMode == "chronoSelect") {
                     holder.Tag_check.visibility = View.VISIBLE
                     if(current.id != mCtx.db_ViewModel.chronoTag_temp){
                         holder.Tag_check.isChecked = false
@@ -179,6 +174,19 @@ class Tag_ListAdapter internal constructor(
                         if(checked){
                             mCtx.db_ViewModel.chronoTag_temp = current.id
                             fragInterface.updateTags()
+                        }
+                    }
+                }
+                else if (mCtx.db_ViewModel.tagMode == "statSelect"){
+                    holder.Tag_check.visibility = View.VISIBLE
+                    holder.Tag_check.isChecked = mCtx.db_ViewModel.statTags_temp.indexOf(current.id!!) != -1
+                    holder.Tag_check.setOnClickListener {
+                        val checked = holder.Tag_check.isChecked
+                        if(checked){
+                            mCtx.db_ViewModel.statTags_temp.add(current.id!!)
+                        }
+                        else{
+                            mCtx.db_ViewModel.statTags_temp.remove(current.id!!)
                         }
                     }
                 }
@@ -251,11 +259,23 @@ class Tag_ListAdapter internal constructor(
             else{
                 holder.Folder_edit.visibility = View.INVISIBLE
                 holder.Folder_edit_hide.visibility = View.VISIBLE
-                if (mCtx.db_ViewModel.tagMode == "statSelect"){
-                    holder.Folder_check.visibility = View.VISIBLE
-                }
-                else{
+                if (mCtx.db_ViewModel.tagMode == "move" || mCtx.db_ViewModel.tagMode == "chronoSelect"){
                     holder.Folder_check.visibility = View.INVISIBLE
+                }
+                else if (mCtx.db_ViewModel.tagMode == "statSelect"){
+                    holder.Folder_check.visibility = View.VISIBLE
+                    holder.Folder_check.isChecked = mCtx.db_ViewModel.statFolders_temp.indexOf(current.id!!) != -1
+                    holder.Folder_check.setOnClickListener {
+                        val checked = holder.Folder_check.isChecked
+                        if(checked){
+                            mCtx.db_ViewModel.statFolders_temp.add(current.id!!)
+                            fragInterface.checkInside(current.id!!)
+                        }
+                        else{
+                            mCtx.db_ViewModel.statFolders_temp.remove(current.id!!)
+                            fragInterface.uncheckInside(current.id!!)
+                        }
+                    }
                 }
             }
             holder.Folder_select.setOnClickListener {
