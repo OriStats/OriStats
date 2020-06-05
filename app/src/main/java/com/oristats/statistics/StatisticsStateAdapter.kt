@@ -8,7 +8,7 @@ import com.oristats.db.Raw_Fragment
 
 class StatisticsStateAdapter(fragment: Fragment) : FragmentStateAdapter(fragment){
     override fun getItemCount(): Int {
-        return 4
+        return 5
     }
 
     override fun createFragment(position: Int): Fragment {
@@ -17,7 +17,8 @@ class StatisticsStateAdapter(fragment: Fragment) : FragmentStateAdapter(fragment
             0 -> fragment = Main_Fragment.newInstance()
             1 -> fragment = Raw_Fragment.newInstance()  // On the finished product, this fragment won't be necessary, because its info will be somehow incorporated in the fragment "Main_Fragment".
             2 -> fragment = Time_Chart.newInstance()
-            3 -> fragment = Pie_chart.newInstance()
+            3 -> fragment = Bar_Chart.newInstance()
+            4 -> fragment = Pie_chart.newInstance()
         }
         return fragment!!
     }

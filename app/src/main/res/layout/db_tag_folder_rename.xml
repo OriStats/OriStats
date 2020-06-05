@@ -6,19 +6,19 @@
     android:layout_height="match_parent">
 
     <EditText
-        android:id="@+id/edit_tag_name"
+        android:id="@+id/new_folder_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:minHeight="@dimen/min_height"
         android:fontFamily="sans-serif-light"
-        android:hint="@string/hint_tag_path_name"
+        android:hint="@string/hint_folder_rename"
         android:inputType="text"
         android:layout_margin="@dimen/big_padding"
         android:textSize="18sp"
         android:autofillHints="" />
 
     <Button
-        android:id="@+id/button_tag_entry_save"
+        android:id="@+id/button_folder_entry_save"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         style="@style/button_with_text"

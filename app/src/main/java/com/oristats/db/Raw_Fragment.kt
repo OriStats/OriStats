@@ -46,6 +46,7 @@ class Raw_Fragment : Fragment() {
             }
         })
 
+
         val raw_fab_add = view.findViewById<FloatingActionButton>(R.id.db_raw_fab_add)
         raw_fab_add.setOnClickListener {
             val intent = Intent(context, Raw_New_Entry_Activity::class.java)

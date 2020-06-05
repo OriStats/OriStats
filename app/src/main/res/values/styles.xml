@@ -47,13 +47,12 @@
     </style>
 
     <style name="tag_recyclerview_style">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_marginBottom">8dp</item>
-        <item name="android:paddingLeft">8dp</item>
         <item name="android:background">@color/colorSecondary</item>
         <item name="android:textAppearance">@android:style/TextAppearance.Large</item>
         <item name="android:textColor">@color/colorPrimary</item>
     </style>
     <!-- DB Access: End -->
+
+
 
 </resources>

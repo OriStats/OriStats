@@ -9,11 +9,7 @@
         android:id="@+id/stopwatch"
         android:name="com.oristats.ui.main.Stopwatch"
         android:label="@string/fragment_stopwatch"
-        tools:layout="@layout/stopwatch_fragment">
-        <action
-            android:id="@+id/action_stopwatch_to_tags"
-            app:destination="@id/tags" />
-    </fragment>
+        tools:layout="@layout/stopwatch_fragment"/>
     <fragment
         android:id="@+id/statistics"
         android:name="com.oristats.statistics.Statistics"
@@ -53,4 +49,13 @@
     <action
         android:id="@+id/action_global_about"
         app:destination="@id/about"/>
+    <action
+        android:id="@+id/action_global_stopwatch"
+        app:destination="@id/stopwatch" />
+    <action
+        android:id="@+id/action_global_tags"
+        app:destination="@id/tags"/>
+    <action
+        android:id="@+id/action_global_statistics"
+        app:destination="@id/statistics"/>
 </navigation>

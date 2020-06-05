@@ -16,6 +16,13 @@
     <string name="working">Started</string>
     <string name="stopped">Stopped</string>
     <string name="playpause">Start/Pause/Resume Session</string>
+    <string name="tag">tag</string>
+    <string name="folder">folder</string>
+    <string name="edit">edit</string>
+    <string name="arrow_back">arrow back</string>
+    <string name="notagchrono">No tag selected</string>
+    <string name="untagcheck">View untagged events</string>
+    <string name="tagfilter">Filter viewed tags</string>
 
     <string name="Graphic1">Graph1</string>
     <string name="Graphic2">Graph2</string>
@@ -30,6 +37,8 @@
     <string name="fragment_donate">Donate</string>
     <string name="fragment_pie_chart">Pie Chart</string>
     <string name="fragment_time_chart">Time Chart</string>
+    <string name="fragment_bar_chart">Bar Chart</string>
+
 
     <string name="three_dots_menu_Settings">Settings</string>
     <string name="three_dots_menu_Export">Export Data</string>
@@ -65,8 +74,15 @@
     <string name="db_tag_item_view">%d; \"%s\"</string>
     <string name="db_tag_add">DB Tag Plus</string>
     <string name="db_tag_reset">DB Tag Reset</string>
-    <string name="hint_tag_path_name">folder/subfolder/(…)/name</string>
+    <string name="db_folder_add">DB Folder Plus</string>
+    <string name="hint_tag_path_name">Tag name</string>
+    <string name="hint_folder_name">Folder name</string>
+    <string name="hint_tag_rename" >New tag name</string>
+    <string name="hint_folder_rename">New folder name</string>
     <string name="button_tag_save">Save</string>
     <string name="tag_not_saved">Path Not Saved: Entry Not Valid</string>
 
+    <string name="tag_edit_move">Move</string>
+    <string name="tag_edit_rename">Rename</string>
+    <string name="tag_edit_delete">Delete</string>
 </resources>

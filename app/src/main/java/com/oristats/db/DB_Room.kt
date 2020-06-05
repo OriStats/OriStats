@@ -8,12 +8,18 @@ import kotlinx.coroutines.CoroutineScope
 import androidx.sqlite.db.SupportSQLiteDatabase
 import kotlinx.coroutines.launch
 
-@Database(entities = arrayOf(DB_Raw_Entity::class, DB_Main_Entity::class, DB_Tag_Entity::class), version = 1, exportSchema = false)
+@Database(entities = arrayOf(DB_Raw_Entity::class,
+    DB_Main_Entity::class,
+    DB_Tag_Entity::class,
+    DB_Tag_Folder_Entity::class),
+    version = 1, exportSchema = false)
+
 public abstract class DB_Room : RoomDatabase() {
 
     abstract fun db_Raw_Dao(): DB_Raw_Dao
     abstract fun db_Main_Dao(): DB_Main_Dao
     abstract fun db_Tag_Dao(): DB_Tag_Dao
+    abstract fun db_Tag_Folder_Dao(): DB_Tag_Folder_Dao
 
     private class DB_Callback(
         private val scope: CoroutineScope

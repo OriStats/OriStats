@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/tag_recyclerview_layout"
+    android:id="@+id/folder_recyclerview_layout"
     android:layout_width="match_parent"
     android:layout_marginBottom="8dp"
     android:layout_height="wrap_content">
@@ -12,25 +12,25 @@
         android:layout_height="0dp"
         android:background="@color/colorSecondary"
         android:scaleType="fitCenter"
-        app:layout_constraintBottom_toBottomOf="@id/db_tag_recyclerview_textView"
+        app:layout_constraintBottom_toBottomOf="@id/db_folder_recyclerview_textView"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:srcCompat="@drawable/ic_tags"
-        android:contentDescription="@string/tag" />
+        app:srcCompat="@drawable/ic_folder_24dp"
+        android:contentDescription="@string/folder" />
 
     <TextView
-        android:id="@+id/db_tag_recyclerview_textView"
+        android:id="@+id/db_folder_recyclerview_textView"
         style="@style/tag_recyclerview_style"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:paddingBottom="15dp"
         android:paddingTop="15dp"
-        app:layout_constraintEnd_toStartOf="@id/tag_transparent"
+        android:paddingBottom="15dp"
+        app:layout_constraintEnd_toStartOf="@id/folder_transparent"
         app:layout_constraintStart_toEndOf="@id/imageView"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/tag_transparent"
+        android:id="@+id/folder_transparent"
         android:layout_width="@dimen/tag_recyclerview_button_width"
         android:layout_height="0dp"
         android:background="@color/colorSecondary"
@@ -39,27 +39,37 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
-        android:id="@+id/edit_tag_button"
+        android:id="@+id/edit_folder_button"
         android:layout_width="@dimen/tag_recyclerview_button_width"
         android:layout_height="0dp"
         android:background="@color/colorSecondary"
-        android:contentDescription="@string/edit"
-        android:scaleType="centerInside"
-        app:layout_constraintBottom_toBottomOf="@id/db_tag_recyclerview_textView"
+        android:scaleType="center"
+        app:layout_constraintBottom_toBottomOf="@id/db_folder_recyclerview_textView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_edit_24dp" />
+        app:srcCompat="@drawable/ic_edit_24dp"
+        android:contentDescription="@string/edit" />
 
+    <Button
+        android:id="@+id/select_folder"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="@id/db_folder_recyclerview_textView"
+        app:layout_constraintTop_toTopOf="@id/db_folder_recyclerview_textView"
+        app:layout_constraintLeft_toLeftOf="@id/imageView"
+        app:layout_constraintRight_toRightOf="@id/db_folder_recyclerview_textView"
+        android:background="@color/ap_transparent"
+        />
 
     <CheckBox
-        android:id="@+id/tagcheckBox"
+        android:id="@+id/foldercheckBox"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_marginEnd="8dp"
         android:buttonTint="@color/colorPrimary"
         android:scaleX="1.8"
         android:scaleY="1.8"
-        app:layout_constraintBottom_toBottomOf="@+id/edit_tag_button"
+        app:layout_constraintBottom_toBottomOf="@+id/edit_folder_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
