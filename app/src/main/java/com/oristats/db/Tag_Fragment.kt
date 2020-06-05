@@ -98,18 +98,6 @@ class Tag_Fragment : Fragment(), Tag_ListAdapter.frag_interface {
             }
         }
 
-        val tag_fab_reset = view.findViewById<FloatingActionButton>(R.id.db_tag_fab_reset)
-        tag_fab_reset.setOnClickListener {
-            // Delete all content here.
-            db_ViewModel.tag_delete_all()
-            db_ViewModel.folder_delete_all()
-            // Add sample paths here.
-            // var db_Tag_Entity = DB_Tag_Entity("MEFT/LIDes")
-            // db_ViewModel.tag_insert(db_Tag_Entity)
-            // db_Tag_Entity = DB_Tag_Entity("TECHNO!")
-            // db_ViewModel.tag_insert(db_Tag_Entity)
-        }
-
         val folder_fab_add = view.findViewById<FloatingActionButton>(R.id.db_tag_folder_fab_add)
         folder_fab_add.setOnClickListener{
             val dialog = AlertDialog.Builder(context)
@@ -259,16 +247,12 @@ class Tag_Fragment : Fragment(), Tag_ListAdapter.frag_interface {
 
     override fun updateButtons(situation: String?){
         val tag_fab_add = view?.findViewById<FloatingActionButton>(R.id.db_tag_fab_add)
-        val tag_fab_reset = view?.findViewById<FloatingActionButton>(R.id.db_tag_fab_reset)
         val folder_fab_add = view?.findViewById<FloatingActionButton>(R.id.db_tag_folder_fab_add)
         val buttonOk: Button? = view?.findViewById<Button>(R.id.ok_button)
         val buttonCancel: Button? = view?.findViewById<Button>(R.id.cancel_button)
         if(situation == "normal"){
             if (tag_fab_add != null) {
                 tag_fab_add.visibility = View.VISIBLE
-            }
-            if (tag_fab_reset != null) {
-                tag_fab_reset.visibility = View.VISIBLE
             }
             if (folder_fab_add != null) {
                 folder_fab_add.visibility = View.VISIBLE
@@ -283,9 +267,6 @@ class Tag_Fragment : Fragment(), Tag_ListAdapter.frag_interface {
        if (situation == "move" || situation == "chronoSelect" || situation == "statSelect"){
            if (tag_fab_add != null) {
                tag_fab_add.visibility = View.INVISIBLE
-           }
-           if (tag_fab_reset != null) {
-               tag_fab_reset.visibility = View.INVISIBLE
            }
            if (folder_fab_add != null) {
                folder_fab_add.visibility = View.INVISIBLE
