@@ -37,7 +37,7 @@
     <string name="fragment_donate">Donate</string>
     <string name="fragment_pie_chart">Pie Chart</string>
     <string name="fragment_time_chart">Time Chart</string>
-    <string name="fragment_xy">XY Plot</string>
+    <string name="fragment_bar_chart">Bar Chart</string>
 
 
     <string name="three_dots_menu_Settings">Settings</string>
