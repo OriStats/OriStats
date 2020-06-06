@@ -16,10 +16,11 @@ class DB_ViewModel(application: Application) : AndroidViewModel(application) {
     val allTags: LiveData<List<DB_Tag_Entity>>
     val allFolders: LiveData<List<DB_Tag_Folder_Entity>>
 
-    lateinit var currentFolders: List<DB_Tag_Folder_Entity>
-    lateinit var currentTags: List<DB_Tag_Entity>
-    lateinit var currentMains: List<DB_Main_Entity>
-    lateinit var currentRaws: List<DB_Raw_Entity>
+    var currentFolders: List<DB_Tag_Folder_Entity>
+    var currentTags: List<DB_Tag_Entity>
+    var currentMains: List<DB_Main_Entity>
+    var currentRaws: List<DB_Raw_Entity>
+
     var current_folder: Int?
     var current_path: String?
     var moved_folder: Int?
@@ -42,6 +43,11 @@ class DB_ViewModel(application: Application) : AndroidViewModel(application) {
         allMains = repository.allMains
         allTags = repository.allTags
         allFolders = repository.allFolders
+
+        currentFolders = ArrayList()
+        currentTags = ArrayList()
+        currentMains = ArrayList()
+        currentRaws = ArrayList()
 
         current_folder = 1
         current_path = "/"
