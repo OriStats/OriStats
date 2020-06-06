@@ -70,7 +70,7 @@ class DB_ViewModel(application: Application) : AndroidViewModel(application) {
         statTags_temp = ArrayList()
         statFolders_temp = ArrayList()
         statTags = null
-        viewUntagged = true
+        viewUntagged = false
     }
 
     fun raw_insert(db_Raw_entity: DB_Raw_Entity) = viewModelScope.launch(Dispatchers.IO) {
