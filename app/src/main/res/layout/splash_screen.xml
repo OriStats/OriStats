@@ -31,7 +31,7 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:indeterminateTint="@color/colorSecondaryDark"
-        app:layout_constraintBottom_toTopOf="@id/splash_name"
+        app:layout_constraintBottom_toBottomOf="@id/splash_name"
         app:layout_constraintTop_toBottomOf="@id/splash_logo"
         tools:layout_editor_absoluteX="0dp" />
 
