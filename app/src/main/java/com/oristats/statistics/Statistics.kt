@@ -78,8 +78,10 @@ class Statistics : Fragment() {
     private fun checkuntagged(){
         db_Viewmodel.currentMains.forEach {
             val main = it.tag_id
-            if(db_Viewmodel.currentTags.filter { it.id == main }.isEmpty() && main != -1){
-                db_Viewmodel.main_untagged_by_id(main)
+            if (db_Viewmodel.currentTags.isNotEmpty()) {
+                if (db_Viewmodel.currentTags.filter { it.id == main }.isEmpty() && main != -1) {
+                    db_Viewmodel.main_untagged_by_id(main)
+                }
             }
         }
     }
