@@ -6,7 +6,10 @@ import com.oristats.db.Main_Fragment
 import com.oristats.db.Raw_Fragment
 
 
-class StatisticsStateAdapter(fragment: Fragment) : FragmentStateAdapter(fragment){
+class StatisticsStateAdapter(fragment: Fragment, main_interface: Main_Fragment.MainInterface) : FragmentStateAdapter(fragment){
+
+    var Main_Fragment = com.oristats.db.Main_Fragment.newInstance(main_interface)
+
     override fun getItemCount(): Int {
         return 4
     }
@@ -14,7 +17,7 @@ class StatisticsStateAdapter(fragment: Fragment) : FragmentStateAdapter(fragment
     override fun createFragment(position: Int): Fragment {
         var fragment : Fragment? = null
         when(position){
-            0 -> fragment = Main_Fragment.newInstance()
+            0 -> fragment = Main_Fragment
             1 -> fragment = Time_Chart.newInstance()
             2 -> fragment = Bar_Chart.newInstance()
             3 -> fragment = Pie_chart.newInstance()

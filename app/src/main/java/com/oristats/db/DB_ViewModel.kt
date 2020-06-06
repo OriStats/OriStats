@@ -28,9 +28,11 @@ class DB_ViewModel(application: Application) : AndroidViewModel(application) {
     var current_path: String?
     var moved_folder: Int?
     var moved_tag: Int?
-    var tagMode: String //Available modes: normal, move, chronoSelect, statSelect
+    var tagMode: String //Available modes: normal, move, chronoSelect, statSelect, mainSelect
     var chronoTag: Int?
     var chronoTag_temp : Int?
+    var mainTag: Int?
+    var mainTagid: Long?
     var statTags_temp: MutableList<Int>
     var statFolders_temp: MutableList<Int>
     var statTags: IntArray?
@@ -63,6 +65,8 @@ class DB_ViewModel(application: Application) : AndroidViewModel(application) {
         tagMode = "normal"
         chronoTag = null
         chronoTag_temp = null
+        mainTag = null
+        mainTagid = null
         statTags_temp = ArrayList()
         statFolders_temp = ArrayList()
         statTags = null
@@ -104,6 +108,10 @@ class DB_ViewModel(application: Application) : AndroidViewModel(application) {
 
     fun main_untagged_by_id(id: Int) = viewModelScope.launch(Dispatchers.IO){
         repository.main_untagged_by_id(id)
+    }
+
+    fun main_change_tag_by_id(id: Long, tagId: Int) = viewModelScope.launch(Dispatchers.IO){
+        repository.main_change_tag_by_id(id, tagId)
     }
 
     fun main_delete_by_start_times(start_times: LongArray) = viewModelScope.launch(Dispatchers.IO){

@@ -49,6 +49,10 @@ class DB_Repository(private val db_Raw_Dao: DB_Raw_Dao,
         db_Main_Dao.setUntaggedById(id)
     }
 
+    suspend fun main_change_tag_by_id(id: Long, tagId: Int){
+        db_Main_Dao.updateTagIdById(id,tagId)
+    }
+
     suspend fun main_delete_by_start_times(start_times: LongArray){
         db_Main_Dao.deleteAllByStartTimes(start_times)
     }

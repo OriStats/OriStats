@@ -177,6 +177,19 @@ class Tag_ListAdapter internal constructor(
                         }
                     }
                 }
+                else if (mCtx.db_ViewModel.tagMode == "mainSelect") {
+                    holder.Tag_check.visibility = View.VISIBLE
+                    if(current.id != mCtx.db_ViewModel.mainTag){
+                        holder.Tag_check.isChecked = false
+                    }
+                    holder.Tag_check.setOnClickListener {
+                        val checked = holder.Tag_check.isChecked
+                        if(checked){
+                            mCtx.db_ViewModel.mainTag = current.id
+                            fragInterface.updateTags()
+                        }
+                    }
+                }
                 else if (mCtx.db_ViewModel.tagMode == "statSelect"){
                     holder.Tag_check.visibility = View.VISIBLE
                     holder.Tag_check.isChecked = mCtx.db_ViewModel.statTags_temp.indexOf(current.id!!) != -1
@@ -259,7 +272,7 @@ class Tag_ListAdapter internal constructor(
             else{
                 holder.Folder_edit.visibility = View.INVISIBLE
                 holder.Folder_edit_hide.visibility = View.VISIBLE
-                if (mCtx.db_ViewModel.tagMode == "move" || mCtx.db_ViewModel.tagMode == "chronoSelect"){
+                if (mCtx.db_ViewModel.tagMode == "move" || mCtx.db_ViewModel.tagMode == "chronoSelect" || mCtx.db_ViewModel.tagMode == "mainSelect"){
                     holder.Folder_check.visibility = View.INVISIBLE
                 }
                 else if (mCtx.db_ViewModel.tagMode == "statSelect"){

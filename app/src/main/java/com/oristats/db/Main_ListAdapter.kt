@@ -2,6 +2,7 @@ package com.oristats.db
 
 import android.app.AlertDialog
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,15 +10,19 @@ import android.widget.ImageButton
 import android.widget.PopupMenu
 import android.widget.TextView
 import android.widget.Toast
+import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.RecyclerView
 import com.oristats.MainActivity
+import com.oristats.NavGraphDirections
 import com.oristats.R
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.confirmation.view.*
 import java.text.SimpleDateFormat
 import java.util.Calendar
 
 class Main_ListAdapter internal constructor(
-    context: Context
+    context: Context,
+    private val fragInterface:  frag_interface
 ) : RecyclerView.Adapter<Main_ListAdapter.DB_Main_ViewHolder>() {
 
     private val inflater: LayoutInflater = LayoutInflater.from(context)
@@ -31,6 +36,10 @@ class Main_ListAdapter internal constructor(
         val Main_edit: ImageButton = itemView.findViewById(R.id.edit_main_button)
     }
 
+    interface frag_interface{
+        fun updateMains()
+        fun gototags()
+    }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DB_Main_ViewHolder {
         val itemView = inflater.inflate(R.layout.db_main_recyclerview_item, parent, false)
         return DB_Main_ViewHolder(itemView)
@@ -60,7 +69,7 @@ class Main_ListAdapter internal constructor(
                             val dialog = AlertDialog.Builder(mCtx)
                             val dialogview = inflater.inflate(R.layout.confirmation, null)
                             dialog.setView(dialogview)
-                            val session_start_time = toDate(current.start_time)
+                            val session_start_time = toDate2(current.start_time)
                             dialog.setTitle("Delete $session_start_time session? \n(this action is irreversible)")
                             val alertDialog = dialog.show()
                             dialogview.confirmation_button.setOnClickListener {
@@ -74,20 +83,12 @@ class Main_ListAdapter internal constructor(
                                 alertDialog.dismiss()
                             }
                         }
-                        R.id.main_edit_change_tag -> { //@Hugo Lóio, anda lá para aqui!!!! Estás a gozar connosco. Isto desconta se ficarmos para lá das 18.30. Anda para aqui imediatamente!!!!!!
-                            /*
-                        //AlertDialog implementation
-                        val dialog = AlertDialog.Builder(mCtx)
-                        val dialogview = inflater.inflate(R.layout.db_tag_rename_activity, null)
-                        dialog.setView(dialogview)
-                        dialog.setTitle("Rename Tag")
-                        val alertDialog = dialog.show()
-                        dialogview.button_tag_entry_save.setOnClickListener {
-                            alertDialog.dismiss()
-                            val new_name = dialogview.new_tag_name.text.toString()
-                            mCtx.db_ViewModel.tag_rename_by_id(new_name, current.id!!)
-                            Toast.makeText( mCtx, "New name: " + new_name, Toast.LENGTH_SHORT ).show()
-                        }*/
+                        R.id.main_edit_change_tag -> {
+                            mCtx.db_ViewModel.tagMode = "mainSelect"
+                            mCtx.db_ViewModel.mainTagid = current.start_time
+                            Log.d("teste","aqui")
+                            fragInterface.gototags()
+                            Log.d("teste","aqui")
                         }
                     }
                     true
@@ -110,6 +111,20 @@ class Main_ListAdapter internal constructor(
     //milliSeconds -> System.currentTimeMillis()
     {
         val dateFormat = "dd/MM/yyyy   hh:mm"
+
+        // Create a DateFormatter object for displaying date in specified format.
+        val formatter = SimpleDateFormat(dateFormat)
+
+        // Create a calendar object that will convert the date and time value in milliseconds to date.
+        val calendar = Calendar.getInstance()
+        calendar.setTimeInMillis(milliSeconds)
+        return formatter.format(calendar.getTime())
+    }
+
+    private fun toDate2(milliSeconds: Long) : String
+    //milliSeconds -> System.currentTimeMillis()
+    {
+        val dateFormat = "dd/MM/yyyy hh:mm"
 
         // Create a DateFormatter object for displaying date in specified format.
         val formatter = SimpleDateFormat(dateFormat)

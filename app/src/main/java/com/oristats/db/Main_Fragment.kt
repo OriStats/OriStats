@@ -3,25 +3,35 @@ package com.oristats.db
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.oristats.MainActivity
+import com.oristats.NavGraphDirections
 import com.oristats.R
+import com.oristats.statistics.Statistics
+import kotlinx.android.synthetic.main.activity_main.*
 
-class Main_Fragment : Fragment() {
+class Main_Fragment internal constructor( private val main_interface: MainInterface ): Fragment(), Main_ListAdapter.frag_interface {
 
     private val DB_Main_New_Entry_ActivityRequestCode = 1
     private lateinit var db_ViewModel: DB_ViewModel
+    private var adapter: Main_ListAdapter? = null
+
+    interface MainInterface{
+        fun gototabs()
+    }
 
     companion object {
-        fun newInstance() = Main_Fragment()
+        fun newInstance(main_interface: MainInterface) = Main_Fragment(main_interface)
     }
 
     override fun onCreateView(
@@ -31,20 +41,11 @@ class Main_Fragment : Fragment() {
         val view = inflater.inflate(R.layout.db_main_fragment, container, false)
 
         val recyclerView = view.findViewById<RecyclerView>(R.id.db_main_recyclerview)
-        val adapter = context?.let { Main_ListAdapter(it) }
+        adapter = context?.let { Main_ListAdapter(it,this) }
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(context)
 
         db_ViewModel = (getActivity() as MainActivity).db_ViewModel
-
-        db_ViewModel.allMains.observe(viewLifecycleOwner, Observer { db_main_entities ->
-            // Update the cached copy of entities in the adapter.
-            db_main_entities?.let {
-                if (adapter != null) {
-                    adapter.setDB_Main_Entities(it)
-                }
-            }
-        })
 
         val main_fab_add = view.findViewById<FloatingActionButton>(R.id.db_main_fab_add)
         main_fab_add.setOnClickListener {
@@ -63,6 +64,11 @@ class Main_Fragment : Fragment() {
             // db_ViewModel.main_insert(db_Main_Entity)
         }
 
+        db_ViewModel.allMains.observe(viewLifecycleOwner, Observer {
+            updateMains()
+        })
+
+        updateMains()
         return view
     }
 
@@ -99,6 +105,7 @@ class Main_Fragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        updatetags()
         (activity as MainActivity).supportActionBar?.title = getString(R.string.fragment_db_main_v2)
     }
 
@@ -106,5 +113,39 @@ class Main_Fragment : Fragment() {
     override fun onResume() {
         super.onResume()
         (activity as MainActivity).supportActionBar?.title = getString(R.string.fragment_db_main_v2)
+    }
+
+    override fun updateMains() {
+        if(db_ViewModel.statTags == null) {
+            if(db_ViewModel.viewUntagged) {
+                adapter!!.setDB_Main_Entities(db_ViewModel.currentMains)
+            }
+            else{
+                adapter!!.setDB_Main_Entities(db_ViewModel.currentMains.filter { it.tag_id != -1 })
+            }
+        }
+        else{
+            if(db_ViewModel.viewUntagged) {
+                adapter!!.setDB_Main_Entities(db_ViewModel.currentMains.filter { it_main ->
+                    it_main.tag_id == -1 || db_ViewModel.statTags!!.filter{ it == it_main.tag_id }.isNotEmpty()
+                })
+            }
+            else{
+                adapter!!.setDB_Main_Entities(db_ViewModel.currentMains.filter {it_main ->
+                    it_main.tag_id != -1 && db_ViewModel.statTags!!.filter{ it == it_main.tag_id }.isNotEmpty()
+                })
+            }
+        }
+    }
+
+
+    private fun updatetags(){
+        if(db_ViewModel.mainTag != null && db_ViewModel.mainTagid != null){
+           db_ViewModel.main_change_tag_by_id(db_ViewModel.mainTagid!!,db_ViewModel.mainTag!!)
+        }
+    }
+
+    override fun gototags() {
+        main_interface.gototabs()
     }
 }

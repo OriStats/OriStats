@@ -15,11 +15,12 @@ import com.oristats.MainActivity
 import com.oristats.NavGraphDirections
 import com.oristats.R
 import com.oristats.db.DB_ViewModel
+import com.oristats.db.Main_Fragment
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.statistics_fragment.*
 
 
-class Statistics : Fragment() {
+class Statistics : Fragment() , Main_Fragment.MainInterface{
 
     private lateinit var statisticsStateAdapter: StatisticsStateAdapter
     private lateinit var db_Viewmodel: DB_ViewModel
@@ -41,7 +42,7 @@ class Statistics : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         (activity as MainActivity).supportActionBar?.title = getString(R.string.app_name)
 
-        statisticsStateAdapter = StatisticsStateAdapter(this)
+        statisticsStateAdapter = StatisticsStateAdapter(this,this)
         viewPager = view.findViewById(R.id.statistics_viewpager)
         viewPager.adapter = statisticsStateAdapter
 
@@ -49,6 +50,7 @@ class Statistics : Fragment() {
 
         checkuntagged.setOnClickListener {
             db_Viewmodel.viewUntagged = checkuntagged.isChecked
+            statisticsStateAdapter.Main_Fragment.updateMains()
         }
 
         tagfilter.setOnClickListener {
@@ -67,10 +69,6 @@ class Statistics : Fragment() {
 
         checkuntagged()
         getWorkPauses()
-
-        for (i in db_Viewmodel.MainIds.indices){
-            Log.d("teste","${db_Viewmodel.MainIds[i]} , ${db_Viewmodel.MainWorks[i]} , ${db_Viewmodel.MainPauses[i]}")
-        }
     }
 
     override fun onResume() {
@@ -110,6 +108,11 @@ class Statistics : Fragment() {
             db_Viewmodel.MainWorks.add(Work)
             db_Viewmodel.MainPauses.add(Pause)
         }
+    }
+
+    override fun gototabs() {
+        val action = NavGraphDirections.actionGlobalTags()
+        NavHostFragment.findNavController(nav_host_fragment).navigate(action)
     }
 }
 

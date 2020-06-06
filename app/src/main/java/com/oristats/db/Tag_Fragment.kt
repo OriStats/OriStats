@@ -152,6 +152,13 @@ class Tag_Fragment : Fragment(), Tag_ListAdapter.frag_interface {
                 val action = NavGraphDirections.actionGlobalStopwatch()
                 NavHostFragment.findNavController(nav_host_fragment).navigate(action)
             }
+            else if(db_ViewModel.tagMode == "mainSelect"){
+                if(db_ViewModel.mainTag == null) {
+                    Toast.makeText(context, "No tag selected", Toast.LENGTH_LONG).show()
+                }
+                val action = NavGraphDirections.actionGlobalStatistics()
+                NavHostFragment.findNavController(nav_host_fragment).navigate(action)
+            }
             else if(db_ViewModel.tagMode == "statSelect"){
                 if(db_ViewModel.statTags_temp.size == 0){
                     Toast.makeText(context,"No filter: all tags selected",Toast.LENGTH_LONG).show()
@@ -184,6 +191,11 @@ class Tag_Fragment : Fragment(), Tag_ListAdapter.frag_interface {
             else if(db_ViewModel.tagMode == "chronoSelect"){
                 db_ViewModel.chronoTag_temp = null
                 val action = NavGraphDirections.actionGlobalStopwatch()
+                NavHostFragment.findNavController(nav_host_fragment).navigate(action)
+            }
+            else if(db_ViewModel.tagMode == "mainSelect"){
+                db_ViewModel.mainTag = null
+                val action = NavGraphDirections.actionGlobalStatistics()
                 NavHostFragment.findNavController(nav_host_fragment).navigate(action)
             }
             else if(db_ViewModel.tagMode == "statSelect"){
@@ -265,7 +277,7 @@ class Tag_Fragment : Fragment(), Tag_ListAdapter.frag_interface {
                 buttonCancel.visibility = View.INVISIBLE
             }
         }
-       if (situation == "move" || situation == "chronoSelect" || situation == "statSelect"){
+       if (situation == "move" || situation == "chronoSelect" || situation == "statSelect" || situation == "mainSelect"){
            if (tag_fab_add != null) {
                tag_fab_add.visibility = View.INVISIBLE
            }

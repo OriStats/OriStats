@@ -23,6 +23,9 @@ interface DB_Main_Dao {
     @Query("UPDATE main_table SET tag_id = -1 WHERE tag_id = :id")
     suspend fun setUntaggedById(id: Int)
 
+    @Query("UPDATE main_table SET tag_id = :tagId WHERE start_time = :id")
+    suspend fun updateTagIdById(id: Long, tagId: Int)
+
     @Query("DELETE FROM main_table")
     suspend fun deleteAll()
 
