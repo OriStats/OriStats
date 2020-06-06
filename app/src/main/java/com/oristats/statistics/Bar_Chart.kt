@@ -236,9 +236,9 @@ class Bar_Chart: Fragment() {
         val currentDate = System.currentTimeMillis()
         val day = cal.get(Calendar.DAY_OF_MONTH);
         /* log the system time */
-        val aaa = 1591393440360
-        val date = Date(aaa)
-        cal.time = date;
+       // val aaa = 1591393440360
+        //val date = Date(aaa)
+        //cal.time = date;
         /* log the system time */
         Log.d("TEMPO QUE SA BARCHART: ", currentDate.toString())
 
@@ -282,22 +282,21 @@ class Bar_Chart: Fragment() {
 
 
                 }
+
+                val date = Date(db_ViewModel.currentMains[j].start_time)
+                cal.time = date;
+                yValueGroup1.add(BarEntry(day.toFloat(), work / 60000))
+                yValueGroup2.add(BarEntry(day.toFloat(), pausa / 60000))
+                cal.get(Calendar.DAY_OF_MONTH)
             }
-            yValueGroup1.add(BarEntry(day.toFloat(), work / 60000))
-            yValueGroup2.add(BarEntry(day.toFloat(), pausa / 60000))
+
             xAxisValues.add(cal.get(Calendar.DAY_OF_MONTH).toString())
-
-
             var barDataSet1: BarDataSet
             var barDataSet2: BarDataSet
-
-
             barDataSet1 = BarDataSet(yValueGroup1, "Work")
             barDataSet1.setColors(Color.BLUE)
-
             barDataSet1.setDrawIcons(false)
             barDataSet1.setDrawValues(false)
-
             barDataSet2 = BarDataSet(yValueGroup2, "Pause")
             barDataSet2.setColors(Color.RED)
             barDataSet2.setDrawIcons(false)
