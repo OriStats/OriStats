@@ -14,10 +14,10 @@ class StatisticsStateAdapter(fragment: Fragment) : FragmentStateAdapter(fragment
     override fun createFragment(position: Int): Fragment {
         var fragment : Fragment? = null
         when(position){
-            0 -> fragment = Time_Chart.newInstance()
-            1 -> fragment = Bar_Chart.newInstance()
-            2 -> fragment = Pie_chart.newInstance()
-            3 -> fragment = Main_Fragment.newInstance()
+            0 -> fragment = Main_Fragment.newInstance()
+            1 -> fragment = Time_Chart.newInstance()
+            2 -> fragment = Bar_Chart.newInstance()
+            3 -> fragment = Pie_chart.newInstance()
 //            4 -> fragment = Raw_Fragment.newInstance()  // On the finished product, this fragment won't be necessary, because its info will be somehow incorporated in the fragment "Main_Fragment".
         }
         return fragment!!
