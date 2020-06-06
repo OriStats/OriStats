@@ -93,10 +93,7 @@ class Main_Fragment : Fragment() {
             val db_main_entity = DB_Main_Entity(new_start_time, new_tag_id, new_start_raw_id, new_end_raw_id, new_minus_one_day)
             db_ViewModel.main_insert(db_main_entity)
         } else {
-            Toast.makeText(
-                context,
-                R.string.main_not_saved,
-                Toast.LENGTH_LONG).show()
+            Toast.makeText( context, R.string.main_not_saved, Toast.LENGTH_LONG).show()
         }
     }
 

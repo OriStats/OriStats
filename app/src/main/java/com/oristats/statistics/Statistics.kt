@@ -66,6 +66,11 @@ class Statistics : Fragment() {
         })
 
         checkuntagged()
+        getWorkPauses()
+
+        for (i in db_Viewmodel.MainIds.indices){
+            Log.d("teste","${db_Viewmodel.MainIds[i]} , ${db_Viewmodel.MainWorks[i]} , ${db_Viewmodel.MainPauses[i]}")
+        }
     }
 
     override fun onResume() {
@@ -73,9 +78,10 @@ class Statistics : Fragment() {
         db_Viewmodel.tagMode = "normal"
         checkuntagged.isChecked = db_Viewmodel.viewUntagged
         checkuntagged()
+        getWorkPauses()
     }
 
-    private fun checkuntagged(){
+    private fun checkuntagged() {
         db_Viewmodel.currentMains.forEach {
             val main = it.tag_id
             if (db_Viewmodel.currentTags.isNotEmpty()) {
@@ -86,46 +92,24 @@ class Statistics : Fragment() {
         }
     }
 
+    private fun getWorkPauses() {
+        db_Viewmodel.currentMains.forEach {
+            val main = it
+            var Work: Long = 0
+            var Pause: Long = 0
+            val raws =
+                db_Viewmodel.currentRaws.filter { it.id!! >= main.start_raw_id && it.id!! <= main.end_raw_id }
+            for (i in raws.indices) {
+                if (i % 2 == 1) {
+                    Work += raws[i].millis - raws[i - 1].millis
+                } else if (i != 0) {
+                    Pause += raws[i].millis - raws[i - 1].millis
+                }
+            }
+            db_Viewmodel.MainIds.add(main.start_time)
+            db_Viewmodel.MainWorks.add(Work)
+            db_Viewmodel.MainPauses.add(Pause)
+        }
+    }
 }
 
-
-
-/* Example Plot [Final de onViewCreated().]
-//Part1
-val entries = ArrayList<Entry>()
-
-//Part2
-entries.add(Entry(1f, 10f))
-entries.add(Entry(2f, 2f))
-entries.add(Entry(3f, 7f))
-entries.add(Entry(4f, 20f))
-entries.add(Entry(5f, 16f))
-
-//Part3
-val vl = LineDataSet(entries, "My Type")
-
-//Part4
-vl.setDrawValues(false)
-vl.setDrawFilled(true)
-vl.lineWidth = 3f
-vl.fillColor = R.color.Blue
-vl.fillAlpha = R.color.Red
-
-//Part5
-lineChart.xAxis.labelRotationAngle = 0f
-
-//Part6
-lineChart.data = LineData(vl)
-
-//Part7
-lineChart.axisRight.isEnabled = false
-
-
-//Part8
-lineChart.setTouchEnabled(true)
-lineChart.setPinchZoom(true)
-
-//Part9
-lineChart.description.text = "Days"
-lineChart.setNoDataText("No forex yet!")
-*/

@@ -20,6 +20,9 @@ class DB_ViewModel(application: Application) : AndroidViewModel(application) {
     var currentTags: List<DB_Tag_Entity>
     var currentMains: List<DB_Main_Entity>
     var currentRaws: List<DB_Raw_Entity>
+    var MainIds: MutableList<Long>
+    var MainWorks: MutableList<Long>
+    var MainPauses: MutableList<Long>
 
     var current_folder: Int?
     var current_path: String?
@@ -48,6 +51,10 @@ class DB_ViewModel(application: Application) : AndroidViewModel(application) {
         currentTags = ArrayList()
         currentMains = ArrayList()
         currentRaws = ArrayList()
+
+        MainIds = ArrayList()
+        MainWorks = ArrayList()
+        MainPauses = ArrayList()
 
         current_folder = 1
         current_path = "/"

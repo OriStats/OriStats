@@ -7,14 +7,56 @@
     android:layout_height="wrap_content">
 
     <TextView
-        android:id="@+id/db_main_recyclerview_textView"
+        android:id="@+id/day_time_text"
+        style="@style/main_recyclerview_style"
+        android:layout_width="0dp"
+        android:text="@string/app_name"
+        android:textSize="18sp"
+        android:paddingTop="@dimen/small_padding"
+        android:textAlignment="center"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toStartOf="@id/tag_image"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/work_pause_text"
         style="@style/main_recyclerview_style"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:padding="@dimen/small_padding"
-        app:layout_constraintEnd_toStartOf="@id/edit_main_button"
+        android:text="@string/app_name"
+        android:paddingBottom="@dimen/small_padding"
+        android:textSize="18sp"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toStartOf="@id/tag_text"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/day_time_text" />
+
+    <ImageView
+        android:id="@+id/tag_image"
+        android:layout_width="0dp"
+        android:background="@color/colorSecondary"
+        android:layout_height="0dp"
+        android:src="@drawable/ic_tags"
+        app:layout_constraintTop_toTopOf="parent"
+        android:scaleType="centerInside"
+        app:layout_constraintRight_toLeftOf="@id/edit_main_button"
+        app:layout_constraintLeft_toLeftOf="@id/tag_text"
+        android:contentDescription="@string/ok"
+        app:layout_constraintBottom_toBottomOf="@id/day_time_text"
+        />
+
+    <TextView
+        android:id="@+id/tag_text"
+        style="@style/main_recyclerview_style"
+        android:layout_width="120dp"
+        android:text="@string/app_name"
+        android:paddingBottom="@dimen/small_padding"
+        android:textSize="18sp"
+        android:textAlignment="center"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toStartOf="@id/edit_main_button"
+        app:layout_constraintTop_toBottomOf="@id/day_time_text" />
 
     <ImageButton
         android:id="@+id/edit_main_button"
@@ -23,7 +65,7 @@
         android:background="@color/colorSecondary"
         android:contentDescription="@string/edit"
         android:scaleType="centerInside"
-        app:layout_constraintBottom_toBottomOf="@id/db_main_recyclerview_textView"
+        app:layout_constraintBottom_toBottomOf="@id/work_pause_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_edit_24dp" />
