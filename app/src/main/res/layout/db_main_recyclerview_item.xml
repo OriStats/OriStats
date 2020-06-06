@@ -11,9 +11,7 @@
         style="@style/main_recyclerview_style"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:paddingLeft="7dp"
-        android:paddingBottom="7dp"
-        android:paddingTop="7dp"
+        android:padding="@dimen/small_padding"
         app:layout_constraintEnd_toStartOf="@id/edit_main_button"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

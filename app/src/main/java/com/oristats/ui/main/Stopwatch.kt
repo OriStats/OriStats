@@ -15,6 +15,7 @@ import com.oristats.MainActivity
 import com.oristats.NavGraphDirections
 import com.oristats.R
 import com.oristats.db.DB_Raw_Entity
+import com.oristats.db.DB_Tag_Folder_Entity
 import com.oristats.db.DB_ViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.stopwatch_fragment.*
@@ -96,6 +97,28 @@ class Stopwatch : Fragment() {
                 db_ViewModel.currentRaws = it
             }
         })
+
+        db_ViewModel.allFolders.observe(viewLifecycleOwner, Observer {db_folder_entities ->
+            db_folder_entities?.let{
+                if(db_folder_entities.isEmpty()){
+                    val rootEntity = DB_Tag_Folder_Entity("root","/",1)
+                    db_ViewModel.folder_insert(rootEntity)
+                }
+                else {
+                    db_ViewModel.currentFolders = db_folder_entities
+                }
+            }
+        })
+
+        db_ViewModel.allTags.observe(viewLifecycleOwner, Observer { db_tag_entities ->
+            // Update the cached copy of entities in the adapter.
+            db_tag_entities?.let {
+                if(db_ViewModel.current_folder != null) {
+                    db_ViewModel.currentTags = db_tag_entities
+                }
+            }
+        })
+
     }
 
     override fun onResume() {
