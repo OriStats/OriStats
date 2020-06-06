@@ -105,12 +105,41 @@
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/project_description1" />
 
+            <ImageView
+                android:id="@+id/github_logo"
+                android:layout_width="50dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="80dp"
+                android:src="@drawable/github_logo"
+                android:contentDescription="@string/ok"
+                app:layout_constraintTop_toBottomOf="@id/project_description2"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintBottom_toBottomOf="@id/github_link"
+                />
+
+            <Button
+                android:id="@+id/github_link"
+                android:layout_width="wrap_content"
+                android:background="@color/ap_transparent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="50dp"
+                android:paddingRight="50dp"
+                android:text="@string/project_github"
+                android:textAllCaps="false"
+                android:textColor="@color/Black"
+                android:textAlignment="center"
+                app:layout_constraintTop_toBottomOf="@id/project_description2"
+                app:layout_constraintLeft_toLeftOf="@id/github_logo"
+                />
+
+
             <androidx.constraintlayout.widget.Group
                 android:id="@+id/project_group"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:visibility="visible"
-                app:constraint_referenced_ids="project_description2,project_description1,image_logo,project_arrow_up" />
+                app:constraint_referenced_ids="project_description2,github_link,
+                project_description1,image_logo,project_arrow_up,github_logo" />
 
 
             <TextView
@@ -127,7 +156,7 @@
                 android:textSize="24sp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/project_description2" />
+                app:layout_constraintTop_toBottomOf="@id/github_link" />
 
             <Button
                 android:id="@+id/contributors"

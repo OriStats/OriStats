@@ -1,6 +1,8 @@
 package com.oristats.three_dots_menu
 
+import android.content.Intent
 import android.graphics.Typeface
+import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -9,6 +11,7 @@ import android.view.ViewGroup
 import com.oristats.MainActivity
 import com.oristats.R
 import kotlinx.android.synthetic.main.about_fragment.*
+import java.net.URI
 
 
 class About : Fragment() {
@@ -33,6 +36,10 @@ class About : Fragment() {
         (activity as MainActivity).supportActionBar?.title = getString(
             R.string.fragment_about
         )
+
+        github_link.setOnClickListener {
+            context?.resources?.getString(R.string.github_url)?.let { it1 -> follow_link(it1) }
+        }
 
         project_group.visibility = View.GONE
         project.setOnClickListener {
@@ -74,6 +81,12 @@ class About : Fragment() {
                 license_group.visibility = View.GONE
             }
         }
+    }
+    private fun follow_link(url: String){
+        val intent = Intent(Intent.ACTION_VIEW)
+        intent.data = Uri.parse(url)
+        startActivity(intent)
+
     }
 
 }

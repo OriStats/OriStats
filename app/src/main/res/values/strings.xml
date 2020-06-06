@@ -100,6 +100,8 @@
         The app is meant to help students, and workers in general, track their working time and time spent on breaks, in order to increase productivity.\n
         This app will always be free and open sourced, without ads or in-app purchases except for donation purposes.
     </string>
+    <string name="project_github">View source code on github</string>
+    <string name="github_url">https://github.com/OriStats/OriStats</string>
     <string name="contributors_title">Contributors</string>
     <string name="contributors_description">
         Heitor Östherdahl - Developer\nHugo Lóio - Developer\nJoão Mesquita - Developer
@@ -119,4 +121,12 @@
         See the License for the specific language governing permissions and limitations under the License.
     </string>
 
+    <!-- Donate Page -->
+    <string name="donate_button">DONATE</string>
+    <string name="donate_description">
+        This software is completely free, open source and without adds.
+        So, if you wish to support the developers of this project, please consider donating.
+    </string>
+    <string name="donate_thank">Thank You!</string>
+    <string name="donate_warning">This feature is not functional yet but it will be added in the future.</string>
 </resources>
