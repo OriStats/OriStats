@@ -25,7 +25,10 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginBottom="8dp"
-        android:text="Switch"
+        android:showText="true"
+        android:textColor="@color/colorSecondary"
+        android:textColorHighlight="@color/colorPrimary"
+        android:textColorLink="@color/colorSecondary"
         android:textOff="Month"
         android:textOn="Week"
         app:layout_constraintBottom_toTopOf="@+id/barchart"
@@ -33,5 +36,4 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>
