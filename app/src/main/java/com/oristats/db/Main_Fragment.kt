@@ -102,12 +102,12 @@ class Main_Fragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        (activity as MainActivity).supportActionBar?.title = getString(R.string.fragment_db_main)
+        (activity as MainActivity).supportActionBar?.title = getString(R.string.fragment_db_main_v2)
     }
 
     //Update action bar title when viewpager focuses this fragment
     override fun onResume() {
         super.onResume()
-        (activity as MainActivity).supportActionBar?.title = getString(R.string.fragment_db_main)
+        (activity as MainActivity).supportActionBar?.title = getString(R.string.fragment_db_main_v2)
     }
 }

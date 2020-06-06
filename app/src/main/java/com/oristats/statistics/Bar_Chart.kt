@@ -280,4 +280,12 @@
 
         }
         }
+
+        //Update action bar title when viewpager focuses this fragment
+        override fun onResume() {
+            super.onResume()
+            (activity as MainActivity).supportActionBar?.title = getString(
+                R.string.fragment_bar_chart
+            )
+        }
     }

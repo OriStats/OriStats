@@ -5,6 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <!--
     <TextView
         android:id="@+id/db_main_recyclerview_title"
         app:layout_constraintTop_toTopOf="parent"
@@ -13,9 +14,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        android:text="@string/db_main_item_view_description"
+        android:text="@string/db_main_item_view_description_v2"
         android:textSize="14sp"
-        android:fontFamily="sans-serif-condensed-medium"/>
+        android:fontFamily="sans-serif-medium"/>
+        -->
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/db_main_recyclerview"
@@ -28,7 +30,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/db_main_recyclerview_title"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0"
         tools:listitem="@layout/db_main_recyclerview_item" />
 
@@ -41,7 +43,9 @@
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         android:contentDescription="@string/db_main_add"
-        android:src="@drawable/ic_add_colorsecondary_24dp"/>
+        android:src="@drawable/ic_add_colorsecondary_24dp"
+        android:visibility="invisible"
+        tools:visibility="visible"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/db_main_fab_reset"
@@ -52,6 +56,8 @@
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         android:contentDescription="@string/db_main_reset"
-        android:src="@drawable/ic_replay_colorsecondary_24dp"/>
+        android:src="@drawable/ic_replay_colorsecondary_24dp"
+        android:visibility="invisible"
+        tools:visibility="visible"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

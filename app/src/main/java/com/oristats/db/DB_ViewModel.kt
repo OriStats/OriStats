@@ -93,6 +93,10 @@ class DB_ViewModel(application: Application) : AndroidViewModel(application) {
         repository.main_untagged_by_id(id)
     }
 
+    fun main_delete_by_start_times(start_times: LongArray) = viewModelScope.launch(Dispatchers.IO){
+        repository.main_delete_by_start_times(start_times)
+    }
+
     // Tag Functions
 
     fun tag_insert(db_Tag_entity: DB_Tag_Entity) = viewModelScope.launch(Dispatchers.IO) {

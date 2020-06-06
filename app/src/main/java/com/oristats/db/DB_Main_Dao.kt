@@ -25,4 +25,7 @@ interface DB_Main_Dao {
 
     @Query("DELETE FROM main_table")
     suspend fun deleteAll()
+
+    @Query("DELETE FROM main_table WHERE start_time IN (:start_times)")
+    suspend fun deleteAllByStartTimes(start_times: LongArray)
 }

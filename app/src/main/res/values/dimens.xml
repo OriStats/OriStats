@@ -7,6 +7,7 @@
     <dimen name="appbar_padding_top">8dp</dimen>
     <dimen name="tag_recyclerview_icon_width">60dp</dimen>
     <dimen name="tag_recyclerview_button_width">40dp</dimen>
+    <dimen name="main_recyclerview_button_width">40dp</dimen>
 
     <!-- Created for DB_Test -->
     <dimen name="small_padding">8dp</dimen>

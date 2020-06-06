@@ -69,6 +69,10 @@
     <string name="button_main_save">Save</string>
     <string name="main_not_saved">Session Not Saved: Entry Not Valid</string>
 
+    <string name="fragment_db_main_v2">Sessions</string>
+    <string name="db_main_item_view_description_v2">Start Time   (Tag)</string>
+    <string name="db_main_item_view_v2">%s   (%s)</string>
+
     <string name="fragment_db_tag">Data Base: tag_table</string>
     <string name="db_tag_item_view_description">id (P.Key-Auto); path_name</string>
     <string name="db_tag_item_view">%d; \"%s\"</string>
@@ -85,4 +89,7 @@
     <string name="tag_edit_move">Move</string>
     <string name="tag_edit_rename">Rename</string>
     <string name="tag_edit_delete">Delete</string>
+
+    <string name="main_edit_change_tag">Change Tag</string>
+    <string name="main_edit_delete">Delete</string>
 </resources>
