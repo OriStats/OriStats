@@ -36,6 +36,7 @@
         android:id="@+id/tag_image"
         android:layout_width="0dp"
         android:background="@color/colorSecondary"
+        android:paddingTop="@dimen/small_padding"
         android:layout_height="0dp"
         android:src="@drawable/ic_tags"
         app:layout_constraintTop_toTopOf="parent"
