@@ -94,10 +94,10 @@ class Pie_chart : Fragment() {
             ContextCompat.getColor(context!!,R.color.Green),
             ContextCompat.getColor(context!!,R.color.Blue),
             ContextCompat.getColor(context!!,R.color.colorPrimaryDark),
-            ContextCompat.getColor(context!!,R.color.Yellow),
+            ContextCompat.getColor(context!!,R.color.Black),
             ContextCompat.getColor(context!!,R.color.Purple),
             ContextCompat.getColor(context!!,R.color.Orange),
-            ContextCompat.getColor(context!!,R.color.Black)
+            ContextCompat.getColor(context!!,R.color.Yellow)
         )
         piechart.animateXY(500, 500)
         piechart.data = data
