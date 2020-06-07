@@ -92,7 +92,7 @@ class Pie_chart : Fragment() {
                     //Log.d("Checkup de tags", tag1.toString())
 
                     //var filtered_mains =
-                      //  db_ViewModel.currentMains.filter { it.tag_id != -1 }
+                    //  db_ViewModel.currentMains.filter { it.tag_id != -1 }
                     if (db_ViewModel.currentRaws.isEmpty()) {
                         Log.d("debug1", "it's empty")
                     } else {
@@ -149,9 +149,9 @@ class Pie_chart : Fragment() {
                             }*/
                             p += j
                             dataSet.setColors(resources.getColor(R.color.colorPrimaryDark),
-                            resources.getColor(R.color.Red),
-                            resources.getColor(R.color.Blue),
-                            resources.getColor(R.color.Black))
+                                resources.getColor(R.color.Red),
+                                resources.getColor(R.color.Blue),
+                                resources.getColor(R.color.Black))
                         }
 
                     }
@@ -171,7 +171,7 @@ class Pie_chart : Fragment() {
             }
 
 
-             else {
+            else {
                 with(xvalues) {
                     clear()
                 }
@@ -187,11 +187,12 @@ class Pie_chart : Fragment() {
                     with(xvalues) {
                         clear()
                     }
-                    var pausa = 0f
-                    var work = 0f
+
                     var total = 0f
                     var p=0
                     for (j in filtered_mains.indices) {
+                        var pausa = 0f
+                        var work = 0f
                         for (i in db_ViewModel.currentRaws.indices) {
                             if (i == 0) {
                                 work += db_ViewModel.currentRaws[1].millis - db_ViewModel.currentRaws[0].millis
@@ -207,18 +208,22 @@ class Pie_chart : Fragment() {
 
                         }
                         total += work
-                        Log.d("CHECKPOINT DOPIECHART: ", total.toString())
-                        Log.d("CHECKPOINT PIECHART2: ", work.toString())
+                        //Log.d("CHECKPOINT DOPIECHART: ", total.toString())
+                        //Log.d("CHECKPOINT PIECHART2: ", work.toString())
                         xvalues.add(
                             PieEntry(
                                 work / (total) * 100,
                                 db_ViewModel.currentTags.filter{it.id==filtered_mains[j].tag_id}[0].path_name)
                         )
                         p+=j
-
+                        Log.d("ENTROUUUUU", db_ViewModel.currentTags.filter{it.id==filtered_mains[j].tag_id}.size.toString())
+                        if(db_ViewModel.currentTags.filter{it.id==filtered_mains[j].tag_id}.size!=1)
+                        {Log.d("ENTROUUUUU", db_ViewModel.currentTags.filter{it.id==filtered_mains[j].tag_id}.size.toString())
+                        }
                     }
                     piechart.setUsePercentValues(true)
                     val dataSet = PieDataSet(xvalues, "")
+                    // dataSet.filter{it.}
                     val data = PieData(dataSet)
                     // In Percentage
                     data.setValueFormatter(PercentFormatter())
@@ -306,7 +311,7 @@ class Pie_chart : Fragment() {
         )
     }
 
-    }
+}
 
 
 

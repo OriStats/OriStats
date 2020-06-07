@@ -17,6 +17,7 @@ import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import com.github.mikephil.charting.formatter.LargeValueFormatter
+import com.github.mikephil.charting.utils.ColorTemplate
 import com.oristats.MainActivity
 import com.oristats.R
 import com.oristats.db.DB_ViewModel
@@ -100,7 +101,8 @@ class Bar_Chart: Fragment() {
         barSpace = 0.07f
         groupSpace = 0.56f
 
-
+        var x = mutableListOf<Pair<Float,Float>>()
+        var y = mutableListOf<Pair<Float,Float>>()
         var yValueGroup1 = mutableListOf<BarEntry>()
         var yValueGroup2 = mutableListOf<BarEntry>()
         var xAxisValues = mutableListOf<String>()
@@ -108,10 +110,13 @@ class Bar_Chart: Fragment() {
         if (db_ViewModel.currentMains.isEmpty()) {
             Log.d("debug1", "it's empty")
         } else {
-            var pausa = 0f
-            var work = 0f
+            // var pausa = 0f
+            // var work = 0f
             var total = 0f
+            var day=0
             for(j in db_ViewModel.currentMains.indices) {
+                var pausa = 0f
+                var work = 0f
                 Log.d("debug1", (db_ViewModel.currentMains[j].start_time).toString())
                 if (currentDate - db_ViewModel.currentMains[j].start_time < 604800000) {
                     for (i in db_ViewModel.currentRaws.indices) {
@@ -121,20 +126,39 @@ class Bar_Chart: Fragment() {
                             work += db_ViewModel.currentRaws[1].millis - db_ViewModel.currentRaws[0].millis
                         }
                         if (i > 0 && i % 2 == 0 && db_ViewModel.currentRaws[i].millis - db_ViewModel.currentRaws[i - 1].millis > 0) {
-                            work += db_ViewModel.currentRaws[i].millis - db_ViewModel.currentRaws[i - 1].millis
+                            pausa += db_ViewModel.currentRaws[i].millis - db_ViewModel.currentRaws[i - 1].millis
                         }
                         if (i > 0 && i % 2 != 0 && db_ViewModel.currentRaws[i].millis - db_ViewModel.currentRaws[i - 1].millis > 0) {
-                            pausa += db_ViewModel.currentRaws[i].millis - db_ViewModel.currentRaws[i - 1].millis
+                            work += db_ViewModel.currentRaws[i].millis - db_ViewModel.currentRaws[i - 1].millis
                         }
                     }
                     total += work
 
+                    val date = Date(db_ViewModel.currentMains[j].start_time)
+
+                    cal.time = date;
+                    day=cal.get(Calendar.DAY_OF_WEEK)
+                    x.add(Pair(day.toFloat(),total / 60000))
+                    y.add(Pair(day.toFloat(),pausa/ 60000))
+                    val mapa=mutableMapOf(day.toFloat() to work/60000)
 
                 }
             }
-            yValueGroup1.add(BarEntry(day.toFloat(), work / 60000))
-            yValueGroup2.add(BarEntry(day.toFloat(), pausa / 60000))
-            xAxisValues.add(cal.get(Calendar.DAY_OF_WEEK).toString())
+
+
+            var ae=x.groupingBy { it.first }.eachCount().filter { it.value > 1 }
+            Log.d("aksjbhfcabd",x.groupingBy { it.first }.eachCount().filter { it.value > 1 }.toString())
+            var t=0f
+            for(j in 0 until 4 step 1){
+                t+=x[j].second
+            }
+
+            yValueGroup1.add(BarEntry(6f,t))
+            yValueGroup2.add(BarEntry(ae.keys.toFloatArray()[0],t))
+            xAxisValues.add(day.toString())
+            cal.get(Calendar.DAY_OF_MONTH)
+
+
 
 
             var barDataSet1: BarDataSet
@@ -234,9 +258,9 @@ class Bar_Chart: Fragment() {
         Log.d("Time zone: ", tz.displayName)
         val sdf = SimpleDateFormat("dd/mm/yyyy")
         val currentDate = System.currentTimeMillis()
-        val day = cal.get(Calendar.DAY_OF_MONTH);
+        // val day = cal.get(Calendar.DAY_OF_MONTH);
         /* log the system time */
-       // val aaa = 1591393440360
+        // val aaa = 1591393440360
         //val date = Date(aaa)
         //cal.time = date;
         /* log the system time */
@@ -263,6 +287,8 @@ class Bar_Chart: Fragment() {
             var work = 0f
             var total = 0f
             for(j in db_ViewModel.currentMains.indices) {
+                var pausa = 0f
+                var work = 0f
                 Log.d("debug1", (db_ViewModel.currentMains[j].start_time).toString())
                 if (currentDate - db_ViewModel.currentMains[j].start_time < 2629743830 ) {
                     for (i in db_ViewModel.currentRaws.indices) {
@@ -272,10 +298,10 @@ class Bar_Chart: Fragment() {
                             work += db_ViewModel.currentRaws[1].millis - db_ViewModel.currentRaws[0].millis
                         }
                         if (i > 0 && i % 2 == 0 && db_ViewModel.currentRaws[i].millis - db_ViewModel.currentRaws[i - 1].millis > 0) {
-                            work += db_ViewModel.currentRaws[i].millis - db_ViewModel.currentRaws[i - 1].millis
+                            pausa += db_ViewModel.currentRaws[i].millis - db_ViewModel.currentRaws[i - 1].millis
                         }
                         if (i > 0 && i % 2 != 0 && db_ViewModel.currentRaws[i].millis - db_ViewModel.currentRaws[i - 1].millis > 0) {
-                            pausa += db_ViewModel.currentRaws[i].millis - db_ViewModel.currentRaws[i - 1].millis
+                            work += db_ViewModel.currentRaws[i].millis - db_ViewModel.currentRaws[i - 1].millis
                         }
                     }
                     total += work
@@ -285,15 +311,22 @@ class Bar_Chart: Fragment() {
 
                 val date = Date(db_ViewModel.currentMains[j].start_time)
                 cal.time = date;
-                yValueGroup1.add(BarEntry(day.toFloat(), work / 60000))
+                val day=cal.get(Calendar.DAY_OF_MONTH)
+                val mapa=mutableMapOf(day.toFloat() to work/60000)
+                yValueGroup1.add(BarEntry(day.toFloat(), work/60000))
                 yValueGroup2.add(BarEntry(day.toFloat(), pausa / 60000))
+                xAxisValues.add(cal.get(Calendar.DAY_OF_MONTH).toString())
                 cal.get(Calendar.DAY_OF_MONTH)
             }
 
-            xAxisValues.add(cal.get(Calendar.DAY_OF_MONTH).toString())
+            val start = 0f
+            barchart.getXAxis().setAxisMinValue(start)
+
             var barDataSet1: BarDataSet
             var barDataSet2: BarDataSet
+
             barDataSet1 = BarDataSet(yValueGroup1, "Work")
+            //barDataSet1.Setcolors(ColorTemplate.COLORFUL_COLORS)
             barDataSet1.setColors(Color.BLUE)
             barDataSet1.setDrawIcons(false)
             barDataSet1.setDrawValues(false)
