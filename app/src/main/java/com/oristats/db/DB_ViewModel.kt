@@ -24,12 +24,12 @@ class DB_ViewModel(application: Application) : AndroidViewModel(application) {
     var MainWorks: MutableList<Long>
     var MainPauses: MutableList<Long>
 
+    var created_tags = false
     var current_folder: Int?
     var current_path: String?
     var moved_folder: Int?
     var moved_tag: Int?
     var tagMode: String //Available modes: normal, move, chronoSelect, statSelect, mainSelect
-    var chronoTag: Int?
     var chronoTag_temp : Int?
     var mainTag: Int?
     var mainTagid: Long?
@@ -63,7 +63,6 @@ class DB_ViewModel(application: Application) : AndroidViewModel(application) {
         moved_folder = null
         moved_tag = null
         tagMode = "normal"
-        chronoTag = null
         chronoTag_temp = null
         mainTag = null
         mainTagid = null

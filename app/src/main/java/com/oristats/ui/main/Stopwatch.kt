@@ -25,7 +25,6 @@ class Stopwatch : Fragment() {
 
     private lateinit var stopwatch_ViewModel: Stopwatch_ViewModel
     private lateinit var db_ViewModel: DB_ViewModel
-    private var stopped: Boolean = true
 
     companion object {
         fun newInstance() = Stopwatch()
@@ -67,33 +66,44 @@ class Stopwatch : Fragment() {
             })
 
         tagselect.setOnClickListener{
-            db_ViewModel.tagMode = "chronoSelect"
-            val action = NavGraphDirections.actionGlobalTags()
-            NavHostFragment.findNavController(nav_host_fragment).navigate(action)
+            if(stopwatch_ViewModel.getStart()) {
+                db_ViewModel.tagMode = "chronoSelect"
+                val action = NavGraphDirections.actionGlobalTags()
+                NavHostFragment.findNavController(nav_host_fragment).navigate(action)
+            }
         }
 
-        if(db_ViewModel.chronoTag == null){
-            taginfo.text = context!!.resources.getString(R.string.notagchrono)
-        }
-        else{
-            val tag = db_ViewModel.currentTags.filter { it.id == db_ViewModel.chronoTag }
-            if(tag.size ==1) {
-                taginfo.text = tag[0].path_name
-            }
-            else{
-                db_ViewModel.chronoTag = null
+        if (db_ViewModel.created_tags) {
+            if (stopwatch_ViewModel.getTag() == -1) {
                 taginfo.text = context!!.resources.getString(R.string.notagchrono)
+            } else {
+                val tag = db_ViewModel.currentTags.filter { it.id == stopwatch_ViewModel.getTag() }
+                if (tag.size == 1) {
+                    taginfo.text = tag[0].path_name
+                } else {
+                    stopwatch_ViewModel.setTag(null)
+                    taginfo.text = context!!.resources.getString(R.string.notagchrono)
+                }
+            }
+        }
+
+        else{
+            if (stopwatch_ViewModel.getTagName() == null || stopwatch_ViewModel.getStart()){
+                taginfo.text = context!!.resources.getString(R.string.notagchrono)
+            }
+            else {
+                taginfo.text = stopwatch_ViewModel.getTagName()
             }
         }
 
         db_ViewModel.allMains.observe(viewLifecycleOwner, Observer {
-            if (stopped){
+            if (stopwatch_ViewModel.getStart()){
                 db_ViewModel.currentMains = it
             }
         })
 
         db_ViewModel.allRaws.observe(viewLifecycleOwner, Observer {
-            if (stopped){
+            if (stopwatch_ViewModel.getStart()){
                 db_ViewModel.currentRaws = it
             }
         })
@@ -115,6 +125,11 @@ class Stopwatch : Fragment() {
             db_tag_entities?.let {
                 if(db_ViewModel.current_folder != null) {
                     db_ViewModel.currentTags = db_tag_entities
+                    db_ViewModel.created_tags = true
+                }
+                if (db_ViewModel.currentTags.filter { it.id == stopwatch_ViewModel.getTag() }.isEmpty()) {
+                    stopwatch_ViewModel.setTag(null)
+                    taginfo.text = context!!.resources.getString(R.string.notagchrono)
                 }
             }
         })
@@ -178,7 +193,6 @@ class Stopwatch : Fragment() {
 
     private fun StartChrono() {
         // Clean Reboot Correction
-        stopped = false
         stopwatch_ViewModel.setRebootCorrection(0)  // Necessary
 
         stopwatch_ViewModel.setLastPlay(SystemClock.elapsedRealtime())
@@ -195,12 +209,7 @@ class Stopwatch : Fragment() {
 
         // Store to DB
         stopwatch_ViewModel.setMainStartTime(System.currentTimeMillis())
-        if(db_ViewModel.chronoTag != null) {
-            db_ViewModel.raw_insert_and_main_insert( DB_Raw_Entity(MillisForDB()), stopwatch_ViewModel.getMainStartTime(), db_ViewModel.chronoTag!!, false )
-        }
-        else{
-            db_ViewModel.raw_insert_and_main_insert( DB_Raw_Entity(MillisForDB()), stopwatch_ViewModel.getMainStartTime(), -1, false )
-        }
+        db_ViewModel.raw_insert_and_main_insert( DB_Raw_Entity(MillisForDB()), stopwatch_ViewModel.getMainStartTime(), stopwatch_ViewModel.getTag(), false )
         // Choose tag_id and minus_one_day UI not implemented yet. Using -1 and false for default. "-1" means tagless.
     }
 
@@ -238,7 +247,6 @@ class Stopwatch : Fragment() {
         stopwatch_ViewModel.setStart(true)
         stopwatch_ViewModel.setIsWorking(false)
         updateButtons("stop")
-        stopped = true
 
         // Store to DB
         db_ViewModel.raw_insert_and_main_update_end_raw_id(DB_Raw_Entity(MillisForDB()), stopwatch_ViewModel.getMainStartTime())

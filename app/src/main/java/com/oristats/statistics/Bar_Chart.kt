@@ -173,6 +173,10 @@ class Bar_Chart: Fragment() {
                 PausePerDay.forEach { pauseGroup.add(BarEntry(it.key, (it.value/60f)))}
                 yAxisLabel = "Minutes"
             }
+            else{
+                WorkPerDay.forEach { workGroup.add(BarEntry(it.key, it.value)) }
+                PausePerDay.forEach { pauseGroup.add(BarEntry(it.key, it.value))}
+            }
 
             if (yAxisLabel == "Hours"){
                 ymaximum = ymaximum/3600f

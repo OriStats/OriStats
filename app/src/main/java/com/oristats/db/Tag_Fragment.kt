@@ -25,6 +25,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.oristats.MainActivity
 import com.oristats.NavGraphDirections
 import com.oristats.R
+import com.oristats.ui.main.Stopwatch_ViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.db_tag_folder_new_entry.view.*
 import kotlinx.android.synthetic.main.db_tag_new_entry_activity.view.*
@@ -33,6 +34,7 @@ import kotlinx.android.synthetic.main.db_tag_rename_activity.view.button_tag_ent
 
 class Tag_Fragment : Fragment(), Tag_ListAdapter.frag_interface {
 
+    private lateinit var stopwatch_ViewModel: Stopwatch_ViewModel
     private lateinit var db_ViewModel: DB_ViewModel
     private var adapter: Tag_ListAdapter? = null
 
@@ -52,6 +54,7 @@ class Tag_Fragment : Fragment(), Tag_ListAdapter.frag_interface {
         recyclerView.layoutManager = LinearLayoutManager(context)
 
         db_ViewModel = (getActivity() as MainActivity).db_ViewModel
+        stopwatch_ViewModel = (getActivity() as MainActivity).stopwatch_ViewModel
 
         db_ViewModel.allFolders.observe(viewLifecycleOwner, Observer {db_folder_entities ->
             db_folder_entities?.let{
@@ -146,8 +149,13 @@ class Tag_Fragment : Fragment(), Tag_ListAdapter.frag_interface {
             else if(db_ViewModel.tagMode == "chronoSelect"){
                 if(db_ViewModel.chronoTag_temp == null) {
                     Toast.makeText(context, "No tag selected", Toast.LENGTH_LONG).show()
+                    stopwatch_ViewModel.setTagName(context!!.resources.getString(R.string.notagchrono))
                 }
-                db_ViewModel.chronoTag = db_ViewModel.chronoTag_temp
+                else{
+                    stopwatch_ViewModel.setTagName(db_ViewModel.currentTags.filter {it.id == db_ViewModel.chronoTag_temp }[0].path_name)
+                    Log.d("teste","${stopwatch_ViewModel.getTagName()} ${db_ViewModel.currentTags.filter {it.id == db_ViewModel.chronoTag_temp }[0].path_name}")
+                }
+                stopwatch_ViewModel.setTag(db_ViewModel.chronoTag_temp)
                 db_ViewModel.chronoTag_temp = null
                 val action = NavGraphDirections.actionGlobalStopwatch()
                 NavHostFragment.findNavController(nav_host_fragment).navigate(action)

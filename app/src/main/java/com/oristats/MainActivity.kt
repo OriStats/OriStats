@@ -21,8 +21,8 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
-    public lateinit var stopwatch_ViewModel: Stopwatch_ViewModel
-    public lateinit var db_ViewModel: DB_ViewModel
+    lateinit var stopwatch_ViewModel: Stopwatch_ViewModel
+    lateinit var db_ViewModel: DB_ViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,6 +42,7 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
+
     }
 
 

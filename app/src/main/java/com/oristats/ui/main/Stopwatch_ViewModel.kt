@@ -20,6 +20,33 @@ class Stopwatch_ViewModel(application: Application) : AndroidViewModel(applicati
         return stopwatch_save.getBoolean("Start", true)
     }
 
+    fun setTag(tag: Int?){
+        with (stopwatch_save.edit()) {
+            if (tag == null){
+                putInt("Tag",-1)
+            }
+            else {
+                putInt("Tag", tag)
+            }
+            apply()
+        }
+    }
+
+    fun getTag(): Int {
+        return stopwatch_save.getInt("Tag",-1)
+    }
+
+    fun setTagName(tagname: String){
+        with (stopwatch_save.edit()){
+            putString("TagName",tagname)
+            apply()
+        }
+    }
+
+    fun getTagName(): String? {
+        return stopwatch_save.getString("TagName",null)
+    }
+
     // IsWorking: Is the client working/studying/etc?
     fun setIsWorking(isWorking : Boolean) {
         with (stopwatch_save.edit()) {
