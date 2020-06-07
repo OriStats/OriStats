@@ -96,8 +96,8 @@
         <string name="main_edit_delete">Delete</string>
 
         <!--Splash Screen-->
-        <string name="splash_title">ORISTATS</string>
-        <string name="splash_authors">Designed by: HMO, HRL, JML</string>
+        <string name="splash_title">OriStats</string>
+        <string name="splash_authors">Designed by: HMÖ, HRL & JML</string>
 
         <!--About Page -->
         <string name="project_title">The Project</string>
