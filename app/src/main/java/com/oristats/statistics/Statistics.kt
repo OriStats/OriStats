@@ -51,6 +51,10 @@ class Statistics : Fragment() , Main_Fragment.MainInterface{
         checkuntagged.setOnClickListener {
             db_Viewmodel.viewUntagged = checkuntagged.isChecked
             statisticsStateAdapter.Main_Fragment.updateMains()
+            if(statisticsStateAdapter.Bar_Chart.created) {
+                statisticsStateAdapter.Bar_Chart.setBarChart()
+                statisticsStateAdapter.Bar_Chart.updateChart()
+            }
         }
 
         tagfilter.setOnClickListener {
@@ -91,12 +95,14 @@ class Statistics : Fragment() , Main_Fragment.MainInterface{
     }
 
     private fun getWorkPauses() {
+        db_Viewmodel.MainIds.clear()
+        db_Viewmodel.MainWorks.clear()
+        db_Viewmodel.MainPauses.clear()
         db_Viewmodel.currentMains.forEach {
             val main = it
             var Work: Long = 0
             var Pause: Long = 0
-            val raws =
-                db_Viewmodel.currentRaws.filter { it.id!! >= main.start_raw_id && it.id!! <= main.end_raw_id }
+            val raws = db_Viewmodel.currentRaws.filter { it.id!! >= main.start_raw_id && it.id!! <= main.end_raw_id }
             for (i in raws.indices) {
                 if (i % 2 == 1) {
                     Work += raws[i].millis - raws[i - 1].millis

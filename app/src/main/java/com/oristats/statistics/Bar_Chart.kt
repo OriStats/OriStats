@@ -28,6 +28,8 @@ import java.util.*
 
 class Bar_Chart: Fragment() {
 
+    private var mode: String = "Week"
+    var created = false
     private lateinit var db_ViewModel: DB_ViewModel
     companion object {
         fun newInstance() = Bar_Chart()
@@ -40,8 +42,6 @@ class Bar_Chart: Fragment() {
         val view: View =inflater.inflate(R.layout.bar_chart_fragment, container, false)
 
         db_ViewModel = (getActivity() as MainActivity).db_ViewModel
-
-
         return view
 
     }
@@ -54,362 +54,199 @@ class Bar_Chart: Fragment() {
         )
 
 
-        /*   switch1?.setOnCheckedChangeListener { _, isChecked ->
-               val message = if (isChecked) "Week Records" else "Month Records"
-               Toast.makeText(context, message,
-                   Toast.LENGTH_SHORT).show()
-
-           }*/
-        setBarChart1()
+        switch1.isChecked = true
         switch1.setOnCheckedChangeListener(CompoundButton.OnCheckedChangeListener { buttonView, isChecked ->
             if (isChecked) {
-                val message ="Week Records"
-                Toast.makeText(context, message,
-                    Toast.LENGTH_SHORT).show()
+                mode = "Week"
                 setBarChart()
             } else {
                 // The toggle is disabled
-                val message ="Month Records"
-                Toast.makeText(context, message,
-                    Toast.LENGTH_SHORT).show()
-                setBarChart1()
+                mode = "Month"
+                setBarChart()
             }
         })
-
-
+        setBarChart()
+        created = true
     }
-    private fun setBarChart() {
+    fun updateChart(){
+        barchart.notifyDataSetChanged()
+        barchart.invalidate()
+    }
+
+    fun setBarChart() {
         val cal = Calendar.getInstance()
         val tz = cal.timeZone
         Log.d("Time zone: ", tz.displayName)
-        val sdf = SimpleDateFormat("dd/mm/yyyy")
-        val currentDate = System.currentTimeMillis()
-        val day = cal.get(Calendar.DAY_OF_MONTH);
-        /* log the system time */
-        val aaa = 1591393440360
-        val date = Date(aaa)
-        cal.time = date;
-        /* log the system time */
-        Log.d("TEMPO QUE SA BARCHART: ", currentDate.toString())
 
         val barWidth: Float
         val barSpace: Float
         val groupSpace: Float
-        val groupCount = 12
 
-        barWidth = 0.15f
-        barSpace = 0.07f
-        groupSpace = 0.56f
+        barWidth = 0.45f
+        barSpace = 0.02f
+        groupSpace = 0.06f
 
-        var x = mutableListOf<Pair<Float,Float>>()
-        var y = mutableListOf<Pair<Float,Float>>()
-        var yValueGroup1 = mutableListOf<BarEntry>()
-        var yValueGroup2 = mutableListOf<BarEntry>()
-        var xAxisValues = mutableListOf<String>()
+        val xminimum = 0f
+        var xmaximum = 0f
+        val yminimum = 0f
+        var ymaximum = 1f
 
-        if (db_ViewModel.currentMains.isEmpty()) {
-            Log.d("debug1", "it's empty")
-        } else {
-            // var pausa = 0f
-            // var work = 0f
-            var total = 0f
-            var day=0
-            for(j in db_ViewModel.currentMains.indices) {
-                var pausa = 0f
-                var work = 0f
-                Log.d("debug1", (db_ViewModel.currentMains[j].start_time).toString())
-                if (currentDate - db_ViewModel.currentMains[j].start_time < 604800000) {
-                    for (i in db_ViewModel.currentRaws.indices) {
-                        Log.d("debug1", (db_ViewModel.currentRaws[i].millis).toString())
-                        Log.d("debug1", (currentDate-db_ViewModel.currentRaws[i].millis).toString())
-                        if (i == 0) {
-                            work += db_ViewModel.currentRaws[1].millis - db_ViewModel.currentRaws[0].millis
-                        }
-                        if (i > 0 && i % 2 == 0 && db_ViewModel.currentRaws[i].millis - db_ViewModel.currentRaws[i - 1].millis > 0) {
-                            pausa += db_ViewModel.currentRaws[i].millis - db_ViewModel.currentRaws[i - 1].millis
-                        }
-                        if (i > 0 && i % 2 != 0 && db_ViewModel.currentRaws[i].millis - db_ViewModel.currentRaws[i - 1].millis > 0) {
-                            work += db_ViewModel.currentRaws[i].millis - db_ViewModel.currentRaws[i - 1].millis
-                        }
-                    }
-                    total += work
+        cal.set(Calendar.HOUR_OF_DAY, 0)
+        cal.set(Calendar.MINUTE, 0)
+        cal.set(Calendar.SECOND, 0)
+        cal.set(Calendar.MILLISECOND, 0)
+        var time: Long = 0
+        val now: Long = System.currentTimeMillis()
+        if(mode == "Week"){
+            time = 518400000 + now - cal.timeInMillis //6 days + time since day began
+        }
+        else if(mode == "Month"){
+            time = 2505600000 + now - cal.timeInMillis //29 days + time since day began
+        }
 
-                    val date = Date(db_ViewModel.currentMains[j].start_time)
+        val WorkPerDay: MutableMap<Float,Float> = mutableMapOf<Float,Float>()
+        val PausePerDay: MutableMap<Float,Float> = mutableMapOf<Float,Float>()
+        val LegendPerDay: MutableMap<Float,String> = mutableMapOf<Float,String>()
+        val workGroup = mutableListOf<BarEntry>()
+        val pauseGroup = mutableListOf<BarEntry>()
+        val xAxisValues = mutableListOf<String>()
 
-                    cal.time = date;
-                    day=cal.get(Calendar.DAY_OF_WEEK)
-                    x.add(Pair(day.toFloat(),total / 60000))
-                    y.add(Pair(day.toFloat(),pausa/ 60000))
-                    val mapa=mutableMapOf(day.toFloat() to work/60000)
+        for(i in db_ViewModel.MainIds.indices){
+            val letUntagged = db_ViewModel.viewUntagged && db_ViewModel.currentMains.filter { it.start_time == db_ViewModel.MainIds[i] }[0].tag_id == -1
+            var letTag = true && db_ViewModel.currentMains.filter { it.start_time == db_ViewModel.MainIds[i] }[0].tag_id != -1
+            if (db_ViewModel.statTags != null) {
+                letTag = db_ViewModel.statTags!!.filter { tag ->
+                    db_ViewModel.currentMains.filter { it.start_time == db_ViewModel.MainIds[i] }[0].tag_id == tag
+                }.isNotEmpty()
+            }
+            if(db_ViewModel.MainIds[i] > now - time && (letUntagged || letTag)){
+                cal.time = Date(db_ViewModel.MainIds[i])
+                var day = cal.get(Calendar.DAY_OF_YEAR).toFloat()
+                var legend = ""
+                if(mode == "Week") {
+                    day = cal.get(Calendar.DAY_OF_WEEK).toFloat()
+                    val formatter = SimpleDateFormat("EEE")
+                    legend = formatter.format(cal.time)
 
+                }
+                if (mode == "Month"){
+                    day = cal.get(Calendar.DAY_OF_MONTH).toFloat()
+                    val formatter = SimpleDateFormat("dd/MM")
+                    legend = formatter.format(cal.time)
+                }
+                val work = (db_ViewModel.MainWorks[i]/1000).toFloat()
+                val pause = (db_ViewModel.MainPauses[i]/1000).toFloat()
+                if (WorkPerDay.get(day) == null){
+                    WorkPerDay.put(day, work)
+                    PausePerDay.put(day, pause)
+                    LegendPerDay.put(day,legend)
+                }
+                else{
+                    WorkPerDay.set(day,WorkPerDay.get(day)!!+ work)
+                    PausePerDay.set(day,PausePerDay.get(day)!!+ pause)
+                }
+            }
+        }
+
+        if (WorkPerDay.isNotEmpty()) {
+
+            WorkPerDay.forEach {
+                workGroup.add(BarEntry(it.key, it.value))
+                if(it.value > ymaximum){
+                    ymaximum = it.value*1.20f
+                }
+                xmaximum += 1f
+            }
+
+            PausePerDay.forEach {
+                pauseGroup.add(BarEntry(it.key, it.value))
+                if(it.value > ymaximum){
+                    ymaximum = it.value*1.10f
                 }
             }
 
-
-            var ae=x.groupingBy { it.first }.eachCount().filter { it.value > 1 }
-            Log.d("aksjbhfcabd",x.groupingBy { it.first }.eachCount().filter { it.value > 1 }.toString())
-            var t=0f
-            for(j in 0 until 4 step 1){
-                t+=x[j].second
+            LegendPerDay.forEach{
+                xAxisValues.add(it.value)
             }
-
-            yValueGroup1.add(BarEntry(6f,t))
-            yValueGroup2.add(BarEntry(ae.keys.toFloatArray()[0],t))
-            xAxisValues.add(day.toString())
-            cal.get(Calendar.DAY_OF_MONTH)
-
-
-
-
-            var barDataSet1: BarDataSet
-            var barDataSet2: BarDataSet
-
-
-            barDataSet1 = BarDataSet(yValueGroup1, "Work")
-            barDataSet1.setColors(Color.BLUE)
-
-            barDataSet1.setDrawIcons(false)
-            barDataSet1.setDrawValues(false)
-
-            barDataSet2 = BarDataSet(yValueGroup2, "Pause")
-            barDataSet2.setColors(Color.RED)
-            barDataSet2.setDrawIcons(false)
-            barDataSet2.setDrawValues(false)
-
-
-            // Pass Both Bar Data Set's in Bar Data.
-            var barData = BarData(barDataSet1, barDataSet2)
-            barchart.description.isEnabled = false
-            barchart.description.textSize = 0f
-            barData.setValueFormatter(LargeValueFormatter())
-            barchart.setData(barData)
-            barchart.getBarData().setBarWidth(barWidth)
-            barchart.getXAxis().setAxisMinimum(0f)
-            barchart.getXAxis().setAxisMaximum(12f)
-            barchart.groupBars(0f, groupSpace, barSpace)
-            //   barChartView.setFitBars(true)
-            barchart.getData().setHighlightEnabled(false)
-            barchart.invalidate()
-
-
-            var legend = barchart.legend
-            legend.setVerticalAlignment(Legend.LegendVerticalAlignment.BOTTOM)
-            legend.setHorizontalAlignment(Legend.LegendHorizontalAlignment.RIGHT)
-            legend.setOrientation(Legend.LegendOrientation.HORIZONTAL)
-            legend.setDrawInside(false)
-
-            var legenedEntries = arrayListOf<LegendEntry>()
-
-            legenedEntries.add(
-                LegendEntry(
-                    "Work",
-                    Legend.LegendForm.SQUARE,
-                    8f,
-                    8f,
-                    null,
-                    Color.BLUE
-                )
-            )
-            legenedEntries.add(
-                LegendEntry(
-                    "Pause",
-                    Legend.LegendForm.SQUARE,
-                    8f,
-                    8f,
-                    null,
-                    Color.RED
-                )
-            )
-
-            legend.setCustom(legenedEntries)
-
-            legend.setYOffset(2f)
-            legend.setXOffset(2f)
-            legend.setYEntrySpace(0f)
-            legend.setTextSize(5f)
-
-
-            val xAxis = barchart.getXAxis()
-            xAxis.setGranularity(1f)
-            xAxis.setGranularityEnabled(true)
-            xAxis.setCenterAxisLabels(true)
-            xAxis.setDrawGridLines(false)
-            xAxis.textSize = 9f
-
-            xAxis.setPosition(XAxis.XAxisPosition.BOTTOM)
-            xAxis.setValueFormatter(IndexAxisValueFormatter(xAxisValues))
-
-            xAxis.setLabelCount(12)
-            xAxis.mAxisMaximum = 12f
-            xAxis.setCenterAxisLabels(true)
-            xAxis.setAvoidFirstLastClipping(true)
-            xAxis.spaceMin = 4f
-            xAxis.spaceMax = 4f
-
-
+        }
+        else {
+            workGroup.add(BarEntry(0f,0f))
+            pauseGroup.add(BarEntry(0f,0f))
         }
 
+        val barDataSet1: BarDataSet
+        val barDataSet2: BarDataSet
+
+
+        barDataSet1 = BarDataSet(workGroup, "Work")
+        barDataSet1.setColors(Color.BLUE)
+
+        barDataSet1.setDrawIcons(false)
+        barDataSet1.setDrawValues(false)
+
+        barDataSet2 = BarDataSet(pauseGroup, "Pause")
+        barDataSet2.setColors(Color.RED)
+        barDataSet2.setDrawIcons(false)
+        barDataSet2.setDrawValues(false)
+
+
+        // Pass Both Bar Data Set's in Bar Data.
+        val barData = BarData(barDataSet1, barDataSet2)
+        barchart.description.isEnabled = false
+        barchart.description.textSize = 0f
+        barData.setValueFormatter(LargeValueFormatter())
+        barchart.setData(barData)
+        barchart.getBarData().setBarWidth(barWidth)
+        barchart.getXAxis().setAxisMinimum(xminimum)
+        barchart.getXAxis().setAxisMaximum(xmaximum)
+        barchart.axisLeft.axisMinimum = yminimum
+        barchart.axisLeft.axisMaximum = ymaximum
+        barchart.groupBars(0f, groupSpace, barSpace)
+        //   barChartView.setFitBars(true)
+        barchart.getData().setHighlightEnabled(false)
+        barchart.invalidate()
+
+
+        val legend = barchart.legend
+        legend.setVerticalAlignment(Legend.LegendVerticalAlignment.BOTTOM)
+        legend.setHorizontalAlignment(Legend.LegendHorizontalAlignment.RIGHT)
+        legend.setOrientation(Legend.LegendOrientation.HORIZONTAL)
+        legend.setDrawInside(false)
+
+        val legendEntries = arrayListOf<LegendEntry>()
+
+        legendEntries.add(
+            LegendEntry( "Work", Legend.LegendForm.SQUARE, 8f, 8f, null, Color.BLUE )
+        )
+        legendEntries.add(
+            LegendEntry( "Pause", Legend.LegendForm.SQUARE, 8f, 8f, null, Color.RED )
+        )
+
+        legend.setCustom(legendEntries)
+
+        legend.setYOffset(2f)
+        legend.setXOffset(2f)
+        legend.setYEntrySpace(0f)
+        legend.setTextSize(5f)
+
+
+        val xAxis = barchart.getXAxis()
+        xAxis.setGranularity(1f)
+        xAxis.setGranularityEnabled(true)
+        xAxis.setCenterAxisLabels(true)
+        xAxis.setDrawGridLines(false)
+        xAxis.textSize = 9f
+
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM)
+        xAxis.setValueFormatter(IndexAxisValueFormatter(xAxisValues))
+
+        xAxis.setCenterAxisLabels(true)
+        xAxis.setAvoidFirstLastClipping(true)
+        xAxis.spaceMin = 4f
+        xAxis.spaceMax = 4f
 
     }
 
-    private fun setBarChart1() {
-        val cal = Calendar.getInstance()
-        val tz = cal.timeZone
-        Log.d("Time zone: ", tz.displayName)
-        val sdf = SimpleDateFormat("dd/mm/yyyy")
-        val currentDate = System.currentTimeMillis()
-        // val day = cal.get(Calendar.DAY_OF_MONTH);
-        /* log the system time */
-        // val aaa = 1591393440360
-        //val date = Date(aaa)
-        //cal.time = date;
-        /* log the system time */
-        Log.d("TEMPO QUE SA BARCHART: ", currentDate.toString())
-
-        val barWidth: Float
-        val barSpace: Float
-        val groupSpace: Float
-        val groupCount = 12
-
-        barWidth = 0.15f
-        barSpace = 0.07f
-        groupSpace = 0.56f
-
-
-        var yValueGroup1 = mutableListOf<BarEntry>()
-        var yValueGroup2 = mutableListOf<BarEntry>()
-        var xAxisValues = mutableListOf<String>()
-
-        if (db_ViewModel.currentMains.isEmpty()) {
-            Log.d("debug1", "it's empty")
-        } else {
-            var pausa = 0f
-            var work = 0f
-            var total = 0f
-            for(j in db_ViewModel.currentMains.indices) {
-                var pausa = 0f
-                var work = 0f
-                Log.d("debug1", (db_ViewModel.currentMains[j].start_time).toString())
-                if (currentDate - db_ViewModel.currentMains[j].start_time < 2629743830 ) {
-                    for (i in db_ViewModel.currentRaws.indices) {
-                        Log.d("debug1", (db_ViewModel.currentRaws[i].millis).toString())
-                        Log.d("debug1", (currentDate-db_ViewModel.currentRaws[i].millis).toString())
-                        if (i == 0) {
-                            work += db_ViewModel.currentRaws[1].millis - db_ViewModel.currentRaws[0].millis
-                        }
-                        if (i > 0 && i % 2 == 0 && db_ViewModel.currentRaws[i].millis - db_ViewModel.currentRaws[i - 1].millis > 0) {
-                            pausa += db_ViewModel.currentRaws[i].millis - db_ViewModel.currentRaws[i - 1].millis
-                        }
-                        if (i > 0 && i % 2 != 0 && db_ViewModel.currentRaws[i].millis - db_ViewModel.currentRaws[i - 1].millis > 0) {
-                            work += db_ViewModel.currentRaws[i].millis - db_ViewModel.currentRaws[i - 1].millis
-                        }
-                    }
-                    total += work
-
-
-                }
-
-                val date = Date(db_ViewModel.currentMains[j].start_time)
-                cal.time = date;
-                val day=cal.get(Calendar.DAY_OF_MONTH)
-                val mapa=mutableMapOf(day.toFloat() to work/60000)
-                yValueGroup1.add(BarEntry(day.toFloat(), work/60000))
-                yValueGroup2.add(BarEntry(day.toFloat(), pausa / 60000))
-                xAxisValues.add(cal.get(Calendar.DAY_OF_MONTH).toString())
-                cal.get(Calendar.DAY_OF_MONTH)
-            }
-
-            val start = 0f
-            barchart.getXAxis().setAxisMinValue(start)
-
-            var barDataSet1: BarDataSet
-            var barDataSet2: BarDataSet
-
-            barDataSet1 = BarDataSet(yValueGroup1, "Work")
-            //barDataSet1.Setcolors(ColorTemplate.COLORFUL_COLORS)
-            barDataSet1.setColors(Color.BLUE)
-            barDataSet1.setDrawIcons(false)
-            barDataSet1.setDrawValues(false)
-            barDataSet2 = BarDataSet(yValueGroup2, "Pause")
-            barDataSet2.setColors(Color.RED)
-            barDataSet2.setDrawIcons(false)
-            barDataSet2.setDrawValues(false)
-
-
-            // Pass Both Bar Data Set's in Bar Data.
-            var barData = BarData(barDataSet1, barDataSet2)
-            barchart.description.isEnabled = false
-            barchart.description.textSize = 0f
-            barData.setValueFormatter(LargeValueFormatter())
-            barchart.setData(barData)
-            barchart.getBarData().setBarWidth(barWidth)
-            barchart.getXAxis().setAxisMinimum(0f)
-            barchart.getXAxis().setAxisMaximum(12f)
-            barchart.groupBars(0f, groupSpace, barSpace)
-            //   barChartView.setFitBars(true)
-            barchart.getData().setHighlightEnabled(false)
-            barchart.invalidate()
-
-
-            var legend = barchart.legend
-            legend.setVerticalAlignment(Legend.LegendVerticalAlignment.BOTTOM)
-            legend.setHorizontalAlignment(Legend.LegendHorizontalAlignment.RIGHT)
-            legend.setOrientation(Legend.LegendOrientation.HORIZONTAL)
-            legend.setDrawInside(false)
-
-            var legenedEntries = arrayListOf<LegendEntry>()
-
-            legenedEntries.add(
-                LegendEntry(
-                    "Work",
-                    Legend.LegendForm.SQUARE,
-                    8f,
-                    8f,
-                    null,
-                    Color.BLUE
-                )
-            )
-            legenedEntries.add(
-                LegendEntry(
-                    "Pause",
-                    Legend.LegendForm.SQUARE,
-                    8f,
-                    8f,
-                    null,
-                    Color.RED
-                )
-            )
-
-            legend.setCustom(legenedEntries)
-
-            legend.setYOffset(2f)
-            legend.setXOffset(2f)
-            legend.setYEntrySpace(0f)
-            legend.setTextSize(5f)
-
-
-            val xAxis = barchart.getXAxis()
-            xAxis.setGranularity(1f)
-            xAxis.setGranularityEnabled(true)
-            xAxis.setCenterAxisLabels(true)
-            xAxis.setDrawGridLines(false)
-            xAxis.textSize = 9f
-
-            xAxis.setPosition(XAxis.XAxisPosition.BOTTOM)
-            xAxis.setValueFormatter(IndexAxisValueFormatter(xAxisValues))
-
-            xAxis.setLabelCount(12)
-            xAxis.mAxisMaximum = 12f
-            xAxis.setCenterAxisLabels(true)
-            xAxis.setAvoidFirstLastClipping(true)
-            xAxis.spaceMin = 4f
-            xAxis.spaceMax = 4f
-
-
-        }
-
-
-    }
 
     //Update action bar title when viewpager focuses this fragment
     override fun onResume() {
