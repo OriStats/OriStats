@@ -23,7 +23,7 @@
         android:id="@+id/work_pause_text"
         style="@style/main_recyclerview_style"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:text="@string/app_name"
         android:paddingBottom="@dimen/small_padding"
         android:textSize="18sp"
