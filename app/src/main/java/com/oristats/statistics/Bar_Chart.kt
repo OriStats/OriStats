@@ -75,8 +75,6 @@ class Bar_Chart: Fragment() {
 
     fun setBarChart() {
         val cal = Calendar.getInstance()
-        val tz = cal.timeZone
-        //Log.d("Time zone: ", tz.displayName)
 
         val barWidth: Float
         val barSpace: Float
@@ -90,6 +88,7 @@ class Bar_Chart: Fragment() {
         var xmaximum = 0f
         val yminimum = 0f
         var ymaximum = 1f
+        var yAxisLabel = "Seconds"
 
         cal.set(Calendar.HOUR_OF_DAY, 0)
         cal.set(Calendar.MINUTE, 0)
@@ -151,23 +150,38 @@ class Bar_Chart: Fragment() {
         if (WorkPerDay.isNotEmpty()) {
 
             WorkPerDay.forEach {
-                workGroup.add(BarEntry(it.key, it.value))
                 if(it.value > ymaximum){
                     ymaximum = it.value*1.20f
                 }
                 xmaximum += 1f
             }
 
+
             PausePerDay.forEach {
-                pauseGroup.add(BarEntry(it.key, it.value))
                 if(it.value > ymaximum){
-                    ymaximum = it.value*1.10f
+                    ymaximum = it.value*1.20f
                 }
             }
 
-            LegendPerDay.forEach{
-                xAxisValues.add(it.value)
+            if (ymaximum >= 7200) {
+                WorkPerDay.forEach { workGroup.add(BarEntry(it.key, (it.value/3600f))) }
+                PausePerDay.forEach { pauseGroup.add(BarEntry(it.key, (it.value/3600f))) }
+                yAxisLabel = "Hours"
             }
+            else if (ymaximum >= 120){
+                WorkPerDay.forEach { workGroup.add(BarEntry(it.key, (it.value/60f))) }
+                PausePerDay.forEach { pauseGroup.add(BarEntry(it.key, (it.value/60f)))}
+                yAxisLabel = "Minutes"
+            }
+
+            if (yAxisLabel == "Hours"){
+                ymaximum = ymaximum/3600f
+            }
+            else if(yAxisLabel == "Minutes"){
+                ymaximum = ymaximum/60f
+            }
+
+            LegendPerDay.forEach{ xAxisValues.add(it.value) }
         }
         else {
             workGroup.add(BarEntry(0f,0f))
@@ -177,6 +191,7 @@ class Bar_Chart: Fragment() {
         val barDataSet1: BarDataSet
         val barDataSet2: BarDataSet
 
+        ytile.text = yAxisLabel
 
         barDataSet1 = BarDataSet(workGroup, "Work")
         barDataSet1.setColors(Color.BLUE)

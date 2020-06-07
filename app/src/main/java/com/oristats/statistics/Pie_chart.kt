@@ -1,28 +1,24 @@
 package com.oristats.statistics
 
-import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import com.github.mikephil.charting.charts.PieChart
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
 import com.github.mikephil.charting.formatter.PercentFormatter
+import com.github.mikephil.charting.utils.ViewPortHandler
 import com.oristats.MainActivity
 import com.oristats.R
 import com.oristats.db.DB_ViewModel
 import kotlinx.android.synthetic.main.pie_chart_fragment.*
-import java.text.SimpleDateFormat
-import java.util.*
-import kotlin.collections.ArrayList
+import java.text.DecimalFormat
 
 
 class Pie_chart : Fragment() {
@@ -90,15 +86,17 @@ class Pie_chart : Fragment() {
         // dataSet.filter{it.}
         val data = PieData(dataSet)
         // In Percentage
-        data.setValueFormatter(PercentFormatter())
+        data.setValueFormatter(PercentFormatter(piechart))
+        piechart.setUsePercentValues(true)
 
         dataSet.setColors(
-            ContextCompat.getColor(context!!,R.color.colorSecondary),
-            ContextCompat.getColor(context!!,R.color.colorPrimary),
-            ContextCompat.getColor(context!!,R.color.colorSecondaryDark),
-            ContextCompat.getColor(context!!,R.color.Orange),
+            ContextCompat.getColor(context!!,R.color.Red),
+            ContextCompat.getColor(context!!,R.color.Green),
+            ContextCompat.getColor(context!!,R.color.Blue),
             ContextCompat.getColor(context!!,R.color.colorPrimaryDark),
+            ContextCompat.getColor(context!!,R.color.Yellow),
             ContextCompat.getColor(context!!,R.color.Purple),
+            ContextCompat.getColor(context!!,R.color.Orange),
             ContextCompat.getColor(context!!,R.color.Black)
         )
         piechart.animateXY(500, 500)

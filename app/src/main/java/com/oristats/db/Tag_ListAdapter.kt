@@ -166,9 +166,7 @@ class Tag_ListAdapter internal constructor(
                 }
                 else if (mCtx.db_ViewModel.tagMode == "chronoSelect") {
                     holder.Tag_check.visibility = View.VISIBLE
-                    if(current.id != mCtx.db_ViewModel.chronoTag_temp){
-                        holder.Tag_check.isChecked = false
-                    }
+                    holder.Tag_check.isChecked = current.id == mCtx.db_ViewModel.chronoTag_temp
                     holder.Tag_check.setOnClickListener {
                         val checked = holder.Tag_check.isChecked
                         if(checked){
@@ -179,9 +177,7 @@ class Tag_ListAdapter internal constructor(
                 }
                 else if (mCtx.db_ViewModel.tagMode == "mainSelect") {
                     holder.Tag_check.visibility = View.VISIBLE
-                    if(current.id != mCtx.db_ViewModel.mainTag){
-                        holder.Tag_check.isChecked = false
-                    }
+                    holder.Tag_check.isChecked = current.id == mCtx.db_ViewModel.mainTag
                     holder.Tag_check.setOnClickListener {
                         val checked = holder.Tag_check.isChecked
                         if(checked){
