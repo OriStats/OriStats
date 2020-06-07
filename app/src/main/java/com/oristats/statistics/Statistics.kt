@@ -55,6 +55,10 @@ class Statistics : Fragment() , Main_Fragment.MainInterface{
                 statisticsStateAdapter.Bar_Chart.setBarChart()
                 statisticsStateAdapter.Bar_Chart.updateChart()
             }
+            if(statisticsStateAdapter.Pie_chart.created) {
+                statisticsStateAdapter.Pie_chart.Pie_chart()
+                statisticsStateAdapter.Pie_chart.updateChart()
+            }
         }
 
         tagfilter.setOnClickListener {

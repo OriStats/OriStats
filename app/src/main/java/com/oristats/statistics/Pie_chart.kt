@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.github.mikephil.charting.charts.PieChart
@@ -19,11 +20,15 @@ import com.oristats.MainActivity
 import com.oristats.R
 import com.oristats.db.DB_ViewModel
 import kotlinx.android.synthetic.main.pie_chart_fragment.*
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class Pie_chart : Fragment() {
 
     private lateinit var db_ViewModel: DB_ViewModel
+    var created = false
 
     companion object {
         fun newInstance() = Pie_chart()
@@ -42,234 +47,73 @@ class Pie_chart : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        (activity as MainActivity).supportActionBar?.title = getString(
-            R.string.fragment_pie_chart
-        )
+        (activity as MainActivity).supportActionBar?.title = getString( R.string.fragment_pie_chart )
 
-        //val xvalues = ArrayList<PieEntry>()
-        val xvalues = mutableListOf<PieEntry>()
-        val dataSet = PieDataSet(xvalues, "")
-        var currency_mains =
-            db_ViewModel.currentMains.filter { it.tag_id == -1 }
-
-
-        if (db_ViewModel.currentMains.isEmpty()) {
-            Log.d("debug1", "it's empty")
-
-        } else {
-            if (db_ViewModel.statTags == null) {
-                if (db_ViewModel.currentMains.size == 1) {
-                    with(xvalues) {
-                        clear()
-                    }
-                    Log.d("Checkpoint1", "it's 1")
-                    //xvalues.add(PieEntry(1f,  db_ViewModel.currentTags[0].path_name))
-                    xvalues.add(PieEntry(100f, "caminhando"))
-                    piechart.setUsePercentValues(true)
-                    val dataSet = PieDataSet(xvalues, "")
-                    val data = PieData(dataSet)
-                    // In Percentage
-                    data.setValueFormatter(PercentFormatter())
-
-                    dataSet.setColors(
-                        resources.getColor(R.color.colorPrimaryDark),
-                        resources.getColor(R.color.Red),
-                        resources.getColor(R.color.Blue),
-                        resources.getColor(R.color.Black)
-                    )
-                    piechart.animateXY(500, 500);
-                    piechart.data = data
-                    piechart.description.text = ""
-                    piechart.isDrawHoleEnabled = false
-                    piechart.isRotationEnabled = false
-                    data.setValueTextSize(13f)
-                    piechart.notifyDataSetChanged();
-                } else {
-                    with(xvalues) {
-                        clear()
-                    }
-                    // var tag1=db_ViewModel.currentMains[1].tag_id
-                    //Log.d("Checkup de tags", tag1.toString())
-
-                    //var filtered_mains =
-                    //  db_ViewModel.currentMains.filter { it.tag_id != -1 }
-                    if (db_ViewModel.currentRaws.isEmpty()) {
-                        Log.d("debug1", "it's empty")
-                    } else {
-
-                        with(xvalues) {
-                            clear()
-                        }
-                        var pausa = 0f
-                        var work = 0f
-                        var total = 0f
-                        var p = 0
-                        for (j in db_ViewModel.currentMains.indices) {
-                            for (i in db_ViewModel.currentRaws.indices) {
-                                if (i == 0) {
-                                    work += db_ViewModel.currentRaws[1].millis - db_ViewModel.currentRaws[0].millis
-                                }
-                                if (db_ViewModel.currentMains[j].start_raw_id < db_ViewModel.currentRaws[i].id!! && db_ViewModel.currentRaws[i].id!! < db_ViewModel.currentMains[j].end_raw_id)
-                                    if (i > 0 && i % 2 == 0 && db_ViewModel.currentRaws[i].millis - db_ViewModel.currentRaws[i - 1].millis > 0) {
-                                        work += db_ViewModel.currentRaws[i].millis - db_ViewModel.currentRaws[i - 1].millis
-                                    }
-                                if (i > 0 && i % 2 != 0 && db_ViewModel.currentRaws[i].millis - db_ViewModel.currentRaws[i - 1].millis > 0) {
-                                    pausa += db_ViewModel.currentRaws[i].millis - db_ViewModel.currentRaws[i - 1].millis
-                                }
-                                total += work
-
-
-                            }
-                            if(db_ViewModel.currentMains[j].tag_id==-1) {
-                                xvalues.add(PieEntry(work / (total) * 100, "Untagged"))
-                            }
-                            else{
-                                xvalues.add(PieEntry(work / (total) * 100, db_ViewModel.currentTags.filter{it.id==db_ViewModel.currentMains[j].tag_id}[0].path_name))
-                            }
-                            Log.d("CHECKPOINT DOPIECHART: ", total.toString())
-                            Log.d("CHECKPOINT PIECHART2: ", work.toString())
-
-
-
-                            //    db_ViewModel.currentTags.forEach{
-                            //      it.id=currency_mains[j].tag_id
-                            // }
-
-
-                            // }
-
-                            /*      val main = it.tag_id
-                                if(db_ViewModel.currentTags.filter { it.id == main }.isEmpty() && main != -1){
-                                    xvalues.add(PieEntry(work / (total) * 100, "Untagged"))
-                                }
-                                else{
-                                    xvalues.add(PieEntry(work / (total) * 100, db_ViewModel.currentTags[j].path_name))
-
-                                }
-                            }*/
-                            p += j
-                            dataSet.setColors(resources.getColor(R.color.colorPrimaryDark),
-                                resources.getColor(R.color.Red),
-                                resources.getColor(R.color.Blue),
-                                resources.getColor(R.color.Black))
-                        }
-
-                    }
-                    piechart.setUsePercentValues(true)
-                    val data = PieData(dataSet)
-                    // In Percentage
-                    data.setValueFormatter(PercentFormatter())
-                    piechart.animateXY(500, 500);
-                    piechart.data = data
-                    piechart.description.text = ""
-                    piechart.isDrawHoleEnabled = false
-                    piechart.isRotationEnabled = false
-                    data.setValueTextSize(13f)
-                    piechart.notifyDataSetChanged();
-                    // piechart.invalidate();
-                }
-            }
-
-
-            else {
-                with(xvalues) {
-                    clear()
-                }
-                Log.d("DEbugg das tags", 234321.toString())
-                var filtered_mains =
-                    db_ViewModel.currentMains.filter { db_ViewModel.statTags!!.contains(it.tag_id) && it.tag_id != -1 }
-
-                Log.d("DEBUGG", filtered_mains.indices.toString())
-
-                if (db_ViewModel.currentRaws.isEmpty()) {
-                    Log.d("debug1", "it's empty")
-                } else {
-                    with(xvalues) {
-                        clear()
-                    }
-
-                    var total = 0f
-                    var p=0
-                    for (j in filtered_mains.indices) {
-                        var pausa = 0f
-                        var work = 0f
-                        for (i in db_ViewModel.currentRaws.indices) {
-                            if (i == 0) {
-                                work += db_ViewModel.currentRaws[1].millis - db_ViewModel.currentRaws[0].millis
-                            }
-                            if (filtered_mains[j].start_raw_id < db_ViewModel.currentRaws[i].id!! && db_ViewModel.currentRaws[i].id!! < filtered_mains[j].end_raw_id)
-                                if (i > 0 && i % 2 == 0 && db_ViewModel.currentRaws[i].millis - db_ViewModel.currentRaws[i - 1].millis > 0) {
-                                    work += db_ViewModel.currentRaws[i].millis - db_ViewModel.currentRaws[i - 1].millis
-                                }
-                            if (i > 0 && i % 2 != 0 && db_ViewModel.currentRaws[i].millis - db_ViewModel.currentRaws[i - 1].millis > 0) {
-                                pausa += db_ViewModel.currentRaws[i].millis - db_ViewModel.currentRaws[i - 1].millis
-                            }
-
-
-                        }
-                        total += work
-                        //Log.d("CHECKPOINT DOPIECHART: ", total.toString())
-                        //Log.d("CHECKPOINT PIECHART2: ", work.toString())
-                        xvalues.add(
-                            PieEntry(
-                                work / (total) * 100,
-                                db_ViewModel.currentTags.filter{it.id==filtered_mains[j].tag_id}[0].path_name)
-                        )
-                        p+=j
-                        Log.d("ENTROUUUUU", db_ViewModel.currentTags.filter{it.id==filtered_mains[j].tag_id}.size.toString())
-                        if(db_ViewModel.currentTags.filter{it.id==filtered_mains[j].tag_id}.size!=1)
-                        {Log.d("ENTROUUUUU", db_ViewModel.currentTags.filter{it.id==filtered_mains[j].tag_id}.size.toString())
-                        }
-                    }
-                    piechart.setUsePercentValues(true)
-                    val dataSet = PieDataSet(xvalues, "")
-                    // dataSet.filter{it.}
-                    val data = PieData(dataSet)
-                    // In Percentage
-                    data.setValueFormatter(PercentFormatter())
-
-                    dataSet.setColors(
-                        resources.getColor(R.color.colorPrimaryDark),
-                        resources.getColor(R.color.Red),
-                        resources.getColor(R.color.Blue),
-                        resources.getColor(R.color.Black)
-                    )
-                    piechart.animateXY(500, 500);
-                    piechart.data = data
-                    piechart.description.text = ""
-                    piechart.isDrawHoleEnabled = false
-                    piechart.isRotationEnabled = false
-                    data.setValueTextSize(13f)
-                    piechart.notifyDataSetChanged()
-                    piechart.invalidate()
-
-
-                }
-
-            }
-
-        }
-
-
+        created = true
+        Pie_chart()
     }
 
-    /* piechart.setUsePercentValues(true)
-     val xvalues = ArrayList<PieEntry>()
-     xvalues.add(PieEntry(34.0f, "London"))
-     xvalues.add(PieEntry(28.2f, "Coventry"))
-     xvalues.add(PieEntry(37.9f, "Manchester"))
-     val dataSet = PieDataSet(xvalues, "")
-     val data = PieData(dataSet)
-     // In Percentage
-     data.setValueFormatter(PercentFormatter())
+    fun Pie_chart(){
+        val entries: MutableList<PieEntry> = ArrayList()
+        val entries_temp: MutableMap<String,Long> = mutableMapOf()
+        var total: Long = 0
+        for(i in db_ViewModel.MainIds.indices){
+            val main = db_ViewModel.currentMains.filter{it.start_time == db_ViewModel.MainIds[i]}[0]
+            val letUntagged = db_ViewModel.viewUntagged && main.tag_id == -1
+            var letTag = main.tag_id != -1
+            if (db_ViewModel.statTags != null) {
+                letTag = db_ViewModel.statTags!!.filter { main.tag_id == it }.isNotEmpty()
+            }
+            if(letUntagged || letTag) {
+                var tag_name = ""
+                if (letUntagged){
+                    tag_name = "Untagged"
+                }
+                else if(letTag){
+                    tag_name = db_ViewModel.currentTags.filter { it.id == main.tag_id }[0].path_name
+                }
+                total += db_ViewModel.MainWorks[i]
+                if(entries_temp.get(tag_name) == null){
+                    entries_temp.put(tag_name,db_ViewModel.MainWorks[i])
+                }
+                else{
+                    entries_temp.set(tag_name,entries_temp.get(tag_name)!! + db_ViewModel.MainWorks[i])
+                }
+            }
+        }
+        entries_temp.forEach{
+            entries.add(PieEntry(100f*((it.value).toDouble()/total.toDouble()).toFloat(),it.key))
+        }
 
-     piechart.data = data
-     piechart.description.text = ""
-     piechart.isDrawHoleEnabled = false
-     piechart.isRotationEnabled = false
-     data.setValueTextSize(13f)
-*/
+        piechart.setUsePercentValues(true)
+        val dataSet = PieDataSet(entries, "")
+        // dataSet.filter{it.}
+        val data = PieData(dataSet)
+        // In Percentage
+        data.setValueFormatter(PercentFormatter())
 
+        dataSet.setColors(
+            ContextCompat.getColor(context!!,R.color.Red),
+            ContextCompat.getColor(context!!,R.color.Blue),
+            ContextCompat.getColor(context!!,R.color.Green),
+            ContextCompat.getColor(context!!,R.color.Orange),
+            ContextCompat.getColor(context!!,R.color.colorPrimaryDark),
+            ContextCompat.getColor(context!!,R.color.Purple),
+            ContextCompat.getColor(context!!,R.color.Yellow),
+            ContextCompat.getColor(context!!,R.color.Black)
+        )
+        piechart.animateXY(500, 500)
+        piechart.data = data
+        piechart.description.text = ""
+        piechart.isDrawHoleEnabled = false
+        piechart.isRotationEnabled = false
+        data.setValueTextSize(13f)
+    }
+
+    fun updateChart(){
+        piechart.notifyDataSetChanged()
+        piechart.invalidate()
+    }
 
     fun chartDetails(mChart: PieChart, tf: Typeface) {
         mChart.description.isEnabled = true
@@ -298,8 +142,6 @@ class Pie_chart : Fragment() {
         mChart.setDrawCenterText(false)
         mChart.description.isEnabled = true
         mChart.isRotationEnabled = false
-
-
     }
 
 

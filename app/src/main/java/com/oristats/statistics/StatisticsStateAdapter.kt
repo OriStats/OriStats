@@ -13,7 +13,7 @@ class StatisticsStateAdapter(fragment: Fragment, main_interface: Main_Fragment.M
     var Pie_chart = com.oristats.statistics.Pie_chart.newInstance()
 
     override fun getItemCount(): Int {
-        return 4
+        return 3
     }
 
     override fun createFragment(position: Int): Fragment {
