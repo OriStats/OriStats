@@ -116,10 +116,10 @@ return view*/
         db_ViewModel.allRaws.observe(viewLifecycleOwner, Observer {db_raw_entities ->
             db_raw_entities?.let{
                 if(db_raw_entities.isEmpty()){
-                    Log.d("debug1","it's empty")
+                   // Log.d("debug1","it's empty")
                 }
                 else {
-                    Log.d("debug3", db_raw_entities[0].id.toString())
+                    //Log.d("debug3", db_raw_entities[0].id.toString())
                     for(i in db_raw_entities.indices) {
                         if(i==0) {
                             db_raw_entities[i].id?.toFloat()?.let { it1 ->

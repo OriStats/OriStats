@@ -93,13 +93,12 @@ class Pie_chart : Fragment() {
         data.setValueFormatter(PercentFormatter())
 
         dataSet.setColors(
-            ContextCompat.getColor(context!!,R.color.Red),
-            ContextCompat.getColor(context!!,R.color.Blue),
-            ContextCompat.getColor(context!!,R.color.Green),
+            ContextCompat.getColor(context!!,R.color.colorSecondary),
+            ContextCompat.getColor(context!!,R.color.colorPrimary),
+            ContextCompat.getColor(context!!,R.color.colorSecondaryDark),
             ContextCompat.getColor(context!!,R.color.Orange),
             ContextCompat.getColor(context!!,R.color.colorPrimaryDark),
             ContextCompat.getColor(context!!,R.color.Purple),
-            ContextCompat.getColor(context!!,R.color.Yellow),
             ContextCompat.getColor(context!!,R.color.Black)
         )
         piechart.animateXY(500, 500)
@@ -107,7 +106,8 @@ class Pie_chart : Fragment() {
         piechart.description.text = ""
         piechart.isDrawHoleEnabled = false
         piechart.isRotationEnabled = false
-        data.setValueTextSize(13f)
+        data.setValueTextSize(15f)
+        data.setValueTextColor(ContextCompat.getColor(context!!,R.color.White))
     }
 
     fun updateChart(){

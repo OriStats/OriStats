@@ -60,7 +60,7 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         // Handle item selection
         return when (item.itemId) {
-            R.id.Settings -> {
+         /*   R.id.Settings -> {
                 val action = NavGraphDirections.actionGlobalSettings()
                 NavHostFragment.findNavController(nav_host_fragment).navigate(action)
                 true
@@ -77,7 +77,7 @@ class MainActivity : AppCompatActivity() {
                 val action = NavGraphDirections.actionGlobalHelp()
                 NavHostFragment.findNavController(nav_host_fragment).navigate(action)
                 true
-            }
+            }*/
             R.id.About -> {
                 val action = NavGraphDirections.actionGlobalAbout()
                 NavHostFragment.findNavController(nav_host_fragment).navigate(action)

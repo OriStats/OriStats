@@ -86,9 +86,9 @@ class Main_ListAdapter internal constructor(
                         R.id.main_edit_change_tag -> {
                             mCtx.db_ViewModel.tagMode = "mainSelect"
                             mCtx.db_ViewModel.mainTagid = current.start_time
-                            Log.d("teste","aqui")
+                            //Log.d("teste","aqui")
                             fragInterface.gototags()
-                            Log.d("teste","aqui")
+                            //Log.d("teste","aqui")
                         }
                     }
                     true

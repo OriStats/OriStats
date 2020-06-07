@@ -26,14 +26,17 @@
         android:layout_marginStart="8dp"
         android:layout_marginBottom="8dp"
         android:showText="true"
-        android:textColor="@color/colorSecondary"
+        android:textColor="@color/colorSecondaryDark"
         android:textColorHighlight="@color/colorPrimary"
+        android:textColorHint="@color/colorPrimary"
         android:textColorLink="@color/colorSecondary"
+        android:textCursorDrawable="@drawable/rounded_button"
         android:textOff="Month"
         android:textOn="Week"
         app:layout_constraintBottom_toTopOf="@+id/barchart"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="1.0"
+        android:theme="@style/SCBSwitch"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -78,7 +78,7 @@ class DB_Repository(private val db_Raw_Dao: DB_Raw_Dao,
     }
 
     fun tag_load_by_folder_id(id: Int) : LiveData<List<DB_Tag_Entity>> {
-        Log.d("teste","Repository $id")
+        //Log.d("teste","Repository $id")
         return db_Tag_Dao.loadByFolderId(id)
     }
 
@@ -96,7 +96,7 @@ class DB_Repository(private val db_Raw_Dao: DB_Raw_Dao,
     }
 
     fun folder_load_by_folder_id(id: Int) : LiveData<List<DB_Tag_Folder_Entity>> {
-        Log.d("teste","Repository $id")
+        //Log.d("teste","Repository $id")
         return db_Tag_Folder_Dao.loadByFolderId(id)
     }
 

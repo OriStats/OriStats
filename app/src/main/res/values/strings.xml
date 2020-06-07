@@ -1,139 +1,151 @@
-<resources>
-    <string name="app_name">OriStats</string>
-    <string name="tab_text_1">Stopwatch</string>
-    <string name="tab_text_2">Tags</string>
-    <string name="tab_text_3">Statistics</string>
-    <string name="start">Start Session</string>
-    <string name="stop">End Session</string>
-    <string name="pause">Take a Break</string>
-    <string name="resume">Resume Work</string>
-    <string name="work_time">Work Time</string>
-    <string name="break_time">Break Time</string>
-    <plurals name="break_time_w_counter">
-        <item quantity="one">Break Time [%d break]</item>
-        <item quantity="other">Break Time [%d breaks]</item>
-    </plurals>
-    <string name="working">Started</string>
-    <string name="stopped">Stopped</string>
-    <string name="playpause">Start/Pause/Resume Session</string>
-    <string name="tag">tag</string>
-    <string name="folder">folder</string>
-    <string name="edit">edit</string>
-    <string name="arrow_back">arrow back</string>
-    <string name="notagchrono">No tag selected</string>
-    <string name="untagcheck">View untagged events</string>
-    <string name="tagfilter">Filter viewed tags</string>
+    <resources>
+        <string name="app_name">OriStats</string>
+        <string name="tab_text_1">Stopwatch</string>
+        <string name="tab_text_2">Tags</string>
+        <string name="tab_text_3">Statistics</string>
+        <string name="start">Start Session</string>
+        <string name="stop">End Session</string>
+        <string name="pause">Take a Break</string>
+        <string name="resume">Resume Work</string>
+        <string name="work_time">Work Time</string>
+        <string name="break_time">Break Time</string>
+        <plurals name="break_time_w_counter">
+            <item quantity="one">Break Time [%d break]</item>
+            <item quantity="other">Break Time [%d breaks]</item>
+        </plurals>
+        <string name="working">Started</string>
+        <string name="stopped">Stopped</string>
+        <string name="playpause">Start/Pause/Resume Session</string>
+        <string name="tag">tag</string>
+        <string name="folder">folder</string>
+        <string name="edit">edit</string>
+        <string name="arrow_back">arrow back</string>
+        <string name="notagchrono">No tag selected</string>
+        <string name="untagcheck">View untagged events</string>
+        <string name="tagfilter">Filter viewed tags</string>
 
-    <string name="Graphic1">Graph1</string>
-    <string name="Graphic2">Graph2</string>
-    <string name="Graphic3">Graph3</string>
+        <string name="Graphic1">Graph1</string>
+        <string name="Graphic2">Graph2</string>
+        <string name="Graphic3">Graph3</string>
 
-    <string name="fragment_stopwatch">Stopwatch</string>
-    <string name="fragment_tags">Tags</string>
-    <string name="fragment_statistics">Statistics</string>
-    <string name="fragment_settings">Settings</string>
-    <string name="fragment_help">Help</string>
-    <string name="fragment_about">About</string>
-    <string name="fragment_donate">Donate</string>
-    <string name="fragment_pie_chart">Pie Chart</string>
-    <string name="fragment_time_chart">Time Chart</string>
-    <string name="fragment_bar_chart">Bar Chart</string>
+        <string name="fragment_stopwatch">Stopwatch</string>
+        <string name="fragment_tags">Tags</string>
+        <string name="fragment_statistics">Statistics</string>
+        <string name="fragment_settings">Settings</string>
+        <string name="fragment_help">Help</string>
+        <string name="fragment_about">About</string>
+        <string name="fragment_donate">Donate</string>
+        <string name="fragment_pie_chart">Pie Chart</string>
+        <string name="fragment_time_chart">Time Chart</string>
+        <string name="fragment_bar_chart">Bar Chart</string>
 
 
-    <string name="three_dots_menu_Settings">Settings</string>
-    <string name="three_dots_menu_Export">Export Data</string>
-    <string name="three_dots_menu_Import">Import Data</string>
-    <string name="three_dots_menu_Help">Help</string>
-    <string name="three_dots_menu_About">About</string>
-    <string name="three_dots_menu_Donate">Donate</string>
+        <string name="three_dots_menu_Settings">Settings</string>
+        <string name="three_dots_menu_Export">Export Data</string>
+        <string name="three_dots_menu_Import">Import Data</string>
+        <string name="three_dots_menu_Help">Help</string>
+        <string name="three_dots_menu_About">About</string>
+        <string name="three_dots_menu_Donate">Donate</string>
 
-    <string name="fragment_db_raw">Data Base: raw_table</string>
-    <string name="db_raw_item_view_description">id (P.Key-Auto); millis</string>
-    <string name="db_raw_item_view">%d; %d</string>
-    <string name="db_raw_add">DB Raw Plus</string>
-    <string name="db_raw_reset">DB Raw Reset</string>
-    <string name="hint_raw_millis">MillisForDB()…</string>
-    <string name="button_raw_save">Save</string>
-    <string name="raw_not_saved">Millis Not Saved: Entry Not Valid</string>
+        <string name="fragment_db_raw">Data Base: raw_table</string>
+        <string name="db_raw_item_view_description">id (P.Key-Auto); millis</string>
+        <string name="db_raw_item_view">%d; %d</string>
+        <string name="db_raw_add">DB Raw Plus</string>
+        <string name="db_raw_reset">DB Raw Reset</string>
+        <string name="hint_raw_millis">MillisForDB()…</string>
+        <string name="button_raw_save">Save</string>
+        <string name="raw_not_saved">Millis Not Saved: Entry Not Valid</string>
 
-    <string name="fragment_db_main">Data Base: main_table</string>
-    <string name="db_main_item_view_description">start_time (P.Key); tag_id; start_raw_id; end_raw_id; minus_one_day</string>
-    <string name="db_main_item_view">%d; %d; %d; %d; %b</string>
-    <string name="db_main_add">DB Main Plus</string>
-    <string name="db_main_reset">DB Main Reset</string>
-    <string name="hint_main_start_time">System.currentTimeMillis()…</string>
-    <string name="hint_main_tag_id">tag_id</string>
-    <string name="hint_main_start_raw_id">start_raw_id</string>
-    <string name="hint_main_end_raw_id">end_raw_id</string>
-    <string name="hint_main_minus_one_day">minus_one_day (Boolean)</string>
-    <string name="button_main_save">Save</string>
-    <string name="main_not_saved">Session Not Saved: Entry Not Valid</string>
+        <string name="fragment_db_main">Data Base: main_table</string>
+        <string name="db_main_item_view_description">start_time (P.Key); tag_id; start_raw_id; end_raw_id; minus_one_day</string>
+        <string name="db_main_item_view">%d; %d; %d; %d; %b</string>
+        <string name="db_main_add">DB Main Plus</string>
+        <string name="db_main_reset">DB Main Reset</string>
+        <string name="hint_main_start_time">System.currentTimeMillis()…</string>
+        <string name="hint_main_tag_id">tag_id</string>
+        <string name="hint_main_start_raw_id">start_raw_id</string>
+        <string name="hint_main_end_raw_id">end_raw_id</string>
+        <string name="hint_main_minus_one_day">minus_one_day (Boolean)</string>
+        <string name="button_main_save">Save</string>
+        <string name="main_not_saved">Session Not Saved: Entry Not Valid</string>
 
-    <string name="fragment_db_main_v2">Sessions</string>
-    <string name="db_main_item_view_description_v2">Start Time   (Tag)</string>
-    <string name="db_main_item_view_v2">%s   (%s)</string>
+        <string name="fragment_db_main_v2">Sessions</string>
+        <string name="db_main_item_view_description_v2">Start Time   (Tag)</string>
+        <string name="db_main_item_view_v2">%s   (%s)</string>
 
-    <string name="fragment_db_tag">Data Base: tag_table</string>
-    <string name="db_tag_item_view_description">id (P.Key-Auto); path_name</string>
-    <string name="db_tag_item_view">%d; \"%s\"</string>
-    <string name="db_tag_add">DB Tag Plus</string>
-    <string name="db_tag_reset">DB Tag Reset</string>
-    <string name="db_folder_add">DB Folder Plus</string>
-    <string name="hint_tag_path_name">Tag name</string>
-    <string name="hint_folder_name">Folder name</string>
-    <string name="hint_tag_rename" >New tag name</string>
-    <string name="hint_folder_rename">New folder name</string>
-    <string name="button_tag_save">Save</string>
-    <string name="tag_not_saved">Path Not Saved: Entry Not Valid</string>
+        <string name="fragment_db_tag">Data Base: tag_table</string>
+        <string name="db_tag_item_view_description">id (P.Key-Auto); path_name</string>
+        <string name="db_tag_item_view">%d; \"%s\"</string>
+        <string name="db_tag_add">DB Tag Plus</string>
+        <string name="db_tag_reset">DB Tag Reset</string>
+        <string name="db_folder_add">DB Folder Plus</string>
+        <string name="hint_tag_path_name">Tag name</string>
+        <string name="hint_folder_name">Folder name</string>
+        <string name="hint_tag_rename" >New tag name</string>
+        <string name="hint_folder_rename">New folder name</string>
+        <string name="button_tag_save">Save</string>
+        <string name="tag_not_saved">Path Not Saved: Entry Not Valid</string>
 
-    <string name="tag_edit_move">Move</string>
-    <string name="tag_edit_rename">Rename</string>
-    <string name="tag_edit_delete">Delete</string>
+        <string name="tag_edit_move">Move</string>
+        <string name="tag_edit_rename">Rename</string>
+        <string name="tag_edit_delete">Delete</string>
 
-    <string name="main_edit_change_tag">Change Tag</string>
-    <string name="main_edit_delete">Delete</string>
+        <string name="main_edit_change_tag">Change Tag</string>
+        <string name="main_edit_delete">Delete</string>
 
-    <!--Splash Screen-->
-    <string name="splash_title">ORISTATS</string>
-    <string name="splash_authors">Designed by: HMO, HRL, JML</string>
+        <!--Splash Screen-->
+        <string name="splash_title">ORISTATS</string>
+        <string name="splash_authors">Designed by: HMO, HRL, JML</string>
 
-    <!--About Page -->
-    <string name="project_title">The Project</string>
-    <string name="project_description_p1">
-        This project was created in the context of the course \"Innovation and Development Laboratory\" in the Engineering Physics degree at IST (Instituto Superior Técnico).\n
-        It was founded by three Engineering Physics students as a way for them to get in touch with the development of android apps.
-    </string>
-    <string name="project_description_p2">
-        The app is meant to help students, and workers in general, track their working time and time spent on breaks, in order to increase productivity.\n
-        This app will always be free and open sourced, without ads or in-app purchases except for donation purposes.
-    </string>
-    <string name="project_github">View source code on github</string>
-    <string name="github_url">https://github.com/OriStats/OriStats</string>
-    <string name="contributors_title">Contributors</string>
-    <string name="contributors_description">
-        Heitor Östherdahl - Developer\nHugo Lóio - Developer\nJoão Mesquita - Developer
-    </string>
-    <string name="licenses_title">Licenses</string>
-    <string name="license1">Oristats (project license)</string>
-    <string name="license1_description">Temos de escolher uma licensa</string>
-    <string name="license2">MPAndroidChart (third party library)</string>
-    <string name="license2_description">
-        Copyright 2020 Philipp Jahoda\n\n
-        Licensed under the Apache License, Version 2.0 (the "License");
-        you may not use this software except in compliance with the License.\n
-        You may obtain a copy of the License at\n\n
-        \ \ \ http://www.apache.org/licenses/LICENSE-2.0\n\n
-        Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an
-        "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n
-        See the License for the specific language governing permissions and limitations under the License.
-    </string>
+        <!--About Page -->
+        <string name="project_title">The Project</string>
+        <string name="project_description_p1">
+            This project was created in the context of the course \"Innovation and Development Laboratory\" in the Engineering Physics degree at IST (Instituto Superior Técnico).\n
+            It was founded by three Engineering Physics students as a way for them to get in touch with the development of android apps.
+        </string>
+        <string name="project_description_p2">
+            The app is meant to help students, and workers in general, track their working time and time spent on breaks, in order to increase productivity.\n
+            This app will always be free and open sourced, without ads or in-app purchases except for donation purposes.
+        </string>
+        <string name="project_github">View source code on github</string>
+        <string name="github_url">https://github.com/OriStats/OriStats</string>
+        <string name="contributors_title">Contributors</string>
+        <string name="contributors_description">
+            Heitor Östherdahl - Developer\nHugo Lóio - Developer\nJoão Mesquita - Developer
+        </string>
+        <string name="licenses_title">Licenses</string>
+        <string name="license1">Oristats (v1.0 - Beta)</string>
+        <string name="license1_description"> Copyright 2020 OriStats\n\n
 
-    <!-- Donate Page -->
-    <string name="donate_button">DONATE</string>
-    <string name="donate_description">
-        This software is completely free, open source and without adds.
-        So, if you wish to support the developers of this project, please consider donating.
-    </string>
-    <string name="donate_thank">Thank You!</string>
-    <string name="donate_warning">This feature is not functional yet but it will be added in the future.</string>
-</resources>
+       Licensed under the Apache License, Version 2.0 (the "License");
+       you may not use this file except in compliance with the License.\n
+       You may obtain a copy of the License at\n\n
+
+           \ \ \  http://www.apache.org/licenses/LICENSE-2.0\n\n
+
+       Unless required by applicable law or agreed to in writing, software
+       distributed under the License is distributed on an "AS IS" BASIS,
+       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n
+       See the License for the specific language governing permissions and
+       limitations under the License.</string>
+        <string name="license2">MPAndroidChart (third party library)</string>
+        <string name="license2_description">
+            Copyright 2020 Philipp Jahoda\n\n
+            Licensed under the Apache License, Version 2.0 (the "License");
+            you may not use this software except in compliance with the License.\n
+            You may obtain a copy of the License at\n\n
+            \ \ \ http://www.apache.org/licenses/LICENSE-2.0\n\n
+            Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an
+            "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n
+            See the License for the specific language governing permissions and limitations under the License.
+        </string>
+
+        <!-- Donate Page -->
+        <string name="donate_button">DONATE</string>
+        <string name="donate_description">
+            This software is completely free, open source and without adds.
+            So, if you wish to support the developers of this project, please consider donating.
+        </string>
+        <string name="donate_thank">Thank You!</string>
+        <string name="donate_warning">This feature is not functional yet but it will be added in the future.</string>
+    </resources>

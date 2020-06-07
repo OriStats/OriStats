@@ -76,7 +76,7 @@ class Bar_Chart: Fragment() {
     fun setBarChart() {
         val cal = Calendar.getInstance()
         val tz = cal.timeZone
-        Log.d("Time zone: ", tz.displayName)
+        //Log.d("Time zone: ", tz.displayName)
 
         val barWidth: Float
         val barSpace: Float
@@ -224,7 +224,7 @@ class Bar_Chart: Fragment() {
 
         legend.setCustom(legendEntries)
 
-        legend.setYOffset(2f)
+        legend.setYOffset(10f)
         legend.setXOffset(2f)
         legend.setYEntrySpace(0f)
         legend.setTextSize(5f)
@@ -235,7 +235,7 @@ class Bar_Chart: Fragment() {
         xAxis.setGranularityEnabled(true)
         xAxis.setCenterAxisLabels(true)
         xAxis.setDrawGridLines(false)
-        xAxis.textSize = 9f
+        xAxis.textSize = 15f
 
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM)
         xAxis.setValueFormatter(IndexAxisValueFormatter(xAxisValues))
