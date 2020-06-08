@@ -8,7 +8,7 @@ Android app for monitoring working time.
 
 Count the time you spend working (or taking a break) and get its statistics.
 
-##Full Description:
+## Full Description:
 
 ***OriStats v0.1.1 (Beta)***
 
@@ -17,26 +17,32 @@ Count the time you spend working (or taking a break) and get its statistics.
 - A flexible stopwatch and tag system for every kind of user.
 
 **Stopwatch**
+
 Count the time you spend working or taking a break during a session.
 It keeps counting even if you turn off your phone to keep maximum focus.
 
 **Tags**
+
 You can have tags, folders of tags, folders of folders of tags… You get the idea, like a file manager of tags.
 
 **Statistics**
+
 You have a pie chart to compare the time spent in each tag.
 And also a bar chart to see your work evolution throughout the last week or month.
 (We used MPAndroidChart library by PhilJay, under the Apache 2.0 license.)
 
 **Sessions History**
+
 Here you can edit and delete past sessions.
 
 **Menu**
+
 A little bit of information about the app.
 
 
 
 » **WHY IS IT A BETA VERSION?** «
+
 It's a new app and we are also new developers. It may have bugs and we don't want to fool any client saying you can totally trust it already. When we think it's good enough, then we stop calling it "beta".
 
 We also want to add some other functionalities to call it 1.0:
