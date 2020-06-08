@@ -97,7 +97,7 @@
 
         <!--Splash Screen-->
         <string name="splash_title">OriStats</string>
-        <string name="splash_authors">Designed by: HMÖ, HRL & JML</string>
+        <string name="splash_authors">Designed by: HMÖ, HRL &amp; JML</string>
 
         <!--About Page -->
         <string name="project_title">The Project</string>
