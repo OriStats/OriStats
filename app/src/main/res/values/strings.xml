@@ -97,7 +97,7 @@
 
         <!--Splash Screen-->
         <string name="splash_title">OriStats</string>
-        <string name="splash_authors">Designed by: HMÖ, HRL & JML</string>
+        <string name="splash_authors">Designed by: HM\u00d6, HRL \u0026 JML</string>
 
         <!--About Page -->
         <string name="project_title">The Project</string>
@@ -116,7 +116,7 @@
             Heitor Österdahl - Developer\nHugo Lóio - Developer\nJoão Mesquita - Developer
         </string>
         <string name="licenses_title">Licenses</string>
-        <string name="license1">Oristats (v1.0 - Beta)</string>
+        <string name="license1">Oristats (v0.1.0 - Beta)</string>
         <string name="license1_description"> Copyright 2020 OriStats\n\n
 
        Licensed under the Apache License, Version 2.0 (the "License");
@@ -141,6 +141,27 @@
             "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n
             See the License for the specific language governing permissions and limitations under the License.
         </string>
+        <string name="privacypolicy_title">Privacy Policy</string>
+        <string name="privacypolicy_description">
+            All the data is only stored locally in your device.\n
+            OriStats doesn\u0027t upload your data anywhere.\n
+            The developers of OriStats don\u0027t have access to any of your data.\n
+            Your data is not shared with any 3rd parties.\n
+            OriStats doesn\u0027t include any advertisement libraries or any 3rd
+            party tracking (analytics) code.\n\n
+            OriStats don\u0027t use or save information of any of the following:\n
+            - Calendar\n
+            - Camera\n
+            - Contacts\n
+            - Location\n
+            - Microphone\n
+            - Phone\n
+            - Sensors (excluding the touchscreen or the main buttons)\n
+            - SMS\n\n
+            For more information:
+        </string>
+        <string name="privacypolicy_github">View privacy policy on github</string>
+        <string name="github_privacypolicy_url">https://github.com/OriStats/OriStats/blob/master/PRIVACY_POLICY</string>
 
         <!-- Donate Page -->
         <string name="donate_button">DONATE</string>

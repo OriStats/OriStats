@@ -19,6 +19,7 @@ class About : Fragment() {
     private var viewProject: Boolean = false
     private var viewContributors: Boolean = false
     private var viewLicense: Boolean = false
+    private var viewPrivacyPolicy: Boolean = false
 
     companion object {
         fun newInstance() = About()
@@ -80,6 +81,23 @@ class About : Fragment() {
                 license_arrow_down.visibility = View.VISIBLE
                 license_group.visibility = View.GONE
             }
+        }
+
+        privacypolicy_group.visibility = View.GONE
+        privacypolicy.setOnClickListener {
+            viewPrivacyPolicy = !viewPrivacyPolicy
+            if(viewPrivacyPolicy){
+                privacypolicy_arrow_down.visibility = View.INVISIBLE
+                privacypolicy_group.visibility = View.VISIBLE
+            }
+            else{
+                privacypolicy_arrow_down.visibility = View.VISIBLE
+                privacypolicy_group.visibility = View.GONE
+            }
+        }
+
+        github_privacypolicy_link.setOnClickListener {
+            context?.resources?.getString(R.string.github_privacypolicy_url)?.let { it1 -> follow_link(it1) }
         }
     }
     private fun follow_link(url: String){

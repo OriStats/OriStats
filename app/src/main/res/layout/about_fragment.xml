@@ -314,6 +314,89 @@
                 app:constraint_referenced_ids="license1,license1_description,
                 license2,license2_description,license_arrow_up"
                 />
+
+            <TextView
+                android:id="@+id/privacypolicy_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/small_padding"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:layout_margin="1dp"
+                android:background="@drawable/square_border"
+                android:text="@string/privacypolicy_title"
+                android:textColor="@color/Black"
+                android:textSize="24sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/license2_description" />
+
+            <Button
+                android:id="@+id/privacypolicy"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@color/ap_transparent"
+                app:layout_constraintBottom_toBottomOf="@id/privacypolicy_title"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="@id/privacypolicy_title" />
+
+            <ImageView
+                android:id="@+id/privacypolicy_arrow_down"
+                android:layout_width="@dimen/tag_recyclerview_button_width"
+                android:layout_height="0dp"
+                android:contentDescription="@string/ok"
+                android:src="@drawable/ic_baseline_arrow_downward_24"
+                app:layout_constraintBottom_toBottomOf="@id/privacypolicy_title"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="@id/privacypolicy_title" />
+
+            <ImageView
+                android:id="@+id/privacypolicy_arrow_up"
+                android:layout_width="@dimen/tag_recyclerview_button_width"
+                android:layout_height="0dp"
+                android:contentDescription="@string/ok"
+                android:src="@drawable/ic_arrow_upward_24dp"
+                app:layout_constraintBottom_toBottomOf="@id/privacypolicy_title"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="@id/privacypolicy_title" />
+
+            <TextView
+                android:id="@+id/privacypolicy_description"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:paddingStart="@dimen/small_padding"
+                android:paddingEnd="@dimen/small_padding"
+                android:text="@string/privacypolicy_description"
+                android:textAlignment="viewStart"
+                android:textColor="@color/Black"
+                android:textSize="14sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/privacypolicy_title" />
+
+            <Button
+                android:id="@+id/github_privacypolicy_link"
+                android:layout_width="wrap_content"
+                android:background="@color/ap_transparent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="50dp"
+                android:paddingRight="50dp"
+                android:text="@string/privacypolicy_github"
+                android:textAllCaps="false"
+                android:textColor="@color/Black"
+                android:textAlignment="center"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/privacypolicy_description"
+                />
+
+            <androidx.constraintlayout.widget.Group
+                android:id="@+id/privacypolicy_group"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="visible"
+                app:constraint_referenced_ids="privacypolicy_description,privacypolicy_arrow_up, github_privacypolicy_link" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </ScrollView>
