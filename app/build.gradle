@@ -14,12 +14,12 @@ android {
         applicationId "com.oristats"
         minSdkVersion 21
         targetSdkVersion 29
-        versionCode 1
+        versionCode 2
         // versionCode — A positive integer used as an internal version number.
         // This number is used only to determine whether one version is more recent than another, with higher numbers indicating more recent versions.
         // This is not the version number shown to users.
         // Typically, you would release the first version of your app with versionCode set to 1, then monotonically increase the value with each release, regardless of whether the release constitutes a major or minor release.
-        versionName "0.1.0"
+        versionName "0.1.1"
         // versionName — A string used as the version number shown to users.
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
