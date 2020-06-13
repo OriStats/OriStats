@@ -2,7 +2,7 @@
 
 Android app for monitoring working time.
 
-**Get the latest release on Google Play or on [GitHub](https://github.com/OriStats/OriStats/releases).** You can also get the [latest build](https://github.com/OriStats/OriStats/blob/master/app/release/app-release.apk) (not recommended).
+**Get the latest release on [Google Play](https://play.google.com/store/apps/details?id=com.oristats) or on [GitHub](https://github.com/OriStats/OriStats/releases).** You can also get the [latest build](https://github.com/OriStats/OriStats/blob/master/app/release/app-release.apk) (not recommended).
 
 ## Short Description:
 
